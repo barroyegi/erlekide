@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Erlekide — Erlategiaren Kudeaketa</title>
+  <title>ApiVisual — Erlategiaren Kudeaketa</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <style>
     :root {
@@ -1052,24 +1052,26 @@
   <!-- LOGIN -->
   <div id="scr-login" class="scr" style="display:none">
     <div class="lcard">
-      <div class="llogo">🐝 Erlekide</div>
+      <div class="llogo">🐝 ApiVisual</div>
       <div class="lsub">Erlategiaren kudeaketa sistema</div>
       <div class="atabs">
         <button class="atab on" id="tbin" onclick="showTab('in')">Sartu</button>
         <button class="atab" id="tbup" onclick="showTab('up')">Erregistratu</button>
       </div>
       <div id="tab-in">
-        <div class="ff"><label>Erabiltzaile izena</label><input id="liu" placeholder="erabiltzailea"
-            autocomplete="username"></div>
+        <div class="ff"><label>E-posta</label><input id="liu" type="email" placeholder="izena@gmail.com"
+            autocomplete="email"></div>
         <div class="ff"><label>Pasahitza</label><input id="lip" type="password" placeholder="••••••"
             autocomplete="current-password"></div>
         <button class="btn primary full" onclick="doLogin()">Sartu →</button>
         <div id="lie" class="lerr"></div>
       </div>
       <div id="tab-up" style="display:none">
-        <div class="ff"><label>Erabiltzaile izena (gutxienez 3)</label><input id="ruu" placeholder="erabiltzailea"
-            autocomplete="username"></div>
-        <div class="ff"><label>Pasahitza (gutxienez 4)</label><input id="rup" type="password" placeholder="••••••"
+        <div class="ff"><label>Erabiltzaile izena</label><input id="ruu" placeholder="Jon" autocomplete="username">
+        </div>
+        <div class="ff"><label>E-posta</label><input id="rue-mail" type="email" placeholder="izena@gmail.com"
+            autocomplete="email"></div>
+        <div class="ff"><label>Pasahitza</label><input id="rup" type="password" placeholder="••••••"
             autocomplete="new-password"></div>
         <div class="ff"><label>Pasahitza berretsi</label><input id="rup2" type="password" placeholder="••••••"
             autocomplete="new-password"></div>
@@ -1083,7 +1085,7 @@
   <!-- APP -->
   <div id="scr-app" class="scr" style="display:none">
     <header id="hdr">
-      <span class="hlogo">🐝 Erlekide</span>
+      <span class="hlogo">🐝 ApiVisual</span>
       <span class="ubadge" id="ubadge">—</span>
       <button class="btn sm" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);color:#fff"
         onclick="doLogout()">Irten</button>
@@ -1093,7 +1095,7 @@
         <div class="sb-hdr">
           <span>Erlauntzak</span>
           <button class="btn sm" style="padding:2px 9px;font-size:15px;line-height:1.2"
-            onclick="openAddModal(null,null)" title="Erlauntz berria">+</button>
+            onclick="openAddModal(null,null)" title="Erlauntza berria">+</button>
         </div>
         <div id="hl"></div>
         <div class="sb-foot" id="sbfoot"></div>
@@ -1109,7 +1111,7 @@
       </div>
       <div id="dp">
         <div id="dpc">
-          <div class="empty-st"><span class="ei">🐝</span>Hautatu erlauntz bat<br>mapan edo zerrendan</div>
+          <div class="empty-st"><span class="ei">🐝</span>Hautatu erlauntza bat<br>mapan edo zerrendan</div>
         </div>
       </div>
     </div>
@@ -1120,10 +1122,10 @@
     </nav>
   </div>
 
-  <!-- MODAL: ERLAUNTZ BERRIA -->
+  <!-- MODAL: ERLAUNTZA BERRIA -->
   <div id="mod-ah" class="movl" style="display:none">
     <div class="mbox">
-      <div class="mtitle">Erlauntz berria <button class="mclose" onclick="closeM('ah')">✕</button></div>
+      <div class="mtitle">Erlauntza berria <button class="mclose" onclick="closeM('ah')">✕</button></div>
       <div id="ahpos" class="posinfo"></div>
       <div class="fg2">
         <div class="ff"><label>Izena / Kodea</label><input id="ahn" placeholder="Adib: A1"></div>
@@ -1303,16 +1305,14 @@
     }
 
     async function doLogin() {
-      const username = document.getElementById('liu').value.trim();
+      const email = document.getElementById('liu').value.trim();
       const password = document.getElementById('lip').value;
       const er = document.getElementById('lie');
       er.textContent = '';
       try {
-        const { data, error } = await sb.auth.signInWithPassword({
-          email: `${username}@erlategia.app`, password
-        });
-        if (error) throw new Error('Erabiltzaile edo pasahitza okerrak.');
-        me = data.user.user_metadata?.username || username;
+        const { data, error } = await sb.auth.signInWithPassword({ email, password });
+        if (error) throw new Error('E-posta edo pasahitza okerrak.');
+        me = data.user.user_metadata?.username || email.split('@')[0];
         userId = data.user.id;
         token = data.session.access_token;
         await enterApp();
@@ -1321,26 +1321,29 @@
 
     async function doReg() {
       const username = document.getElementById('ruu').value.trim();
+      const email = document.getElementById('rue-mail').value.trim();
       const password = document.getElementById('rup').value;
       const p2 = document.getElementById('rup2').value;
       const er = document.getElementById('rue');
       er.textContent = '';
-      if (username.length < 3) { er.textContent = 'Erabiltzaile izenak gutxienez 3 karaktere behar ditu.'; return; }
-      if (password.length < 4) { er.textContent = 'Pasahitzak gutxienez 4 karaktere behar ditu.'; return; }
+      if (username.length < 2) { er.textContent = 'Erabiltzaile izenak gutxienez 2 karaktere behar ditu.'; return; }
+      if (!email.includes('@')) { er.textContent = 'Sartu e-posta baliogarri bat.'; return; }
+      if (password.length < 6) { er.textContent = 'Pasahitzak gutxienez 6 karaktere behar ditu.'; return; }
       if (password !== p2) { er.textContent = 'Pasahitzak ez datoz bat.'; return; }
       try {
         const { data, error } = await sb.auth.signUp({
-          email: `${username}@erlategia.app`, password,
+          email, password,
           options: { data: { username } }
         });
         if (error) {
           const msg = (error.message || '').toLowerCase();
           throw new Error(msg.includes('already') || error.status === 422
-            ? 'Erabiltzaile izena dagoeneko erabilia dago.'
+            ? 'E-posta hori dagoeneko erregistratuta dago.'
             : error.message);
         }
         if (!data.session) {
-          er.textContent = 'Supabase-n "Confirm email" desaktibatu behar duzu (README ikusi).';
+          er.style.color = 'var(--good)';
+          er.textContent = 'Egiaztapen e-maila bidali da. Berretsi eta saioa hasi.';
           return;
         }
         me = username; userId = data.user.id; token = data.session.access_token;
