@@ -253,7 +253,7 @@
 
     /* ── APP ── */
     #hdr {
-      height: 46px;
+      height: 50px;
       flex-shrink: 0;
       background: var(--bark);
       color: #fff;
@@ -266,9 +266,9 @@
 
     .hlogo {
       font-family: "ADLaM Display", system-ui;
-      font-size: 20px;
+      font-size: 30px;
       font-weight: 700;
-      letter-spacing: -.4px;
+      letter-spacing: 1px;
       flex: 1
     }
 
@@ -299,7 +299,7 @@
     #sb {
       width: 200px;
       flex-shrink: 0;
-      background: #fff;
+      background: #ffed90;
       border-right: 1px solid var(--border);
       display: flex;
       flex-direction: column;
@@ -396,7 +396,7 @@
     #cv-wrap {
       flex: 1;
       overflow: auto;
-      background: #4A6E2A;
+      background: transparent;
       -webkit-overflow-scrolling: touch;
       display: flex;
       align-items: center;
@@ -454,7 +454,7 @@
       width: var(--cell);
       height: var(--cell);
       flex-shrink: 0;
-      border: .5px solid rgba(255, 255, 255, .07);
+      border: .5px solid rgba(0, 0, 0, 0.35);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1106,7 +1106,7 @@
   <!-- APP -->
   <div id="scr-app" class="scr" style="display:none">
     <header id="hdr">
-      <span class="hlogo">🐝 Erlekide</span>
+      <span class="hlogo">Erlekide</span>
       <span class="ubadge" id="ubadge">—</span>
       <button class="btn sm" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);color:#fff"
         onclick="doLogout()">Irten</button>
