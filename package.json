@@ -1,0 +1,8 @@
+{
+  "name": "erlekide",
+  "version": "1.0.0",
+  "description": "Erlategiaren kudeaketa sistema — desplegable en Vercel + Supabase",
+  "engines": {
+    "node": ">=18"
+  }
+}
