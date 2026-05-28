@@ -1059,8 +1059,8 @@
         <button class="atab" id="tbup" onclick="showTab('up')">Erregistratu</button>
       </div>
       <div id="tab-in">
-        <div class="ff"><label>E-posta</label><input id="liu" type="email" placeholder="izena@gmail.com"
-            autocomplete="email"></div>
+        <div class="ff"><label>Erabiltzaile izena</label><input id="liu" placeholder="Jon" autocomplete="username">
+        </div>
         <div class="ff"><label>Pasahitza</label><input id="lip" type="password" placeholder="••••••"
             autocomplete="current-password"></div>
         <button class="btn primary full" onclick="doLogin()">Sartu →</button>
@@ -1069,8 +1069,6 @@
       <div id="tab-up" style="display:none">
         <div class="ff"><label>Erabiltzaile izena</label><input id="ruu" placeholder="Jon" autocomplete="username">
         </div>
-        <div class="ff"><label>E-posta</label><input id="rue-mail" type="email" placeholder="izena@gmail.com"
-            autocomplete="email"></div>
         <div class="ff"><label>Pasahitza</label><input id="rup" type="password" placeholder="••••••"
             autocomplete="new-password"></div>
         <div class="ff"><label>Pasahitza berretsi</label><input id="rup2" type="password" placeholder="••••••"
@@ -1305,14 +1303,16 @@
     }
 
     async function doLogin() {
-      const email = document.getElementById('liu').value.trim();
+      const username = document.getElementById('liu').value.trim();
       const password = document.getElementById('lip').value;
       const er = document.getElementById('lie');
       er.textContent = '';
+      if (!username) { er.textContent = 'Idatzi erabiltzaile izena.'; return; }
+      const email = `${username}@erlekide.local`;
       try {
         const { data, error } = await sb.auth.signInWithPassword({ email, password });
-        if (error) throw new Error('E-posta edo pasahitza okerrak.');
-        me = data.user.user_metadata?.username || email.split('@')[0];
+        if (error) throw new Error('Erabiltzaile izena edo pasahitza okerrak.');
+        me = data.user.user_metadata?.username || username;
         userId = data.user.id;
         token = data.session.access_token;
         await enterApp();
@@ -1321,15 +1321,14 @@
 
     async function doReg() {
       const username = document.getElementById('ruu').value.trim();
-      const email = document.getElementById('rue-mail').value.trim();
       const password = document.getElementById('rup').value;
       const p2 = document.getElementById('rup2').value;
       const er = document.getElementById('rue');
       er.textContent = '';
       if (username.length < 2) { er.textContent = 'Erabiltzaile izenak gutxienez 2 karaktere behar ditu.'; return; }
-      if (!email.includes('@')) { er.textContent = 'Sartu e-posta baliogarri bat.'; return; }
       if (password.length < 6) { er.textContent = 'Pasahitzak gutxienez 6 karaktere behar ditu.'; return; }
       if (password !== p2) { er.textContent = 'Pasahitzak ez datoz bat.'; return; }
+      const email = `${username}@erlekide.local`;
       try {
         const { data, error } = await sb.auth.signUp({
           email, password,
@@ -1338,12 +1337,12 @@
         if (error) {
           const msg = (error.message || '').toLowerCase();
           throw new Error(msg.includes('already') || error.status === 422
-            ? 'E-posta hori dagoeneko erregistratuta dago.'
+            ? 'Erabiltzaile izen hori dagoeneko hartuta dago.'
             : error.message);
         }
         if (!data.session) {
-          er.style.color = 'var(--good)';
-          er.textContent = 'Egiaztapen e-maila bidali da. Berretsi eta saioa hasi.';
+          er.style.color = 'var(--honey-d)';
+          er.textContent = 'Kontua sortu da, baina saioa ezin izan da hasi automatikoki.';
           return;
         }
         me = username; userId = data.user.id; token = data.session.access_token;
