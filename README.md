@@ -114,7 +114,7 @@ Vercel > **Settings** > **Domains** → zure domeinua gehitu.
 ## 📁 Egitura / Estructura
 
 ```
-apivisual/
+erlekide/
 ├── vercel.json          ← Vercel konfigurazioa
 ├── package.json
 ├── .env.example         ← Aldagaien eredua

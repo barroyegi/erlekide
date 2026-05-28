@@ -7,6 +7,8 @@
   <title>Erlekide — Erlategiaren Kudeaketa</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=ADLaM+Display&display=swap');
+
     :root {
       --honey: #C8780A;
       --honey-d: #7A4806;
@@ -263,10 +265,15 @@
     }
 
     .hlogo {
-      font-size: 16px;
+      font-family: "ADLaM Display", system-ui;
+      font-size: 20px;
       font-weight: 700;
       letter-spacing: -.4px;
       flex: 1
+    }
+
+    .agrid {
+      align-items: center;
     }
 
     .ubadge {
@@ -552,6 +559,23 @@
     .st-bad .tbody {
       background: var(--bad-bg);
       border-color: #AE2B2B
+    }
+
+    /* ── DECORACIONES ── */
+    .cdecor {
+      position: absolute;
+      inset: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.65;
+    }
+
+    .cdecor svg {
+      width: 100%;
+      height: 100%;
     }
 
     /* ── ZERRENDA (mobile) ── */
@@ -1044,6 +1068,29 @@
 
 <body>
 
+  <!-- SVGs DECORATIVOS -->
+  <svg style="display:none">
+    <symbol id="icon-tree" viewBox="0 0 100 100">
+      <rect x="45" y="60" width="10" height="30" fill="#5D4037" />
+      <circle cx="50" cy="45" r="32" fill="#2E7D32" />
+      <circle cx="35" cy="55" r="20" fill="#388E3C" />
+      <circle cx="65" cy="55" r="20" fill="#388E3C" />
+    </symbol>
+    <symbol id="icon-bush" viewBox="0 0 100 100">
+      <circle cx="30" cy="70" r="20" fill="#43A047" />
+      <circle cx="50" cy="65" r="25" fill="#4CAF50" />
+      <circle cx="70" cy="70" r="20" fill="#43A047" />
+    </symbol>
+    <symbol id="icon-rock" viewBox="0 0 100 100">
+      <path d="M20 85 L40 35 L65 50 L85 85 Z" fill="#9E9E9E" />
+      <path d="M40 35 L65 50 L55 85 L30 85 Z" fill="#BDBDBD" />
+    </symbol>
+    <symbol id="icon-pond" viewBox="0 0 100 100">
+      <ellipse cx="50" cy="55" rx="40" ry="25" fill="#4FC3F7" />
+      <ellipse cx="45" cy="52" rx="30" ry="15" fill="#81D4FA" />
+    </symbol>
+  </svg>
+
   <!-- KARGATZEA -->
   <div id="loading"><span>🐝</span>
     <p>Kargatzen...</p>
@@ -1208,10 +1255,10 @@
     </div>
   </div>
 
-  <!-- MODAL: IKUSKARITZA -->
+  <!-- MODAL: INSPEKZIOAK -->
   <div id="mod-ai" class="movl" style="display:none">
     <div class="mbox">
-      <div class="mtitle">Ikuskaritza berria <button class="mclose" onclick="closeM('ai')">✕</button></div>
+      <div class="mtitle">Inspekzio berria <button class="mclose" onclick="closeM('ai')">✕</button></div>
       <div class="fg2">
         <div class="ff"><label>Data</label><input id="aid" type="date"></div>
         <div class="ff"><label>Kolonia indarra (1–10)</label><input id="ais" type="number" min="1" max="10" value="7">
@@ -1265,6 +1312,15 @@
     let selId = null, dragId = null, pendX = null, pendY = null;
     let editId = null, inspHiveId = null, aiTxt = '';
     let pollTimer = null;
+
+    // Mapa apaindura / Decoración del mapa (Visual)
+    // Gehitu hemen dekorazioak: "C3": "tree", "E5": "bush"...
+    const MAP_DECOR = {
+      "B2": "tree", "B3": "tree", "C2": "tree",
+      "K7": "rock", "L7": "rock",
+      "F4": "bush", "G4": "bush",
+      "C8": "pond"
+    };
 
     // ── Supabase hasieratzea ──────────────────────────────────────────────────────
     async function initSB() {
@@ -1410,7 +1466,17 @@
       for (let r = 0; r < ROWS; r++)
         for (let c = 0; c < COLS; c++) {
           const el = document.getElementById(`c${c}_${r}`);
-          if (el) el.innerHTML = '<div class="cempty">+</div>';
+          if (!el) continue;
+
+          let html = '<div class="cempty">+</div>';
+
+          // Dekorazioa begiratu / Mirar decoración
+          const coord = `${RLBLS[r]}${c + 1}`;
+          if (MAP_DECOR[coord]) {
+            html += `<div class="cdecor"><svg><use href="#icon-${MAP_DECOR[coord]}"></use></svg></div>`;
+          }
+
+          el.innerHTML = html;
         }
       hives.forEach(h => {
         if (h.grid_x == null || h.grid_y == null) return;
@@ -1459,11 +1525,11 @@
       <div class="mstat"><div class="n" style="font-size:12px">${insps[0] ? insps[0].date.slice(5) : '—'}</div><div class="l">Azkena</div></div>
     </div>
     <div style="display:flex;gap:6px;margin-bottom:10px">
-      <button class="btn sm" style="flex:1" onclick="openInsp('${h.id}')">+ Ikuskaritza</button>
+      <button class="btn sm" style="flex:1" onclick="openInsp('${h.id}')">+ Inspekzioa</button>
       <button class="btn sm" onclick="openEdit('${h.id}')">✎ Editatu</button>
     </div>
     ${h.notes ? `<div style="font-size:11px;color:var(--bark-m);background:var(--cream);padding:7px 9px;border-radius:6px;margin-bottom:10px;line-height:1.6">${esc(h.notes)}</div>` : ''}
-    <div class="sec-title">Ikuskaritza historia</div>
+    <div class="sec-title">Inspekzio historia</div>
     ${insps.length ? insps.slice(0, 12).map(i => `
       <div class="icard">
         <div class="ichdr"><span class="idate">${i.date}</span><span class="iusr">${esc(i.username)}</span></div>
@@ -1476,7 +1542,7 @@
         </div>
         ${i.ai_summary ? `<div class="ainote"><div class="ainote-lbl">✦ IA ANALISIA</div>${esc(i.ai_summary)}</div>` : ''}
       </div>`).join('') :
-          '<div style="font-size:11px;color:var(--bark-l)">Oraindik ikuskaritzerik ez.</div>'}`;
+          '<div style="font-size:11px;color:var(--bark-l)">Oraindik ez du inspekziorik.</div>'}`;
     }
 
     function closeDP() { selId = null; document.getElementById('dp').classList.remove('open'); renderSB(); renderGrid(); }
@@ -1557,7 +1623,7 @@
     }
 
     async function delHive() {
-      if (!confirm('Erlaunutza eta bere ikuskaritza guztiak ezabatu nahi dituzu?')) return;
+      if (!confirm('Erlaunutza eta bere inspekzio guztiak ezabatu nahi dituzu?')) return;
       const { error } = await sb.from('hives').delete().eq('id', editId);
       if (error) { toast(error.message, 'bad'); return; }
       hives = hives.filter(h => h.id !== editId); closeM('eh'); closeDP(); renderAll(); toast('Erlaunutza ezabatuta');
@@ -1613,7 +1679,7 @@ Behaketak: ${document.getElementById('aino').value || 'bat ere ez'}`;
       if (error) { toast(error.message, 'bad'); return; }
       await sb.from('hives').update({ status }).eq('id', inspHiveId);
       const h = hives.find(x => x.id === inspHiveId); if (h) h.status = status;
-      closeM('ai'); renderAll(); if (selId === inspHiveId) await renderDP(inspHiveId); toast('Ikuskaritza gordeta ✓');
+      closeM('ai'); renderAll(); if (selId === inspHiveId) await renderDP(inspHiveId); toast('Inspekzioa gordeta ✓');
     }
 
     // ── Ikuspegia aldatu (mobile) ─────────────────────────────────────────────────
