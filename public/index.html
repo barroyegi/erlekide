@@ -397,7 +397,10 @@
       flex: 1;
       overflow: auto;
       background: #4A6E2A;
-      -webkit-overflow-scrolling: touch
+      -webkit-overflow-scrolling: touch;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .mhint {
@@ -561,21 +564,15 @@
       border-color: #AE2B2B
     }
 
-    /* ── DECORACIONES ── */
-    .cdecor {
-      position: absolute;
-      inset: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    /* ── ATZEKO PLANOA / FONDO ── */
+    #scr-app::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 5L90 25V75L50 95L10 75V25L50 5Z' fill='none' stroke='white' stroke-opacity='0.03' stroke-width='1'/%3E%3C/svg%3E");
+      background-size: 80px 80px;
       pointer-events: none;
-      z-index: 1;
-      opacity: 0.65;
-    }
-
-    .cdecor svg {
-      width: 100%;
-      height: 100%;
+      z-index: 0;
     }
 
     /* ── ZERRENDA (mobile) ── */
@@ -1068,29 +1065,6 @@
 
 <body>
 
-  <!-- SVGs DECORATIVOS -->
-  <svg style="display:none">
-    <symbol id="icon-tree" viewBox="0 0 100 100">
-      <rect x="45" y="60" width="10" height="30" fill="#5D4037" />
-      <circle cx="50" cy="45" r="32" fill="#2E7D32" />
-      <circle cx="35" cy="55" r="20" fill="#388E3C" />
-      <circle cx="65" cy="55" r="20" fill="#388E3C" />
-    </symbol>
-    <symbol id="icon-bush" viewBox="0 0 100 100">
-      <circle cx="30" cy="70" r="20" fill="#43A047" />
-      <circle cx="50" cy="65" r="25" fill="#4CAF50" />
-      <circle cx="70" cy="70" r="20" fill="#43A047" />
-    </symbol>
-    <symbol id="icon-rock" viewBox="0 0 100 100">
-      <path d="M20 85 L40 35 L65 50 L85 85 Z" fill="#9E9E9E" />
-      <path d="M40 35 L65 50 L55 85 L30 85 Z" fill="#BDBDBD" />
-    </symbol>
-    <symbol id="icon-pond" viewBox="0 0 100 100">
-      <ellipse cx="50" cy="55" rx="40" ry="25" fill="#4FC3F7" />
-      <ellipse cx="45" cy="52" rx="30" ry="15" fill="#81D4FA" />
-    </symbol>
-  </svg>
-
   <!-- KARGATZEA -->
   <div id="loading"><span>🐝</span>
     <p>Kargatzen...</p>
@@ -1313,15 +1287,6 @@
     let editId = null, inspHiveId = null, aiTxt = '';
     let pollTimer = null;
 
-    // Mapa apaindura / Decoración del mapa (Visual)
-    // Gehitu hemen dekorazioak: "C3": "tree", "E5": "bush"...
-    const MAP_DECOR = {
-      "B2": "tree", "B3": "tree", "C2": "tree",
-      "K7": "rock", "L7": "rock",
-      "F4": "bush", "G4": "bush",
-      "C8": "pond"
-    };
-
     // ── Supabase hasieratzea ──────────────────────────────────────────────────────
     async function initSB() {
       const cfg = await fetch('/api/config').then(r => r.json());
@@ -1466,17 +1431,7 @@
       for (let r = 0; r < ROWS; r++)
         for (let c = 0; c < COLS; c++) {
           const el = document.getElementById(`c${c}_${r}`);
-          if (!el) continue;
-
-          let html = '<div class="cempty">+</div>';
-
-          // Dekorazioa begiratu / Mirar decoración
-          const coord = `${RLBLS[r]}${c + 1}`;
-          if (MAP_DECOR[coord]) {
-            html += `<div class="cdecor"><svg><use href="#icon-${MAP_DECOR[coord]}"></use></svg></div>`;
-          }
-
-          el.innerHTML = html;
+          if (el) el.innerHTML = '<div class="cempty">+</div>';
         }
       hives.forEach(h => {
         if (h.grid_x == null || h.grid_y == null) return;
