@@ -1374,6 +1374,26 @@
           <div id="agrid"></div>
         </div>
       </div>
+
+      <div id="view-gastuak" style="display:none;flex-direction:column">
+        <div class="view-hdr">
+          <h3>💸 Gastuak</h3>
+          <div style="display:flex;gap:7px">
+            <button class="btn sm" onclick="openMembers()">👥 Sozioak</button>
+            <button class="btn sm primary" onclick="openAddExp()">＋ Gastua</button>
+          </div>
+        </div>
+        <div id="exp-balances"></div>
+        <div id="exp-list"></div>
+      </div>
+
+      <div id="view-materialak" style="display:none;flex-direction:column">
+        <div class="view-hdr">
+          <h3>🔧 Materialak</h3>
+          <button class="btn sm primary" onclick="openAddMat()">＋ Materiala</button>
+        </div>
+        <div id="mat-list"></div>
+      </div>
     </div>
     <!-- FAB: mugikorrean soilik -->
     <button class="fab" onclick="openAddModal(null,null)" title="Erlauntza berria">＋</button>
