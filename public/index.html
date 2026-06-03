@@ -446,10 +446,15 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 10px;
-      color: rgba(255, 255, 255, .5);
-      font-weight: 700;
-      flex-shrink: 0
+      font-size: 11px;
+      color: var(--honey-d);
+      font-weight: 800;
+      flex-shrink: 0;
+      background: linear-gradient(150deg, rgba(255, 255, 255, .92), rgba(249, 234, 196, .85));
+      border: 1px solid rgba(200, 120, 10, .25);
+      border-radius: 7px;
+      box-shadow: 0 2px 6px rgba(122, 72, 6, .16);
+      letter-spacing: .5px;
     }
 
     .clbl {
@@ -467,36 +472,42 @@
       width: var(--cell);
       height: var(--cell);
       flex-shrink: 0;
-      border: 1px solid rgb(169 169 169 / 72%);
-      border-radius: 8px;
+      border: 1px solid rgba(200, 120, 10, .28);
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: background .12s;
-      box-shadow: 0 3px 10px rgb(149 149 149 / 66%);
+      background: linear-gradient(150deg, rgba(255, 255, 255, .55), rgba(249, 234, 196, .4));
+      box-shadow: 0 4px 14px rgba(122, 72, 6, .16), inset 0 1px 0 rgba(255, 255, 255, .55);
+      transition: transform .14s, box-shadow .14s, background .14s, border-color .14s;
       margin: 10px;
     }
 
     .cell:hover {
-      background: rgba(255, 255, 255, .1)
+      background: linear-gradient(150deg, rgba(255, 255, 255, .82), rgba(249, 234, 196, .68));
+      border-color: rgba(200, 120, 10, .55);
+      box-shadow: 0 8px 22px rgba(122, 72, 6, .26), inset 0 1px 0 rgba(255, 255, 255, .6);
+      transform: translateY(-2px);
     }
 
     .cell.dov {
-      background: rgba(255, 210, 50, .25);
-      border-color: rgba(255, 210, 50, .7)
+      background: linear-gradient(150deg, rgba(255, 210, 50, .42), rgba(255, 190, 30, .32));
+      border-color: var(--honey);
+      box-shadow: 0 8px 24px rgba(200, 120, 10, .4);
+      transform: translateY(-2px) scale(1.03);
     }
 
     .cempty {
-      width: 24px;
-      height: 24px;
+      width: 26px;
+      height: 26px;
       border-radius: 50%;
-      border: 1.5px dashed rgba(255, 255, 255, .25);
+      border: 1.5px dashed rgba(200, 120, 10, .45);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
-      color: rgba(255, 255, 255, .3);
+      font-size: 15px;
+      color: var(--honey);
       opacity: 0;
       transition: .15s
     }
@@ -513,7 +524,13 @@
       width: calc(var(--cell) * var(--tok-w, 0.85));
       cursor: grab;
       user-select: none;
-      transition: width .15s
+      transition: width .15s, transform .14s, filter .14s;
+      filter: drop-shadow(0 3px 6px rgba(40, 20, 0, .28));
+    }
+
+    .tok:hover {
+      transform: translateY(-2px) scale(1.04);
+      filter: drop-shadow(0 6px 12px rgba(40, 20, 0, .35));
     }
 
     .tok:active {
@@ -1196,6 +1213,11 @@
         --cell: 56px
       }
 
+      .cell,
+      .clbl {
+        margin: 6px
+      }
+
       #sb {
         display: none
       }
@@ -1403,6 +1425,8 @@
         <div class="ff"><label>Instalazio-data</label><input id="ahd" type="date"></div>
         <div class="ff"><label>Markoak (5–10, aukerazkoa)</label><input id="ahf" type="number" min="5" max="10"
             placeholder="—"></div>
+        <div class="ff"><label>Kokapena — Errenkada</label><select id="ahpy"></select></div>
+        <div class="ff"><label>Kokapena — Zutabea</label><select id="ahpx"></select></div>
         <div class="ff"><label>Kolore bereizia</label>
           <select id="ahc">
             <option value="#C8780A">🟠 Anbrea</option>
@@ -1454,6 +1478,8 @@
         </div>
         <div class="ff"><label>Markoak (5–10)</label><input id="ehf" type="number" min="5" max="10" placeholder="—">
         </div>
+        <div class="ff"><label>Kokapena — Errenkada</label><select id="ehpy"></select></div>
+        <div class="ff"><label>Kokapena — Zutabea</label><select id="ehpx"></select></div>
         <div class="ff fg1"><label>Oharrak</label><textarea id="ehno"></textarea></div>
       </div>
       <div id="del-warn"
@@ -1592,7 +1618,7 @@
           <div style="font-size:10px;color:var(--bark-l);margin-top:3px">Orain: <span id="cfg-cols-now"></span></div>
         </div>
         <div class="ff">
-          <label>Errenkadak (3 – 15)</label>
+          <label>Errenkadak (1 – 15)</label>
           <input id="cfg-rows" type="number" min="1" max="15">
           <div style="font-size:10px;color:var(--bark-l);margin-top:3px">Orain: <span id="cfg-rows-now"></span></div>
         </div>
@@ -1612,7 +1638,7 @@
   <script>
     'use strict';
 
-    let COLS = 14, ROWS = 10; const RLBLS = 'ABCDEFGHIJ';
+    let COLS = 14, ROWS = 10; const RLBLS = 'ABCDEFGHIJKLMNO';
     let sb = null, me = null, userId = null, token = null;
     let hives = [], insps = [];
     let selId = null, dragId = null, pendX = null, pendY = null;
@@ -1744,7 +1770,7 @@
     async function loadSettings() {
       try {
         const { data } = await sb.from('settings').select('cols,rows').eq('id', 'main').maybeSingle();
-        if (data) { COLS = Math.max(3, Math.min(20, data.cols || 14)); ROWS = Math.max(3, Math.min(15, data.rows || 10)); }
+        if (data) { COLS = Math.max(3, Math.min(20, data.cols || 14)); ROWS = Math.max(1, Math.min(15, data.rows || 10)); }
       } catch { /* use defaults 14×10 */ }
       updateHint();
     }
@@ -1767,7 +1793,7 @@
 
     async function saveSettings() {
       const newCols = Math.min(20, Math.max(3, +document.getElementById('cfg-cols').value || COLS));
-      const newRows = Math.min(15, Math.max(3, +document.getElementById('cfg-rows').value || ROWS));
+      const newRows = Math.min(15, Math.max(1, +document.getElementById('cfg-rows').value || ROWS));
       const warn = document.getElementById('cfg-warn');
 
       // Check hives that would fall outside new bounds
@@ -1939,6 +1965,31 @@
     function openM(n) { document.getElementById('mod-' + n).style.display = 'flex'; }
     function closeM(n) { document.getElementById('mod-' + n).style.display = 'none'; }
 
+    // ── Kokapena hautatzeko (position selects) ────────────────────────────────────
+    function fillPosSelects(rowSelId, colSelId, selX, selY) {
+      let rh = '<option value="">— (kokatu gabe)</option>';
+      for (let r = 0; r < ROWS; r++) rh += `<option value="${r}">${RLBLS[r]}</option>`;
+      let ch = '<option value="">—</option>';
+      for (let c = 0; c < COLS; c++) ch += `<option value="${c}">${c + 1}</option>`;
+      const rs = document.getElementById(rowSelId), cs = document.getElementById(colSelId);
+      rs.innerHTML = rh; cs.innerHTML = ch;
+      rs.value = selY != null ? String(selY) : '';
+      cs.value = selX != null ? String(selX) : '';
+    }
+
+    // Hautatutako posizioa irakurri. Itzultzen du {x, y} edo null baliogarria ez bada.
+    // Itzultzen du {ok:false} posizioa beste erlauntz batek hartuta badago.
+    function readPosSelects(rowSelId, colSelId, ignoreId) {
+      const rv = document.getElementById(rowSelId).value;
+      const cv = document.getElementById(colSelId).value;
+      // Biak hutsik edo bietako bat hutsik → kokatu gabe
+      if (rv === '' || cv === '') return { ok: true, x: null, y: null };
+      const x = +cv, y = +rv;
+      const occ = hives.find(h => h.grid_x === x && h.grid_y === y && h.id !== ignoreId);
+      if (occ) { toast(`${occ.name}ek hartuta dago posizio hori`, 'warn'); return { ok: false }; }
+      return { ok: true, x, y };
+    }
+
     function openAddModal(x, y) {
       pendX = x; pendY = y;
       ['ahn', 'ahno'].forEach(i => document.getElementById(i).value = '');
@@ -1948,6 +1999,7 @@
       const pi = document.getElementById('ahpos');
       if (x != null) { pi.textContent = `📍 ${RLBLS[y]}${x + 1} posizioan kokatuko da`; pi.style.display = ''; }
       else pi.style.display = 'none';
+      fillPosSelects('ahpy', 'ahpx', x, y);
       openM('ah');
     }
 
@@ -1956,12 +2008,14 @@
       if (!name) { toast('Idatzi izen bat', 'warn'); return; }
       const rawF = document.getElementById('ahf').value;
       const frames = rawF === '' ? null : Math.min(10, Math.max(5, +rawF));
+      const pos = readPosSelects('ahpy', 'ahpx', null);
+      if (!pos.ok) return;
       const { data, error } = await sb.from('hives').insert({
         name, type: document.getElementById('aht').value, race: document.getElementById('ahr').value,
         status: document.getElementById('ahs').value, color: document.getElementById('ahc').value,
         install_date: document.getElementById('ahd').value || null,
         notes: document.getElementById('ahno').value,
-        frames, grid_x: pendX, grid_y: pendY, created_by: userId
+        frames, grid_x: pos.x, grid_y: pos.y, created_by: userId
       }).select().single();
       if (error) { toast(error.message, 'bad'); return; }
       hives.push(data); hives.sort((a, b) => a.name.localeCompare(b.name));
@@ -1976,6 +2030,7 @@
       document.getElementById('ehs').value = h.status;
       document.getElementById('ehf').value = h.frames ?? '';
       document.getElementById('ehno').value = h.notes || '';
+      fillPosSelects('ehpy', 'ehpx', h.grid_x, h.grid_y);
       resetDelBtn();
       openM('eh');
     }
@@ -1984,13 +2039,16 @@
       const h = hives.find(x => x.id === editId); if (!h) return;
       const rawF = document.getElementById('ehf').value;
       const frames = rawF === '' ? null : Math.min(10, Math.max(5, +rawF));
+      const pos = readPosSelects('ehpy', 'ehpx', editId);
+      if (!pos.ok) return;
       const upd = {
         name: document.getElementById('ehn').value.trim() || h.name,
         type: document.getElementById('eht').value,
         race: document.getElementById('ehr').value,
         status: document.getElementById('ehs').value,
         notes: document.getElementById('ehno').value,
-        frames
+        frames,
+        grid_x: pos.x, grid_y: pos.y
       };
       const { error } = await sb.from('hives').update(upd).eq('id', editId);
       if (error) { toast(error.message, 'bad'); return; }
