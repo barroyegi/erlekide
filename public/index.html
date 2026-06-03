@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="eu">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -9,671 +10,1818 @@
     @import url('https://fonts.googleapis.com/css2?family=ADLaM+Display&display=swap');
 
     :root {
-      --honey: #C8780A; --honey-d: #7A4806; --honey-l: #F9EAC4;
-      --cream: #FBF6EA; --bark: #2E1F0F; --bark-m: #6B4C30; --bark-l: #9A7A5A;
-      --good: #1E6B40; --good-bg: #E4F5EC;
-      --warn: #B06008; --warn-bg: #FEF0D6;
-      --bad: #AE2B2B; --bad-bg: #FCEAEA;
-      --border: rgba(150,95,25,.2); --sh: 0 2px 14px rgba(40,20,0,.13);
+      --honey: #C8780A;
+      --honey-d: #7A4806;
+      --honey-l: #F9EAC4;
+      --cream: #FBF6EA;
+      --bark: #2E1F0F;
+      --bark-m: #6B4C30;
+      --bark-l: #9A7A5A;
+      --good: #1E6B40;
+      --good-bg: #E4F5EC;
+      --warn: #B06008;
+      --warn-bg: #FEF0D6;
+      --bad: #AE2B2B;
+      --bad-bg: #FCEAEA;
+      --border: rgba(150, 95, 25, .2);
+      --sh: 0 2px 14px rgba(40, 20, 0, .13);
       --cell: 68px;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0 }
-    html, body { height: 100%; font-family: 'Segoe UI', system-ui, sans-serif; background: var(--cream); color: var(--bark) }
-    body { display: flex; flex-direction: column; overflow: hidden }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html,
+    body {
+      height: 100%;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--cream);
+      color: var(--bark)
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden
+    }
 
     /* ── PANTAILAK ── */
-    .scr { position: fixed; inset: 0; display: flex; flex-direction: column }
-    #scr-login { align-items: center; justify-content: center; background: linear-gradient(150deg,#FBF3D8 0%,#EDD8A0 100%); z-index: 50 }
-    #scr-app { display: none }
+    .scr {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column
+    }
+
+    #scr-login {
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(150deg, #FBF3D8 0%, #EDD8A0 100%);
+      z-index: 50
+    }
+
+    #scr-app {
+      display: none
+    }
 
     /* ── ATZEKO PLANOA ── */
     #scr-app::before {
-      content: ''; position: fixed; inset: 0;
+      content: '';
+      position: fixed;
+      inset: 0;
       background-image: url('/images/erlekide_bg.png');
-      background-size: cover; background-repeat: no-repeat; background-position: center;
-      pointer-events: none; z-index: 0;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      pointer-events: none;
+      z-index: 0;
     }
 
     /* ── LOGIN ── */
-    .lcard { background: #fff; border: 1px solid var(--border); border-radius: 18px; padding: 1.75rem; width: min(320px,92vw); box-shadow: var(--sh) }
-    .llogo { text-align: center; font-size: 26px; font-weight: 700; color: var(--honey-d); letter-spacing: -.5px; margin-bottom: .2rem }
-    .lsub  { text-align: center; font-size: 12px; color: var(--bark-l); margin-bottom: 1.3rem }
-    .atabs { display: flex; border: 1px solid var(--border); border-radius: 9px; overflow: hidden; margin-bottom: 1.1rem }
-    .atab  { flex: 1; padding: 8px; border: none; background: transparent; font-size: 13px; font-weight: 600; cursor: pointer; color: var(--bark-m); transition: .15s }
-    .atab.on { background: var(--honey); color: #fff }
-    .lnote { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); font-size: 10px; color: var(--bark-l); text-align: center; line-height: 1.6 }
-    .lerr  { font-size: 11px; color: var(--bad); margin-top: 6px; min-height: 14px }
+    .lcard {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 1.75rem;
+      width: min(320px, 92vw);
+      box-shadow: var(--sh)
+    }
+
+    .llogo {
+      text-align: center;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--honey-d);
+      letter-spacing: -.5px;
+      margin-bottom: .2rem
+    }
+
+    .lsub {
+      text-align: center;
+      font-size: 12px;
+      color: var(--bark-l);
+      margin-bottom: 1.3rem
+    }
+
+    .atabs {
+      display: flex;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      overflow: hidden;
+      margin-bottom: 1.1rem
+    }
+
+    .atab {
+      flex: 1;
+      padding: 8px;
+      border: none;
+      background: transparent;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--bark-m);
+      transition: .15s
+    }
+
+    .atab.on {
+      background: var(--honey);
+      color: #fff
+    }
+
+    .lnote {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      font-size: 10px;
+      color: var(--bark-l);
+      text-align: center;
+      line-height: 1.6
+    }
+
+    .lerr {
+      font-size: 11px;
+      color: var(--bad);
+      margin-top: 6px;
+      min-height: 14px
+    }
 
     /* ── FORMULARIOAK ── */
-    .ff { margin-bottom: 9px }
-    .ff label { display: block; font-size: 11px; font-weight: 600; color: var(--bark-l); margin-bottom: 3px; letter-spacing: .3px; text-transform: uppercase }
-    input, select, textarea { width: 100%; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; font-size: 13px; background: var(--cream); color: var(--bark); outline: none; transition: border .15s }
-    input:focus, select:focus, textarea:focus { border-color: var(--honey); background: #fff }
-    textarea { resize: vertical; min-height: 58px; line-height: 1.55 }
-    .fg2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px }
-    .fg1 { grid-column: span 2 }
+    .ff {
+      margin-bottom: 9px
+    }
+
+    .ff label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--bark-l);
+      margin-bottom: 3px;
+      letter-spacing: .3px;
+      text-transform: uppercase
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 13px;
+      background: var(--cream);
+      color: var(--bark);
+      outline: none;
+      transition: border .15s
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--honey);
+      background: #fff
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 58px;
+      line-height: 1.55
+    }
+
+    .fg2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px
+    }
+
+    .fg1 {
+      grid-column: span 2
+    }
 
     /* ── BOTOIAK ── */
-    .btn { display: inline-flex; align-items: center; gap: 5px; padding: 7px 14px; border-radius: 8px; border: 1px solid var(--border); font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer; background: #fff; color: var(--bark); transition: .15s; white-space: nowrap }
-    .btn:hover { background: var(--cream) } .btn:active { opacity: .8 }
-    .btn.primary { background: var(--honey); border-color: var(--honey); color: #fff } .btn.primary:hover { background: var(--honey-d) }
-    .btn.danger  { color: var(--bad); border-color: rgba(174,43,43,.3) } .btn.danger:hover { background: var(--bad-bg) }
-    .btn.full    { width: 100%; justify-content: center; margin-top: 4px }
-    .btn.sm      { padding: 4px 10px; font-size: 11px }
-    .brow        { display: flex; gap: 7px; justify-content: flex-end; margin-top: 1rem }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 7px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #fff;
+      color: var(--bark);
+      transition: .15s;
+      white-space: nowrap
+    }
+
+    .btn:hover {
+      background: var(--cream)
+    }
+
+    .btn:active {
+      opacity: .8
+    }
+
+    .btn.primary {
+      background: var(--honey);
+      border-color: var(--honey);
+      color: #fff
+    }
+
+    .btn.primary:hover {
+      background: var(--honey-d)
+    }
+
+    .btn.danger {
+      color: var(--bad);
+      border-color: rgba(174, 43, 43, .3)
+    }
+
+    .btn.danger:hover {
+      background: var(--bad-bg)
+    }
+
+    .btn.full {
+      width: 100%;
+      justify-content: center;
+      margin-top: 4px
+    }
+
+    .btn.sm {
+      padding: 4px 10px;
+      font-size: 11px
+    }
+
+    .brow {
+      display: flex;
+      gap: 7px;
+      justify-content: flex-end;
+      margin-top: 1rem
+    }
 
     /* ── APP ── */
-    #hdr { height: 50px; flex-shrink: 0; background: var(--bark); color: #fff; display: flex; align-items: center; gap: 10px; padding: 0 14px; z-index: 10 }
-    .hlogo { font-family: "ADLaM Display", system-ui; font-size: 30px; font-weight: 700; letter-spacing: 1px; flex: 1 }
-    .ubadge { font-size: 11px; padding: 3px 10px; background: rgba(255,255,255,.12); border-radius: 20px; color: rgba(255,255,255,.85); max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
-    #bdy { flex: 1; display: flex; overflow: hidden; position: relative; z-index: 1 }
+    #hdr {
+      height: 50px;
+      flex-shrink: 0;
+      background: var(--bark);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 14px;
+      z-index: 10
+    }
+
+    .hlogo {
+      font-family: "ADLaM Display", system-ui;
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      flex: 1
+    }
+
+    .ubadge {
+      font-size: 11px;
+      padding: 3px 10px;
+      background: rgba(255, 255, 255, .12);
+      border-radius: 20px;
+      color: rgba(255, 255, 255, .85);
+      max-width: 140px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap
+    }
+
+    #bdy {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+      position: relative;
+      z-index: 1
+    }
 
     /* ── SIDEBAR ── */
-    #sb { width: 200px; flex-shrink: 0; background: #ffed90; border-right: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; z-index: 2 }
-    .sb-hdr { padding: 9px 11px 8px; border-bottom: 1px solid var(--border); font-size: 10px; font-weight: 700; color: var(--bark-l); text-transform: uppercase; letter-spacing: .7px; display: flex; justify-content: space-between; align-items: center }
-    #hl { flex: 1; overflow-y: auto; padding: 5px }
-    .hli { display: flex; align-items: center; gap: 7px; padding: 7px 8px; border-radius: 7px; cursor: pointer; font-size: 12px; transition: .1s }
-    .hli:hover { background: rgba(255,255,255,.5) } .hli.on { background: rgba(255,255,255,.7); font-weight: 600 }
-    .sdot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0 }
-    .sdot.g { background: var(--good) } .sdot.w { background: var(--warn) } .sdot.b { background: var(--bad) }
-    .hln  { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
-    .hpos { font-size: 10px; color: var(--bark-l); flex-shrink: 0 }
-    .sb-foot { padding: 9px 11px; border-top: 1px solid var(--border); font-size: 11px; color: var(--bark-l) }
+    #sb {
+      width: 200px;
+      flex-shrink: 0;
+      background: #ffed90;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 2
+    }
+
+    .sb-hdr {
+      padding: 9px 11px 8px;
+      border-bottom: 1px solid var(--border);
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--bark-l);
+      text-transform: uppercase;
+      letter-spacing: .7px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center
+    }
+
+    #hl {
+      flex: 1;
+      overflow-y: auto;
+      padding: 5px
+    }
+
+    .hli {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 8px;
+      border-radius: 7px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: .1s
+    }
+
+    .hli:hover {
+      background: rgba(255, 255, 255, .5)
+    }
+
+    .hli.on {
+      background: rgba(255, 255, 255, .7);
+      font-weight: 600
+    }
+
+    .sdot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0
+    }
+
+    .sdot.g {
+      background: var(--good)
+    }
+
+    .sdot.w {
+      background: var(--warn)
+    }
+
+    .sdot.b {
+      background: var(--bad)
+    }
+
+    .hln {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap
+    }
+
+    .hpos {
+      font-size: 10px;
+      color: var(--bark-l);
+      flex-shrink: 0
+    }
+
+    .sb-foot {
+      padding: 9px 11px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--bark-l)
+    }
 
     /* ── MAPA ── */
-    #view-map { flex: 1; overflow: hidden; display: flex; flex-direction: column; min-width: 0 }
-    #cv-wrap  { flex: 1; overflow: auto; background: transparent; -webkit-overflow-scrolling: touch; display: flex; align-items: flex-start; justify-content: center }
-    .mhint    { background: rgba(0,0,0,.3); color: rgba(255,255,255,.65); font-size: 11px; text-align: center; padding: 4px 10px; flex-shrink: 0 }
-    .gcont    { display: inline-block; padding: 4px 4px 10px 4px; min-width: max-content }
-    .ghrow, .gbrow { display: flex }
-    .gcorner { width: 22px; height: 22px; flex-shrink: 0 }
-    .clbl, .rlbl { display: flex; align-items: center; justify-content: center; font-size: 10px; color: rgba(255,255,255,.5); font-weight: 700; flex-shrink: 0 }
-    .clbl { width: var(--cell); height: 22px } .rlbl { width: 22px; height: var(--cell) }
-    .cell { width: var(--cell); height: var(--cell); flex-shrink: 0; border: .5px solid rgba(0,0,0,.35); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .12s }
-    .cell:hover { background: rgba(255,255,255,.1) }
-    .cell.dov   { background: rgba(255,210,50,.25); border-color: rgba(255,210,50,.7) }
-    .cempty { width: 24px; height: 24px; border-radius: 50%; border: 1.5px dashed rgba(255,255,255,.25); display: flex; align-items: center; justify-content: center; font-size: 14px; color: rgba(255,255,255,.3); opacity: 0; transition: .15s }
-    .cell:hover .cempty { opacity: 1 }
+    #view-map {
+      flex: 1;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-width: 0
+    }
+
+    #cv-wrap {
+      flex: 1;
+      overflow: auto;
+      background: transparent;
+      -webkit-overflow-scrolling: touch;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center
+    }
+
+    .mhint {
+      background: rgba(0, 0, 0, .3);
+      color: rgba(255, 255, 255, .65);
+      font-size: 11px;
+      text-align: center;
+      padding: 4px 10px;
+      flex-shrink: 0
+    }
+
+    .gcont {
+      display: inline-block;
+      padding: 4px 4px 10px 4px;
+      min-width: max-content
+    }
+
+    .ghrow,
+    .gbrow {
+      display: flex
+    }
+
+    .gcorner {
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0
+    }
+
+    .clbl,
+    .rlbl {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: rgba(255, 255, 255, .5);
+      font-weight: 700;
+      flex-shrink: 0
+    }
+
+    .clbl {
+      width: var(--cell);
+      height: 22px
+    }
+
+    .rlbl {
+      width: 22px;
+      height: var(--cell)
+    }
+
+    .cell {
+      width: var(--cell);
+      height: var(--cell);
+      flex-shrink: 0;
+      border: .5px solid rgba(0, 0, 0, .35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background .12s
+    }
+
+    .cell:hover {
+      background: rgba(255, 255, 255, .1)
+    }
+
+    .cell.dov {
+      background: rgba(255, 210, 50, .25);
+      border-color: rgba(255, 210, 50, .7)
+    }
+
+    .cempty {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 1.5px dashed rgba(255, 255, 255, .25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: rgba(255, 255, 255, .3);
+      opacity: 0;
+      transition: .15s
+    }
+
+    .cell:hover .cempty {
+      opacity: 1
+    }
 
     /* ── TOKENS ── */
-    .tok { display: flex; flex-direction: column; align-items: center; width: calc(var(--cell) * var(--tok-w, 0.85)); cursor: grab; user-select: none; transition: width .15s }
-    .tok:active { cursor: grabbing } .tok.drag { opacity: .3 }
-    .troof { width: 100%; height: 10px; border-radius: 4px 4px 0 0 }
-    .tbody { width: 100%; height: 34px; border-radius: 0 0 6px 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; border: 2px solid transparent }
-    .tbody-bee { font-size: 17px; line-height: 1 }
-    .tframes { font-size: 7px; font-weight: 800; opacity: .7; line-height: 1; letter-spacing: .3px }
-    .tname { font-size: 9px; font-weight: 700; color: rgba(255,255,255,.95); width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: center; margin-top: 2px; text-shadow: 0 1px 4px rgba(0,0,0,.6) }
-    .st-good .troof { background: #1E6B40 } .st-good .tbody { background: var(--good-bg); border-color: #1E6B40 }
-    .st-warn .troof { background: #B06008 } .st-warn .tbody { background: var(--warn-bg); border-color: #B06008 }
-    .st-bad  .troof { background: #AE2B2B } .st-bad  .tbody { background: var(--bad-bg); border-color: #AE2B2B }
+    .tok {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: calc(var(--cell) * var(--tok-w, 0.85));
+      cursor: grab;
+      user-select: none;
+      transition: width .15s
+    }
+
+    .tok:active {
+      cursor: grabbing
+    }
+
+    .tok.drag {
+      opacity: .3
+    }
+
+    .troof {
+      width: 100%;
+      height: 10px;
+      border-radius: 4px 4px 0 0
+    }
+
+    .tbody {
+      width: 100%;
+      height: 34px;
+      border-radius: 0 0 6px 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1px;
+      border: 2px solid transparent
+    }
+
+    .tbody-bee {
+      font-size: 17px;
+      line-height: 1
+    }
+
+    .tframes {
+      font-size: 7px;
+      font-weight: 800;
+      opacity: .7;
+      line-height: 1;
+      letter-spacing: .3px
+    }
+
+    .tname {
+      font-size: 9px;
+      font-weight: 700;
+      color: rgba(255, 255, 255, .95);
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      text-align: center;
+      margin-top: 2px;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, .6)
+    }
+
+    .st-good .troof {
+      background: #1E6B40
+    }
+
+    .st-good .tbody {
+      background: var(--good-bg);
+      border-color: #1E6B40
+    }
+
+    .st-warn .troof {
+      background: #B06008
+    }
+
+    .st-warn .tbody {
+      background: var(--warn-bg);
+      border-color: #B06008
+    }
+
+    .st-bad .troof {
+      background: #AE2B2B
+    }
+
+    .st-bad .tbody {
+      background: var(--bad-bg);
+      border-color: #AE2B2B
+    }
 
     /* ── MODALAK ── */
-    .movl { position: fixed; inset: 0; background: rgba(46,31,15,.52); display: flex; align-items: flex-end; justify-content: center; z-index: 100; padding: 0 }
-    .mbox { background: #fff; border-radius: 20px 20px 0 0; padding: 1.25rem; width: 100%; max-width: 520px; max-height: 92vh; overflow-y: auto; box-shadow: 0 -4px 32px rgba(40,20,0,.22) }
-    .mtitle { font-size: 16px; font-weight: 700; margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between }
-    .mclose { background: none; border: none; font-size: 22px; cursor: pointer; color: var(--bark-l); line-height: 1; padding: 2px 4px }
-    .mhandle { width: 40px; height: 4px; background: var(--border); border-radius: 2px; margin: 0 auto 1rem; flex-shrink: 0 }
-    .posinfo { font-size: 11px; color: var(--honey-d); background: var(--honey-l); padding: 5px 9px; border-radius: 6px; margin-bottom: 9px; display: none }
-    .aibox { margin-top: 9px; padding: 9px 10px; background: #FEFAF2; border: 1px solid rgba(200,120,10,.22); border-left: 3px solid var(--honey); border-radius: 0 8px 8px 0; font-size: 11px; line-height: 1.75; color: var(--bark-m) }
-    .aibox-lbl { font-size: 9px; font-weight: 700; color: var(--honey-d); margin-bottom: 3px; letter-spacing: .3px }
+    .movl {
+      position: fixed;
+      inset: 0;
+      background: rgba(46, 31, 15, .52);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: 100;
+      padding: 0
+    }
+
+    .mbox {
+      background: #fff;
+      border-radius: 20px 20px 0 0;
+      padding: 1.25rem;
+      width: 100%;
+      max-width: 520px;
+      max-height: 92vh;
+      overflow-y: auto;
+      box-shadow: 0 -4px 32px rgba(40, 20, 0, .22)
+    }
+
+    .mtitle {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between
+    }
+
+    .mclose {
+      background: none;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      color: var(--bark-l);
+      line-height: 1;
+      padding: 2px 4px
+    }
+
+    .mhandle {
+      width: 40px;
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      margin: 0 auto 1rem;
+      flex-shrink: 0
+    }
+
+    .posinfo {
+      font-size: 11px;
+      color: var(--honey-d);
+      background: var(--honey-l);
+      padding: 5px 9px;
+      border-radius: 6px;
+      margin-bottom: 9px;
+      display: none
+    }
+
+    .aibox {
+      margin-top: 9px;
+      padding: 9px 10px;
+      background: #FEFAF2;
+      border: 1px solid rgba(200, 120, 10, .22);
+      border-left: 3px solid var(--honey);
+      border-radius: 0 8px 8px 0;
+      font-size: 11px;
+      line-height: 1.75;
+      color: var(--bark-m)
+    }
+
+    .aibox-lbl {
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--honey-d);
+      margin-bottom: 3px;
+      letter-spacing: .3px
+    }
 
     /* ── DETAIL MODAL ── */
-    .strow { display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; margin-bottom: 12px }
-    .mstat { background: var(--cream); border-radius: 8px; padding: 8px 4px; text-align: center }
-    .mstat .n { font-size: 20px; font-weight: 700 } .mstat .l { font-size: 9px; color: var(--bark-l); margin-top: 1px }
-    .sec-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .7px; color: var(--bark-l); margin: 14px 0 8px }
-    .icard { background: var(--cream); border-radius: 8px; padding: 10px; margin-bottom: 8px; font-size: 12px }
-    .ichdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px }
-    .idate { font-size: 10px; color: var(--bark-l) } .iusr { font-size: 10px; color: var(--honey-d); font-weight: 700 }
-    .ichips { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 5px }
-    .chip { font-size: 9px; padding: 2px 6px; border-radius: 12px; background: #fff; border: 1px solid var(--border); color: var(--bark-m) }
-    .chip.bad { background: var(--bad-bg); border-color: rgba(174,43,43,.25); color: var(--bad) }
-    .ainote { background: #fff; border: 1px solid var(--border); border-left: 3px solid var(--honey); border-radius: 0 7px 7px 0; padding: 7px 9px; font-size: 10px; line-height: 1.7; color: var(--bark-m); margin-top: 7px }
-    .ainote-lbl { font-size: 9px; font-weight: 700; color: var(--honey-d); margin-bottom: 3px; letter-spacing: .3px }
+    .strow {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-bottom: 12px
+    }
+
+    .mstat {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 8px 4px;
+      text-align: center
+    }
+
+    .mstat .n {
+      font-size: 20px;
+      font-weight: 700
+    }
+
+    .mstat .l {
+      font-size: 9px;
+      color: var(--bark-l);
+      margin-top: 1px
+    }
+
+    .sec-title {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .7px;
+      color: var(--bark-l);
+      margin: 14px 0 8px
+    }
+
+    .icard {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 8px;
+      font-size: 12px
+    }
+
+    .ichdr {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px
+    }
+
+    .idate {
+      font-size: 10px;
+      color: var(--bark-l)
+    }
+
+    .iusr {
+      font-size: 10px;
+      color: var(--honey-d);
+      font-weight: 700
+    }
+
+    .ichips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+      margin-top: 5px
+    }
+
+    .chip {
+      font-size: 9px;
+      padding: 2px 6px;
+      border-radius: 12px;
+      background: #fff;
+      border: 1px solid var(--border);
+      color: var(--bark-m)
+    }
+
+    .chip.bad {
+      background: var(--bad-bg);
+      border-color: rgba(174, 43, 43, .25);
+      color: var(--bad)
+    }
+
+    .ainote {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--honey);
+      border-radius: 0 7px 7px 0;
+      padding: 7px 9px;
+      font-size: 10px;
+      line-height: 1.7;
+      color: var(--bark-m);
+      margin-top: 7px
+    }
+
+    .ainote-lbl {
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--honey-d);
+      margin-bottom: 3px;
+      letter-spacing: .3px
+    }
 
     /* ── FAB (mobile) ── */
-    .fab { position: fixed; bottom: 22px; right: 22px; width: 56px; height: 56px; border-radius: 50%; background: var(--honey); color: #fff; font-size: 30px; border: none; cursor: pointer; z-index: 30; box-shadow: 0 4px 18px rgba(200,120,10,.45); display: none; align-items: center; justify-content: center; line-height: 1 }
+    .fab {
+      position: fixed;
+      bottom: 22px;
+      right: 22px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--honey);
+      color: #fff;
+      font-size: 30px;
+      border: none;
+      cursor: pointer;
+      z-index: 30;
+      box-shadow: 0 4px 18px rgba(200, 120, 10, .45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      line-height: 1
+    }
 
     /* ── NABIGAZIO NAGUSIA / Main nav tabs ── */
-    #main-nav { display: flex; background: #241508; flex-shrink: 0; z-index: 9; overflow-x: auto; scrollbar-width: none }
-    #main-nav::-webkit-scrollbar { display: none }
-    .mnav { flex: 1; min-width: 84px; padding: 9px 10px; border: none; background: transparent; color: rgba(255,255,255,.45); font-family: inherit; font-size: 12px; font-weight: 600; cursor: pointer; border-bottom: 2px solid transparent; transition: .15s; white-space: nowrap }
-    .mnav.on { color: #fff; border-bottom-color: var(--honey) }
-    .mnav:hover:not(.on) { color: rgba(255,255,255,.7) }
-    #view-gastuak, #view-materialak { flex: 1; overflow-y: auto; background: var(--cream); padding: 14px 16px; display: none; flex-direction: column }
-    .view-hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px }
-    .view-hdr h3 { font-size: 15px; font-weight: 700 }
-    .balance-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px,1fr)); gap: 8px; margin-bottom: 4px }
-    .bal-card { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 10px; text-align: center }
-    .bal-name { font-size: 12px; font-weight: 600; margin-bottom: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
-    .bal-amt { font-size: 20px; font-weight: 700 }
-    .bal-lbl { font-size: 10px; color: var(--bark-l); margin-top: 1px }
-    .txn-box { background: #fff; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 4px }
-    .txn-item { display: flex; align-items: center; gap: 8px; padding: 9px 13px; font-size: 12px; border-bottom: .5px solid var(--border) }
-    .txn-item:last-child { border-bottom: none }
-    .txn-from { font-weight: 600 } .txn-to { font-weight: 600; color: var(--good) } .txn-arr { color: var(--bark-l) }
-    .txn-amt { margin-left: auto; font-weight: 700; color: var(--warn); white-space: nowrap }
-    .exp-item { background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 10px 13px; margin-bottom: 7px; display: flex; align-items: center; gap: 10px }
-    .exp-body { flex: 1; min-width: 0 } .exp-desc { font-size: 13px; font-weight: 600 }
-    .exp-meta { font-size: 11px; color: var(--bark-l); margin-top: 2px }
-    .exp-amt { font-size: 16px; font-weight: 700; color: var(--honey-d); flex-shrink: 0 }
-    .exp-del { background: none; border: none; color: var(--bark-l); font-size: 15px; cursor: pointer; padding: 2px 5px; border-radius: 5px }
-    .exp-del:hover { color: var(--bad); background: var(--bad-bg) }
-    .paid-chip { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 12px; background: var(--honey-l); color: var(--honey-d); margin-top: 3px }
-    .member-row { display: flex; align-items: center; gap: 8px; padding: 7px 0; border-bottom: .5px solid var(--border); font-size: 13px; font-weight: 500 }
-    .member-row:last-child { border-bottom: none }
-    .member-del { background: none; border: none; color: var(--bark-l); font-size: 16px; cursor: pointer; margin-left: auto; padding: 0 4px }
-    .member-del:hover { color: var(--bad) }
-    .mat-cat { margin-bottom: 18px } .mat-cat-hdr { font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 7px; padding: 7px 0; border-bottom: 1px solid var(--border); margin-bottom: 8px }
-    .mat-cat-count { font-size: 10px; font-weight: 600; background: var(--cream); border: 1px solid var(--border); border-radius: 12px; padding: 1px 7px; color: var(--bark-l) }
-    .mat-item { background: #fff; border: 1px solid var(--border); border-radius: 9px; padding: 9px 12px; margin-bottom: 6px; display: flex; align-items: center; gap: 10px }
-    .mat-icon { font-size: 20px; flex-shrink: 0 } .mat-body { flex: 1; min-width: 0 }
-    .mat-name { font-size: 13px; font-weight: 600 } .mat-notes { font-size: 11px; color: var(--bark-l); margin-top: 1px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
-    .mat-qty { font-size: 15px; font-weight: 700; color: var(--honey-d); flex-shrink: 0; margin-right: 4px }
-    .icon-btn { background: none; border: 1px solid var(--border); border-radius: 6px; padding: 3px 8px; font-size: 11px; cursor: pointer; color: var(--bark-l); transition: .15s }
-    .icon-btn:hover { background: var(--cream) } .icon-btn.del:hover { color: var(--bad); border-color: rgba(174,43,43,.3) }
+    #main-nav {
+      display: flex;
+      background: #241508;
+      flex-shrink: 0;
+      z-index: 9;
+      overflow-x: auto;
+      scrollbar-width: none
+    }
+
+    #main-nav::-webkit-scrollbar {
+      display: none
+    }
+
+    .mnav {
+      flex: 1;
+      min-width: 84px;
+      padding: 9px 10px;
+      border: none;
+      background: transparent;
+      color: rgba(255, 255, 255, .45);
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: .15s;
+      white-space: nowrap
+    }
+
+    .mnav.on {
+      color: #fff;
+      border-bottom-color: var(--honey)
+    }
+
+    .mnav:hover:not(.on) {
+      color: rgba(255, 255, 255, .7)
+    }
+
+    #view-gastuak,
+    #view-materialak {
+      flex: 1;
+      overflow-y: auto;
+      background: var(--cream);
+      padding: 14px 16px;
+      display: none;
+      flex-direction: column
+    }
+
+    .view-hdr {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px
+    }
+
+    .view-hdr h3 {
+      font-size: 15px;
+      font-weight: 700
+    }
+
+    .balance-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 8px;
+      margin-bottom: 4px
+    }
+
+    .bal-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center
+    }
+
+    .bal-name {
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap
+    }
+
+    .bal-amt {
+      font-size: 20px;
+      font-weight: 700
+    }
+
+    .bal-lbl {
+      font-size: 10px;
+      color: var(--bark-l);
+      margin-top: 1px
+    }
+
+    .txn-box {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 4px
+    }
+
+    .txn-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 13px;
+      font-size: 12px;
+      border-bottom: .5px solid var(--border)
+    }
+
+    .txn-item:last-child {
+      border-bottom: none
+    }
+
+    .txn-from {
+      font-weight: 600
+    }
+
+    .txn-to {
+      font-weight: 600;
+      color: var(--good)
+    }
+
+    .txn-arr {
+      color: var(--bark-l)
+    }
+
+    .txn-amt {
+      margin-left: auto;
+      font-weight: 700;
+      color: var(--warn);
+      white-space: nowrap
+    }
+
+    .exp-item {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 13px;
+      margin-bottom: 7px;
+      display: flex;
+      align-items: center;
+      gap: 10px
+    }
+
+    .exp-body {
+      flex: 1;
+      min-width: 0
+    }
+
+    .exp-desc {
+      font-size: 13px;
+      font-weight: 600
+    }
+
+    .exp-meta {
+      font-size: 11px;
+      color: var(--bark-l);
+      margin-top: 2px
+    }
+
+    .exp-amt {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--honey-d);
+      flex-shrink: 0
+    }
+
+    .exp-del {
+      background: none;
+      border: none;
+      color: var(--bark-l);
+      font-size: 15px;
+      cursor: pointer;
+      padding: 2px 5px;
+      border-radius: 5px
+    }
+
+    .exp-del:hover {
+      color: var(--bad);
+      background: var(--bad-bg)
+    }
+
+    .paid-chip {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 12px;
+      background: var(--honey-l);
+      color: var(--honey-d);
+      margin-top: 3px
+    }
+
+    .member-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 0;
+      border-bottom: .5px solid var(--border);
+      font-size: 13px;
+      font-weight: 500
+    }
+
+    .member-row:last-child {
+      border-bottom: none
+    }
+
+    .member-del {
+      background: none;
+      border: none;
+      color: var(--bark-l);
+      font-size: 16px;
+      cursor: pointer;
+      margin-left: auto;
+      padding: 0 4px
+    }
+
+    .member-del:hover {
+      color: var(--bad)
+    }
+
+    .mat-cat {
+      margin-bottom: 18px
+    }
+
+    .mat-cat-hdr {
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 8px
+    }
+
+    .mat-cat-count {
+      font-size: 10px;
+      font-weight: 600;
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1px 7px;
+      color: var(--bark-l)
+    }
+
+    .mat-item {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      padding: 9px 12px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px
+    }
+
+    .mat-icon {
+      font-size: 20px;
+      flex-shrink: 0
+    }
+
+    .mat-body {
+      flex: 1;
+      min-width: 0
+    }
+
+    .mat-name {
+      font-size: 13px;
+      font-weight: 600
+    }
+
+    .mat-notes {
+      font-size: 11px;
+      color: var(--bark-l);
+      margin-top: 1px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap
+    }
+
+    .mat-qty {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--honey-d);
+      flex-shrink: 0;
+      margin-right: 4px
+    }
+
+    .icon-btn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 3px 8px;
+      font-size: 11px;
+      cursor: pointer;
+      color: var(--bark-l);
+      transition: .15s
+    }
+
+    .icon-btn:hover {
+      background: var(--cream)
+    }
+
+    .icon-btn.del:hover {
+      color: var(--bad);
+      border-color: rgba(174, 43, 43, .3)
+    }
+
     /* ── TOAST ── */
-    .toast { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%); background: var(--bark); color: #fff; padding: 8px 20px; border-radius: 20px; font-size: 12px; font-weight: 500; z-index: 200; opacity: 0; transition: opacity .3s; pointer-events: none; white-space: nowrap; max-width: 90vw; text-align: center }
-    .toast.show { opacity: 1 }
-    .spin { display: inline-block; width: 11px; height: 11px; border: 2px solid rgba(255,255,255,.35); border-top-color: #fff; border-radius: 50%; animation: rot .7s linear infinite }
-    @keyframes rot { to { transform: rotate(360deg) } }
-    .empty-st { text-align: center; padding: 2rem 1rem; color: var(--bark-l); font-size: 13px; line-height: 1.8 }
-    .empty-st .ei { font-size: 36px; display: block; margin-bottom: .5rem }
+    .toast {
+      position: fixed;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bark);
+      color: #fff;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      z-index: 200;
+      opacity: 0;
+      transition: opacity .3s;
+      pointer-events: none;
+      white-space: nowrap;
+      max-width: 90vw;
+      text-align: center
+    }
+
+    .toast.show {
+      opacity: 1
+    }
+
+    .spin {
+      display: inline-block;
+      width: 11px;
+      height: 11px;
+      border: 2px solid rgba(255, 255, 255, .35);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: rot .7s linear infinite
+    }
+
+    @keyframes rot {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    .empty-st {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: var(--bark-l);
+      font-size: 13px;
+      line-height: 1.8
+    }
+
+    .empty-st .ei {
+      font-size: 36px;
+      display: block;
+      margin-bottom: .5rem
+    }
 
     /* ── KARGATZEA ── */
-    #loading { position: fixed; inset: 0; background: var(--cream); display: flex; align-items: center; justify-content: center; z-index: 300; flex-direction: column; gap: 12px }
-    #loading span { font-size: 36px } #loading p { font-size: 13px; color: var(--bark-l) }
+    #loading {
+      position: fixed;
+      inset: 0;
+      background: var(--cream);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 300;
+      flex-direction: column;
+      gap: 12px
+    }
+
+    #loading span {
+      font-size: 36px
+    }
+
+    #loading p {
+      font-size: 13px;
+      color: var(--bark-l)
+    }
 
     /* ── RESPONSIVE MUGIKORRA ── */
     @media (max-width: 700px) {
-      :root { --cell: 56px }
-      #sb       { display: none }
-      .mhint    { display: none }
-      .fab      { display: flex }
-      .toast    { bottom: 80px }
-      .fg2      { grid-template-columns: 1fr }
-      .fg1      { grid-column: span 1 }
+      :root {
+        --cell: 56px
+      }
+
+      #sb {
+        display: none
+      }
+
+      .mhint {
+        display: none
+      }
+
+      .fab {
+        display: flex
+      }
+
+      .toast {
+        bottom: 80px
+      }
+
+      .fg2 {
+        grid-template-columns: 1fr
+      }
+
+      .fg1 {
+        grid-column: span 1
+      }
+
       /* Sheet modal — takes bottom 85% on mobile */
-      .movl     { align-items: flex-end }
-      .mbox     { border-radius: 20px 20px 0 0; max-height: 85vh }
-      #cv-wrap  { align-items: flex-start; justify-content: flex-start }
+      .movl {
+        align-items: flex-end
+      }
+
+      .mbox {
+        border-radius: 20px 20px 0 0;
+        max-height: 85vh
+      }
+
+      #cv-wrap {
+        align-items: flex-start;
+        justify-content: flex-start
+      }
+
       /* Shrink hdr on mobile */
-      .hlogo    { font-size: 22px }
-    }
-    @media (min-width: 701px) {
-      /* On desktop: modal centered, not bottom sheet */
-      .movl { align-items: center; padding: 20px }
-      .mbox { border-radius: 16px; max-height: 88vh; max-width: 500px }
-      .mhandle { display: none }
-    }
-    @media (max-width: 400px) {
-      :root { --cell: 50px }
+      .hlogo {
+        font-size: 22px
+      }
     }
 
-    ::-webkit-scrollbar { width: 4px; height: 4px }
-    ::-webkit-scrollbar-thumb { background: rgba(150,95,25,.22); border-radius: 2px }
+    @media (min-width: 701px) {
+
+      /* On desktop: modal centered, not bottom sheet */
+      .movl {
+        align-items: center;
+        padding: 20px
+      }
+
+      .mbox {
+        border-radius: 16px;
+        max-height: 88vh;
+        max-width: 500px
+      }
+
+      .mhandle {
+        display: none
+      }
+    }
+
+    @media (max-width: 400px) {
+      :root {
+        --cell: 50px
+      }
+    }
+
+    ::-webkit-scrollbar {
+      width: 4px;
+      height: 4px
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(150, 95, 25, .22);
+      border-radius: 2px
+    }
   </style>
 </head>
+
 <body>
 
-<!-- KARGATZEA -->
-<div id="loading"><span>🐝</span><p>Kargatzen...</p></div>
-
-<!-- LOGIN -->
-<div id="scr-login" class="scr" style="display:none">
-  <div class="lcard">
-    <div class="llogo">🐝 Erlekide</div>
-    <div class="lsub">Erlategiaren kudeaketa sistema</div>
-    <div class="atabs">
-      <button class="atab on" id="tbin" onclick="showTab('in')">Sartu</button>
-      <button class="atab"    id="tbup" onclick="showTab('up')">Erregistratu</button>
-    </div>
-    <div id="tab-in">
-      <div class="ff"><label>Erabiltzaile izena</label><input id="liu" placeholder="Jon" autocomplete="username"></div>
-      <div class="ff"><label>Pasahitza</label><input id="lip" type="password" placeholder="••••••" autocomplete="current-password"></div>
-      <button class="btn primary full" onclick="doLogin()">Sartu →</button>
-      <div id="lie" class="lerr"></div>
-    </div>
-    <div id="tab-up" style="display:none">
-      <div class="ff"><label>Erabiltzaile izena</label><input id="ruu" placeholder="Jon" autocomplete="username"></div>
-      <div class="ff"><label>Pasahitza</label><input id="rup" type="password" placeholder="••••••" autocomplete="new-password"></div>
-      <div class="ff"><label>Pasahitza berretsi</label><input id="rup2" type="password" placeholder="••••••" autocomplete="new-password"></div>
-      <button class="btn primary full" onclick="doReg()">Kontua sortu →</button>
-      <div id="rue" class="lerr"></div>
-    </div>
-    <div class="lnote">Datuak erabiltzaile guztien artean partekatzen dira</div>
+  <!-- KARGATZEA -->
+  <div id="loading"><span>🐝</span>
+    <p>Kargatzen...</p>
   </div>
-</div>
 
-<!-- APP -->
-<div id="scr-app" class="scr" style="display:none">
-  <header id="hdr">
-    <span class="hlogo">Erlekide</span>
-    <span class="ubadge" id="ubadge">—</span>
-    <!-- Mobile: botoi berria goiburuan -->
-    <button class="btn sm" id="hdr-add-btn"
-      style="display:none;background:var(--honey);border-color:var(--honey);color:#fff;padding:5px 13px"
-      onclick="openAddModal(null,null)">＋ Berria</button>
-    <button class="btn sm" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);color:#fff;font-size:16px;padding:4px 9px" onclick="openCfg()" title="Sareta konfigurazioa">⚙</button>
-    <button class="btn sm" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);color:#fff" onclick="doLogout()">Irten</button>
-  </header>
-  <nav id="main-nav">
-    <button class="mnav on" onclick="setMainView('map')">🗺 Mapa</button>
-    <button class="mnav"    onclick="setMainView('gastuak')">💸 Gastuak</button>
-    <button class="mnav"    onclick="setMainView('materialak')">🔧 Materialak</button>
-  </nav>
-  <div id="bdy">
-    <aside id="sb">
-      <div class="sb-hdr">
-        <span>Erlauntzak</span>
-        <button class="btn sm" style="padding:2px 9px;font-size:15px;line-height:1.2" onclick="openAddModal(null,null)" title="Erlauntza berria">+</button>
+  <!-- LOGIN -->
+  <div id="scr-login" class="scr" style="display:none">
+    <div class="lcard">
+      <div class="llogo">🐝 Erlekide</div>
+      <div class="lsub">Erlategiaren kudeaketa sistema</div>
+      <div class="atabs">
+        <button class="atab on" id="tbin" onclick="showTab('in')">Sartu</button>
+        <button class="atab" id="tbup" onclick="showTab('up')">Erregistratu</button>
       </div>
-      <div id="hl"></div>
-      <div class="sb-foot" id="sbfoot"></div>
-    </aside>
-    <div id="view-map">
-      <div class="mhint" id="mhint">Arrastatu erlauntzak mugitzeko · Egin klik zelula huts batean gehitzeko</div>
-      <div id="cv-wrap"><div id="agrid"></div></div>
-    </div>
-  </div>
-  <!-- FAB: mugikorrean soilik -->
-  <button class="fab" onclick="openAddModal(null,null)" title="Erlauntza berria">＋</button>
-</div>
-
-<!-- ══════════ MODALAK ══════════ -->
-
-<!-- MODAL: ERLAUNTZA XEHETASUNAK (detail) -->
-<div id="mod-dp" class="movl" style="display:none" onclick="if(event.target===this)closeM('dp')">
-  <div class="mbox">
-    <div class="mhandle"></div>
-    <div id="mod-dp-content"></div>
-  </div>
-</div>
-
-<!-- MODAL: ERLAUNTZA BERRIA -->
-<div id="mod-ah" class="movl" style="display:none" onclick="if(event.target===this)closeM('ah')">
-  <div class="mbox">
-    <div class="mhandle"></div>
-    <div class="mtitle">Erlauntza berria <button class="mclose" onclick="closeM('ah')">✕</button></div>
-    <div id="ahpos" class="posinfo"></div>
-    <div class="fg2">
-      <div class="ff"><label>Izena / Kodea</label><input id="ahn" placeholder="Adib: A1"></div>
-      <div class="ff"><label>Mota</label>
-        <select id="aht"><option>Langstroth</option><option>Layens</option><option>Dadant</option><option>Errustikoa</option><option>Beste bat</option></select></div>
-      <div class="ff"><label>Arraza</label>
-        <select id="ahr"><option>Iberiensis</option><option>Buckfast</option><option>Italiar</option><option>Karniolarra</option><option>Ezezaguna</option></select></div>
-      <div class="ff"><label>Hasierako egoera</label>
-        <select id="ahs"><option value="good">Ona</option><option value="warn">Kontuz</option><option value="bad">Kritikoa</option></select></div>
-      <div class="ff"><label>Instalazio-data</label><input id="ahd" type="date"></div>
-      <div class="ff"><label>Markoak (5–10, aukerazkoa)</label><input id="ahf" type="number" min="5" max="10" placeholder="—"></div>
-      <div class="ff"><label>Kolore bereizia</label>
-        <select id="ahc"><option value="#C8780A">🟠 Anbrea</option><option value="#1E6B40">🟢 Berdea</option><option value="#1A5FA0">🔵 Urdina</option><option value="#7A3DAA">🟣 Morea</option><option value="#AE2B2B">🔴 Gorria</option></select></div>
-      <div class="ff fg1"><label>Oharrak / Jatorria</label><textarea id="ahno" placeholder="Kolonioaren jatorria, hasierako behaketak..."></textarea></div>
-    </div>
-    <div class="brow"><button class="btn" onclick="closeM('ah')">Utzi</button><button class="btn primary" onclick="saveHive()">✓ Gorde</button></div>
-  </div>
-</div>
-
-<!-- MODAL: EDITATU -->
-<div id="mod-eh" class="movl" style="display:none" onclick="if(event.target===this)closeM('eh')">
-  <div class="mbox">
-    <div class="mhandle"></div>
-    <div class="mtitle">Erlaunutza editatu <button class="mclose" onclick="closeM('eh')">✕</button></div>
-    <div class="fg2">
-      <div class="ff"><label>Izena</label><input id="ehn"></div>
-      <div class="ff"><label>Mota</label>
-        <select id="eht"><option>Langstroth</option><option>Layens</option><option>Dadant</option><option>Errustikoa</option><option>Beste bat</option></select></div>
-      <div class="ff"><label>Arraza</label>
-        <select id="ehr"><option>Iberiensis</option><option>Buckfast</option><option>Italiar</option><option>Karniolarra</option><option>Ezezaguna</option></select></div>
-      <div class="ff"><label>Egoera</label>
-        <select id="ehs"><option value="good">Ona</option><option value="warn">Kontuz</option><option value="bad">Kritikoa</option></select></div>
-      <div class="ff"><label>Markoak (5–10)</label><input id="ehf" type="number" min="5" max="10" placeholder="—"></div>
-      <div class="ff fg1"><label>Oharrak</label><textarea id="ehno"></textarea></div>
-    </div>
-    <div id="del-warn" style="display:none;background:var(--bad-bg);border:1px solid rgba(174,43,43,.3);border-radius:8px;padding:9px 11px;font-size:12px;color:var(--bad);margin-bottom:10px;line-height:1.6">
-      ⚠️ Erlaunutza eta bere inspekzio guztiak <strong>behin betiko ezabatuko dira</strong>. Berriro sakatu baieztatzeko.
-    </div>
-    <div class="brow">
-      <button class="btn danger" id="btn-del" onclick="stepDelete()">🗑 Ezabatu</button>
-      <button class="btn" onclick="closeM('eh')">Utzi</button>
-      <button class="btn primary" onclick="updHive()">✓ Gorde</button>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL: INSPEKZIOA -->
-<div id="mod-ai" class="movl" style="display:none" onclick="if(event.target===this)closeM('ai')">
-  <div class="mbox">
-    <div class="mhandle"></div>
-    <div class="mtitle">Inspekzio berria <button class="mclose" onclick="closeM('ai')">✕</button></div>
-    <div class="fg2">
-      <div class="ff"><label>Data</label><input id="aid" type="date"></div>
-      <div class="ff"><label>Kolonia indarra (1–10)</label><input id="ais" type="number" min="1" max="10" value="7"></div>
-      <div class="ff"><label>Hazkuntza markoak</label><input id="aib" type="number" min="0" max="20" value="6"></div>
-      <div class="ff"><label>Ezti markoak</label><input id="aim" type="number" min="0" max="20" value="4"></div>
-      <div class="ff"><label>Erregina</label>
-        <select id="aiq"><option value="yes">Ikusi da</option><option value="signs">Aztarnak bakarrik</option><option value="no">Ez da aurkitu</option></select></div>
-      <div class="ff"><label>Varroa maila</label>
-        <select id="aiv"><option value="low">Baxua (&lt;2%)</option><option value="med">Ertaina (2–5%)</option><option value="high">Altua (&gt;5%)</option><option value="unknown">Neurtu gabe</option></select></div>
-      <div class="ff fg1"><label>Egoera berria</label>
-        <select id="aist"><option value="good">Ona</option><option value="warn">Kontuz</option><option value="bad">Kritikoa</option></select></div>
-      <div class="ff fg1"><label>Behaketak eta egindako ekintzak</label>
-        <textarea id="aino" placeholder="Zer ikusi duzun, zer egin duzun..."></textarea></div>
-    </div>
-    <div id="aibox-wrap"></div>
-    <div class="brow">
-      <button class="btn" onclick="closeM('ai')">Utzi</button>
-      <button class="btn" id="btn-ai" onclick="runAI()">✦ IArekin aztertu</button>
-      <button class="btn primary" onclick="saveInsp()">✓ Gorde</button>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL: SOZIOAK (members) -->
-<div id="mod-members" class="movl" style="display:none" onclick="if(event.target===this)closeM('members')">
-  <div class="mbox" style="max-width:360px">
-    <div class="mhandle"></div>
-    <div class="mtitle">👥 Sozioak <button class="mclose" onclick="closeM('members')">✕</button></div>
-    <div style="display:flex;gap:7px;margin-bottom:14px">
-      <input id="mbr-name" placeholder="Sozioaren izena..." style="flex:1">
-      <button class="btn primary" onclick="addMember()">＋</button>
-    </div>
-    <div id="members-list"></div>
-  </div>
-</div>
-
-<!-- MODAL: GASTUA (expense) -->
-<div id="mod-exp" class="movl" style="display:none" onclick="if(event.target===this)closeM('exp')">
-  <div class="mbox" style="max-width:400px">
-    <div class="mhandle"></div>
-    <div class="mtitle" id="exp-modal-title">Gastu berria <button class="mclose" onclick="closeM('exp')">✕</button></div>
-    <div class="fg2">
-      <div class="ff fg1"><label>Deskribapena</label><input id="exp-desc" placeholder="Adib: Vatia, tresnak..."></div>
-      <div class="ff"><label>Zenbatekoa (€)</label><input id="exp-amt" type="number" min="0" step="0.01" placeholder="0.00"></div>
-      <div class="ff"><label>Nork ordaindu</label><select id="exp-payer"></select></div>
-      <div class="ff"><label>Data</label><input id="exp-date" type="date"></div>
-      <div class="ff fg1"><label>Oharrak</label><textarea id="exp-notes" placeholder="Aukerazkoa..."></textarea></div>
-    </div>
-    <div class="brow">
-      <button class="btn" onclick="closeM('exp')">Utzi</button>
-      <button class="btn primary" onclick="saveExp()">✓ Gorde</button>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL: MATERIALA (material) -->
-<div id="mod-mat" class="movl" style="display:none" onclick="if(event.target===this)closeM('mat')">
-  <div class="mbox" style="max-width:400px">
-    <div class="mhandle"></div>
-    <div class="mtitle" id="mat-modal-title">Material berria <button class="mclose" onclick="closeM('mat')">✕</button></div>
-    <div class="fg2">
-      <div class="ff"><label>Izena</label><input id="mat-name" placeholder="Adib: Langstroth 10F"></div>
-      <div class="ff"><label>Kategoria</label>
-        <select id="mat-cat">
-          <option value="kaxak">📦 Kaxak</option>
-          <option value="jantziak">🥼 Jantziak</option>
-          <option value="tresnak">🔧 Tresnak</option>
-          <option value="bestelakoa">📋 Bestelakoa</option>
-        </select>
+      <div id="tab-in">
+        <div class="ff"><label>Erabiltzaile izena</label><input id="liu" placeholder="Jon" autocomplete="username">
+        </div>
+        <div class="ff"><label>Pasahitza</label><input id="lip" type="password" placeholder="••••••"
+            autocomplete="current-password"></div>
+        <button class="btn primary full" onclick="doLogin()">Sartu →</button>
+        <div id="lie" class="lerr"></div>
       </div>
-      <div class="ff"><label>Kopurua</label><input id="mat-qty" type="number" min="0" value="1"></div>
-      <div class="ff fg1"><label>Oharrak</label><textarea id="mat-notes" placeholder="Egoera, kokapena..."></textarea></div>
-    </div>
-    <div class="brow">
-      <button class="btn" onclick="closeM('mat')">Utzi</button>
-      <button class="btn primary" onclick="saveMat()">✓ Gorde</button>
+      <div id="tab-up" style="display:none">
+        <div class="ff"><label>Erabiltzaile izena</label><input id="ruu" placeholder="Jon" autocomplete="username">
+        </div>
+        <div class="ff"><label>Pasahitza</label><input id="rup" type="password" placeholder="••••••"
+            autocomplete="new-password"></div>
+        <div class="ff"><label>Pasahitza berretsi</label><input id="rup2" type="password" placeholder="••••••"
+            autocomplete="new-password"></div>
+        <button class="btn primary full" onclick="doReg()">Kontua sortu →</button>
+        <div id="rue" class="lerr"></div>
+      </div>
+      <div class="lnote">Datuak erabiltzaile guztien artean partekatzen dira</div>
     </div>
   </div>
-</div>
 
-<!-- MODAL: SARETA KONFIGURAZIOA -->
-<div id="mod-cfg" class="movl" style="display:none" onclick="if(event.target===this)closeM('cfg')">
-  <div class="mbox" style="max-width:380px">
-    <div class="mhandle"></div>
-    <div class="mtitle">⚙ Sareta konfigurazioa <button class="mclose" onclick="closeM('cfg')">✕</button></div>
-    <p style="font-size:12px;color:var(--bark-l);margin-bottom:14px;line-height:1.6">
-      Zehaztu erlategiaren saretaren neurria. Erlauntzak barnean egon behar dira; kanpoan daudenak mapan agertzeari utziko diote (ez dira ezabatzen).
-    </p>
-    <div class="fg2">
-      <div class="ff">
-        <label>Zutabeak (3 – 20)</label>
-        <input id="cfg-cols" type="number" min="3" max="20">
-        <div style="font-size:10px;color:var(--bark-l);margin-top:3px">Orain: <span id="cfg-cols-now"></span></div>
-      </div>
-      <div class="ff">
-        <label>Errenkadak (3 – 15)</label>
-        <input id="cfg-rows" type="number" min="3" max="15">
-        <div style="font-size:10px;color:var(--bark-l);margin-top:3px">Orain: <span id="cfg-rows-now"></span></div>
+  <!-- APP -->
+  <div id="scr-app" class="scr" style="display:none">
+    <header id="hdr">
+      <span class="hlogo">Erlekide</span>
+      <span class="ubadge" id="ubadge">—</span>
+      <!-- Mobile: botoi berria goiburuan -->
+      <button class="btn sm" id="hdr-add-btn"
+        style="display:none;background:var(--honey);border-color:var(--honey);color:#fff;padding:5px 13px"
+        onclick="openAddModal(null,null)">＋ Berria</button>
+      <button class="btn sm"
+        style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);color:#fff;font-size:16px;padding:4px 9px"
+        onclick="openCfg()" title="Sareta konfigurazioa">⚙</button>
+      <button class="btn sm" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);color:#fff"
+        onclick="doLogout()">Irten</button>
+    </header>
+    <nav id="main-nav">
+      <button class="mnav on" onclick="setMainView('map')">🗺 Mapa</button>
+      <button class="mnav" onclick="setMainView('gastuak')">💸 Gastuak</button>
+      <button class="mnav" onclick="setMainView('materialak')">🔧 Materialak</button>
+    </nav>
+    <div id="bdy">
+      <aside id="sb">
+        <div class="sb-hdr">
+          <span>Erlauntzak</span>
+          <button class="btn sm" style="padding:2px 9px;font-size:15px;line-height:1.2"
+            onclick="openAddModal(null,null)" title="Erlauntza berria">+</button>
+        </div>
+        <div id="hl"></div>
+        <div class="sb-foot" id="sbfoot"></div>
+      </aside>
+      <div id="view-map">
+        <div class="mhint" id="mhint">Arrastatu erlauntzak mugitzeko · Egin klik zelula huts batean gehitzeko</div>
+        <div id="cv-wrap">
+          <div id="agrid"></div>
+        </div>
       </div>
     </div>
-    <div id="cfg-warn" style="display:none;background:var(--warn-bg);border:1px solid rgba(176,96,8,.25);border-radius:8px;padding:9px 11px;font-size:12px;color:var(--warn);margin-bottom:10px;line-height:1.6"></div>
-    <div class="brow">
-      <button class="btn" onclick="closeM('cfg')">Utzi</button>
-      <button class="btn primary" id="cfg-save-btn" onclick="saveSettings()">✓ Gorde</button>
+    <!-- FAB: mugikorrean soilik -->
+    <button class="fab" onclick="openAddModal(null,null)" title="Erlauntza berria">＋</button>
+  </div>
+
+  <!-- ══════════ MODALAK ══════════ -->
+
+  <!-- MODAL: ERLAUNTZA XEHETASUNAK (detail) -->
+  <div id="mod-dp" class="movl" style="display:none" onclick="if(event.target===this)closeM('dp')">
+    <div class="mbox">
+      <div class="mhandle"></div>
+      <div id="mod-dp-content"></div>
     </div>
   </div>
-</div>
 
-<div class="toast" id="toast"></div>
+  <!-- MODAL: ERLAUNTZA BERRIA -->
+  <div id="mod-ah" class="movl" style="display:none" onclick="if(event.target===this)closeM('ah')">
+    <div class="mbox">
+      <div class="mhandle"></div>
+      <div class="mtitle">Erlauntza berria <button class="mclose" onclick="closeM('ah')">✕</button></div>
+      <div id="ahpos" class="posinfo"></div>
+      <div class="fg2">
+        <div class="ff"><label>Izena / Kodea</label><input id="ahn" placeholder="Adib: A1"></div>
+        <div class="ff"><label>Mota</label>
+          <select id="aht">
+            <option>Langstroth</option>
+            <option>Layens</option>
+            <option>Dadant</option>
+            <option>Errustikoa</option>
+            <option>Beste bat</option>
+          </select>
+        </div>
+        <div class="ff"><label>Arraza</label>
+          <select id="ahr">
+            <option>Iberiensis</option>
+            <option>Buckfast</option>
+            <option>Italiar</option>
+            <option>Karniolarra</option>
+            <option>Ezezaguna</option>
+          </select>
+        </div>
+        <div class="ff"><label>Hasierako egoera</label>
+          <select id="ahs">
+            <option value="good">Ona</option>
+            <option value="warn">Kontuz</option>
+            <option value="bad">Kritikoa</option>
+          </select>
+        </div>
+        <div class="ff"><label>Instalazio-data</label><input id="ahd" type="date"></div>
+        <div class="ff"><label>Markoak (5–10, aukerazkoa)</label><input id="ahf" type="number" min="5" max="10"
+            placeholder="—"></div>
+        <div class="ff"><label>Kolore bereizia</label>
+          <select id="ahc">
+            <option value="#C8780A">🟠 Anbrea</option>
+            <option value="#1E6B40">🟢 Berdea</option>
+            <option value="#1A5FA0">🔵 Urdina</option>
+            <option value="#7A3DAA">🟣 Morea</option>
+            <option value="#AE2B2B">🔴 Gorria</option>
+          </select>
+        </div>
+        <div class="ff fg1"><label>Oharrak / Jatorria</label><textarea id="ahno"
+            placeholder="Kolonioaren jatorria, hasierako behaketak..."></textarea></div>
+      </div>
+      <div class="brow"><button class="btn" onclick="closeM('ah')">Utzi</button><button class="btn primary"
+          onclick="saveHive()">✓ Gorde</button></div>
+    </div>
+  </div>
 
-<script>
-'use strict';
+  <!-- MODAL: EDITATU -->
+  <div id="mod-eh" class="movl" style="display:none" onclick="if(event.target===this)closeM('eh')">
+    <div class="mbox">
+      <div class="mhandle"></div>
+      <div class="mtitle">Erlaunutza editatu <button class="mclose" onclick="closeM('eh')">✕</button></div>
+      <div class="fg2">
+        <div class="ff"><label>Izena</label><input id="ehn"></div>
+        <div class="ff"><label>Mota</label>
+          <select id="eht">
+            <option>Langstroth</option>
+            <option>Layens</option>
+            <option>Dadant</option>
+            <option>Errustikoa</option>
+            <option>Beste bat</option>
+          </select>
+        </div>
+        <div class="ff"><label>Arraza</label>
+          <select id="ehr">
+            <option>Iberiensis</option>
+            <option>Buckfast</option>
+            <option>Italiar</option>
+            <option>Karniolarra</option>
+            <option>Ezezaguna</option>
+          </select>
+        </div>
+        <div class="ff"><label>Egoera</label>
+          <select id="ehs">
+            <option value="good">Ona</option>
+            <option value="warn">Kontuz</option>
+            <option value="bad">Kritikoa</option>
+          </select>
+        </div>
+        <div class="ff"><label>Markoak (5–10)</label><input id="ehf" type="number" min="5" max="10" placeholder="—">
+        </div>
+        <div class="ff fg1"><label>Oharrak</label><textarea id="ehno"></textarea></div>
+      </div>
+      <div id="del-warn"
+        style="display:none;background:var(--bad-bg);border:1px solid rgba(174,43,43,.3);border-radius:8px;padding:9px 11px;font-size:12px;color:var(--bad);margin-bottom:10px;line-height:1.6">
+        ⚠️ Erlaunutza eta bere inspekzio guztiak <strong>behin betiko ezabatuko dira</strong>. Berriro sakatu
+        baieztatzeko.
+      </div>
+      <div class="brow">
+        <button class="btn danger" id="btn-del" onclick="stepDelete()">🗑 Ezabatu</button>
+        <button class="btn" onclick="closeM('eh')">Utzi</button>
+        <button class="btn primary" onclick="updHive()">✓ Gorde</button>
+      </div>
+    </div>
+  </div>
 
-let COLS = 14, ROWS = 10; const RLBLS = 'ABCDEFGHIJ';
-let sb = null, me = null, userId = null, token = null;
-let hives = [], insps = [];
-let selId = null, dragId = null, pendX = null, pendY = null;
-let editId = null, inspHiveId = null, aiTxt = '';
-let delStep = 0, delTimer = null;
-let expenses = [], members = [], materials = [];
-let expEditId = null, matEditId = null;
-let pollTimer = null;
+  <!-- MODAL: INSPEKZIOA -->
+  <div id="mod-ai" class="movl" style="display:none" onclick="if(event.target===this)closeM('ai')">
+    <div class="mbox">
+      <div class="mhandle"></div>
+      <div class="mtitle">Inspekzio berria <button class="mclose" onclick="closeM('ai')">✕</button></div>
+      <div class="fg2">
+        <div class="ff"><label>Data</label><input id="aid" type="date"></div>
+        <div class="ff"><label>Kolonia indarra (1–10)</label><input id="ais" type="number" min="1" max="10" value="7">
+        </div>
+        <div class="ff"><label>Hazkuntza markoak</label><input id="aib" type="number" min="0" max="20" value="6"></div>
+        <div class="ff"><label>Ezti markoak</label><input id="aim" type="number" min="0" max="20" value="4"></div>
+        <div class="ff"><label>Erregina</label>
+          <select id="aiq">
+            <option value="yes">Ikusi da</option>
+            <option value="signs">Aztarnak bakarrik</option>
+            <option value="no">Ez da aurkitu</option>
+          </select>
+        </div>
+        <div class="ff"><label>Varroa maila</label>
+          <select id="aiv">
+            <option value="low">Baxua (&lt;2%)</option>
+            <option value="med">Ertaina (2–5%)</option>
+            <option value="high">Altua (&gt;5%)</option>
+            <option value="unknown">Neurtu gabe</option>
+          </select>
+        </div>
+        <div class="ff fg1"><label>Egoera berria</label>
+          <select id="aist">
+            <option value="good">Ona</option>
+            <option value="warn">Kontuz</option>
+            <option value="bad">Kritikoa</option>
+          </select>
+        </div>
+        <div class="ff fg1"><label>Behaketak eta egindako ekintzak</label>
+          <textarea id="aino" placeholder="Zer ikusi duzun, zer egin duzun..."></textarea>
+        </div>
+      </div>
+      <div id="aibox-wrap"></div>
+      <div class="brow">
+        <button class="btn" onclick="closeM('ai')">Utzi</button>
+        <button class="btn" id="btn-ai" onclick="runAI()">✦ IArekin aztertu</button>
+        <button class="btn primary" onclick="saveInsp()">✓ Gorde</button>
+      </div>
+    </div>
+  </div>
 
-// ── Supabase ──────────────────────────────────────────────────────────────────
-async function initSB() {
-  const cfg = await fetch('/api/config').then(r => r.json());
-  if (!cfg.supabaseUrl) throw new Error('SUPABASE_URL ingurune-aldagaia falta da.');
-  const { createClient } = supabase;
-  sb = createClient(cfg.supabaseUrl, cfg.supabaseKey);
-  sb.auth.onAuthStateChange((_e, session) => { token = session?.access_token || null; });
-}
+  <!-- MODAL: SOZIOAK (members) -->
+  <div id="mod-members" class="movl" style="display:none" onclick="if(event.target===this)closeM('members')">
+    <div class="mbox" style="max-width:360px">
+      <div class="mhandle"></div>
+      <div class="mtitle">👥 Sozioak <button class="mclose" onclick="closeM('members')">✕</button></div>
+      <div style="display:flex;gap:7px;margin-bottom:14px">
+        <input id="mbr-name" placeholder="Sozioaren izena..." style="flex:1">
+        <button class="btn primary" onclick="addMember()">＋</button>
+      </div>
+      <div id="members-list"></div>
+    </div>
+  </div>
 
-async function boot() {
-  try {
-    await initSB();
-    const { data: { session } } = await sb.auth.getSession();
-    if (session) {
-      me     = session.user.user_metadata?.username || session.user.email.split('@')[0];
-      userId = session.user.id;
-      token  = session.access_token;
-      await enterApp();
-    } else { showLogin(); }
-  } catch (e) { showLogin(); toast('Konexio errorea: ' + e.message, 'bad'); }
-  document.getElementById('loading').style.display = 'none';
-}
+  <!-- MODAL: GASTUA (expense) -->
+  <div id="mod-exp" class="movl" style="display:none" onclick="if(event.target===this)closeM('exp')">
+    <div class="mbox" style="max-width:400px">
+      <div class="mhandle"></div>
+      <div class="mtitle" id="exp-modal-title">Gastu berria <button class="mclose" onclick="closeM('exp')">✕</button>
+      </div>
+      <div class="fg2">
+        <div class="ff fg1"><label>Deskribapena</label><input id="exp-desc" placeholder="Adib: Vatia, tresnak..."></div>
+        <div class="ff"><label>Zenbatekoa (€)</label><input id="exp-amt" type="number" min="0" step="0.01"
+            placeholder="0.00"></div>
+        <div class="ff"><label>Nork ordaindu</label><select id="exp-payer"></select></div>
+        <div class="ff"><label>Data</label><input id="exp-date" type="date"></div>
+        <div class="ff fg1"><label>Oharrak</label><textarea id="exp-notes" placeholder="Aukerazkoa..."></textarea></div>
+      </div>
+      <div class="brow">
+        <button class="btn" onclick="closeM('exp')">Utzi</button>
+        <button class="btn primary" onclick="saveExp()">✓ Gorde</button>
+      </div>
+    </div>
+  </div>
 
-// ── Auth ──────────────────────────────────────────────────────────────────────
-function showTab(t) {
-  document.getElementById('tab-in').style.display = t === 'in' ? '' : 'none';
-  document.getElementById('tab-up').style.display = t === 'up' ? '' : 'none';
-  document.getElementById('tbin').classList.toggle('on', t === 'in');
-  document.getElementById('tbup').classList.toggle('on', t === 'up');
-}
+  <!-- MODAL: MATERIALA (material) -->
+  <div id="mod-mat" class="movl" style="display:none" onclick="if(event.target===this)closeM('mat')">
+    <div class="mbox" style="max-width:400px">
+      <div class="mhandle"></div>
+      <div class="mtitle" id="mat-modal-title">Material berria <button class="mclose" onclick="closeM('mat')">✕</button>
+      </div>
+      <div class="fg2">
+        <div class="ff"><label>Izena</label><input id="mat-name" placeholder="Adib: Langstroth 10F"></div>
+        <div class="ff"><label>Kategoria</label>
+          <select id="mat-cat">
+            <option value="kaxak">📦 Kaxak</option>
+            <option value="jantziak">🥼 Jantziak</option>
+            <option value="tresnak">🔧 Tresnak</option>
+            <option value="bestelakoa">📋 Bestelakoa</option>
+          </select>
+        </div>
+        <div class="ff"><label>Kopurua</label><input id="mat-qty" type="number" min="0" value="1"></div>
+        <div class="ff fg1"><label>Oharrak</label><textarea id="mat-notes" placeholder="Egoera, kokapena..."></textarea>
+        </div>
+      </div>
+      <div class="brow">
+        <button class="btn" onclick="closeM('mat')">Utzi</button>
+        <button class="btn primary" onclick="saveMat()">✓ Gorde</button>
+      </div>
+    </div>
+  </div>
 
-async function doLogin() {
-  const username = document.getElementById('liu').value.trim();
-  const password = document.getElementById('lip').value;
-  const er = document.getElementById('lie');
-  er.textContent = '';
-  if (!username) { er.textContent = 'Idatzi erabiltzaile izena.'; return; }
-  try {
-    const { data, error } = await sb.auth.signInWithPassword({ email: `${username}@erlekide.local`, password });
-    if (error) throw new Error('Erabiltzaile izena edo pasahitza okerrak.');
-    me = data.user.user_metadata?.username || username;
-    userId = data.user.id; token = data.session.access_token;
-    await enterApp();
-  } catch (e) { er.textContent = e.message; }
-}
+  <!-- MODAL: SARETA KONFIGURAZIOA -->
+  <div id="mod-cfg" class="movl" style="display:none" onclick="if(event.target===this)closeM('cfg')">
+    <div class="mbox" style="max-width:380px">
+      <div class="mhandle"></div>
+      <div class="mtitle">⚙ Sareta konfigurazioa <button class="mclose" onclick="closeM('cfg')">✕</button></div>
+      <p style="font-size:12px;color:var(--bark-l);margin-bottom:14px;line-height:1.6">
+        Zehaztu erlategiaren saretaren neurria. Erlauntzak barnean egon behar dira; kanpoan daudenak mapan agertzeari
+        utziko diote (ez dira ezabatzen).
+      </p>
+      <div class="fg2">
+        <div class="ff">
+          <label>Zutabeak (3 – 20)</label>
+          <input id="cfg-cols" type="number" min="3" max="20">
+          <div style="font-size:10px;color:var(--bark-l);margin-top:3px">Orain: <span id="cfg-cols-now"></span></div>
+        </div>
+        <div class="ff">
+          <label>Errenkadak (3 – 15)</label>
+          <input id="cfg-rows" type="number" min="3" max="15">
+          <div style="font-size:10px;color:var(--bark-l);margin-top:3px">Orain: <span id="cfg-rows-now"></span></div>
+        </div>
+      </div>
+      <div id="cfg-warn"
+        style="display:none;background:var(--warn-bg);border:1px solid rgba(176,96,8,.25);border-radius:8px;padding:9px 11px;font-size:12px;color:var(--warn);margin-bottom:10px;line-height:1.6">
+      </div>
+      <div class="brow">
+        <button class="btn" onclick="closeM('cfg')">Utzi</button>
+        <button class="btn primary" id="cfg-save-btn" onclick="saveSettings()">✓ Gorde</button>
+      </div>
+    </div>
+  </div>
 
-async function doReg() {
-  const username = document.getElementById('ruu').value.trim();
-  const password = document.getElementById('rup').value;
-  const p2       = document.getElementById('rup2').value;
-  const er       = document.getElementById('rue');
-  er.textContent = '';
-  if (username.length < 2) { er.textContent = 'Erabiltzaile izenak gutxienez 2 karaktere behar ditu.'; return; }
-  if (password.length < 6) { er.textContent = 'Pasahitzak gutxienez 6 karaktere behar ditu.'; return; }
-  if (password !== p2)     { er.textContent = 'Pasahitzak ez datoz bat.'; return; }
-  try {
-    const { data, error } = await sb.auth.signUp({
-      email: `${username}@erlekide.local`, password,
-      options: { data: { username } }
-    });
-    if (error) {
-      throw new Error((error.message||'').toLowerCase().includes('already') || error.status === 422
-        ? 'Erabiltzaile izen hori dagoeneko hartuta dago.'
-        : error.message);
+  <div class="toast" id="toast"></div>
+
+  <script>
+    'use strict';
+
+    let COLS = 14, ROWS = 10; const RLBLS = 'ABCDEFGHIJ';
+    let sb = null, me = null, userId = null, token = null;
+    let hives = [], insps = [];
+    let selId = null, dragId = null, pendX = null, pendY = null;
+    let editId = null, inspHiveId = null, aiTxt = '';
+    let delStep = 0, delTimer = null;
+    let expenses = [], members = [], materials = [];
+    let expEditId = null, matEditId = null;
+    let pollTimer = null;
+
+    // ── Supabase ──────────────────────────────────────────────────────────────────
+    async function initSB() {
+      const cfg = await fetch('/api/config').then(r => r.json());
+      if (!cfg.supabaseUrl) throw new Error('SUPABASE_URL ingurune-aldagaia falta da.');
+      const { createClient } = supabase;
+      sb = createClient(cfg.supabaseUrl, cfg.supabaseKey);
+      sb.auth.onAuthStateChange((_e, session) => { token = session?.access_token || null; });
     }
-    if (!data.session) {
-      er.style.color = 'var(--honey-d)';
-      er.textContent = 'Kontua sortuta. Saioa hasi beharko duzu.';
-      return;
+
+    async function boot() {
+      try {
+        await initSB();
+        const { data: { session } } = await sb.auth.getSession();
+        if (session) {
+          me = session.user.user_metadata?.username || session.user.email.split('@')[0];
+          userId = session.user.id;
+          token = session.access_token;
+          await enterApp();
+        } else { showLogin(); }
+      } catch (e) { showLogin(); toast('Konexio errorea: ' + e.message, 'bad'); }
+      document.getElementById('loading').style.display = 'none';
     }
-    me = username; userId = data.user.id; token = data.session.access_token;
-    await enterApp();
-  } catch (e) { er.textContent = e.message; }
-}
 
-async function doLogout() {
-  await sb.auth.signOut();
-  me = userId = token = selId = null; hives = []; insps = [];
-  clearInterval(pollTimer);
-  document.getElementById('scr-app').style.display = 'none';
-  showLogin();
-}
-
-function showLogin() {
-  document.getElementById('scr-login').style.display = 'flex';
-  document.getElementById('scr-app').style.display   = 'none';
-}
-
-async function enterApp() {
-  document.getElementById('scr-login').style.display = 'none';
-  const app = document.getElementById('scr-app');
-  app.style.display = 'flex';
-  document.getElementById('ubadge').textContent = '👤 ' + me;
-  if (window.innerWidth <= 700)
-    document.getElementById('hdr-add-btn').style.display = 'inline-flex';
-  await Promise.all([loadSettings(), loadHives(), loadMembers(), loadExpenses(), loadMaterials()]);
-  buildGrid();
-  renderAll();
-  pollTimer = setInterval(async () => {
-    await Promise.all([loadHives(), loadExpenses(), loadMaterials()]);
-    renderAll();
-    if (document.getElementById('view-gastuak').style.display !== 'none') renderExpenses();
-    if (document.getElementById('view-materialak').style.display !== 'none') renderMaterials();
-  }, 30000);
-}
-
-// ── Datuak ────────────────────────────────────────────────────────────────────
-async function loadHives() {
-  const { data, error } = await sb.from('hives').select('*').order('name');
-  if (!error && data) hives = data;
-}
-
-async function loadInsps(hiveId) {
-  const { data } = await sb.from('inspections').select('*')
-    .eq('hive_id', hiveId).order('date', { ascending: false }).order('created_at', { ascending: false });
-  insps = data || [];
-}
-
-// ── Konfigurazioa / Settings ──────────────────────────────────────────────────
-async function loadSettings() {
-  try {
-    const { data } = await sb.from('settings').select('cols,rows').eq('id', 'main').maybeSingle();
-    if (data) { COLS = Math.max(3, Math.min(20, data.cols || 14)); ROWS = Math.max(3, Math.min(15, data.rows || 10)); }
-  } catch { /* use defaults 14×10 */ }
-  updateHint();
-}
-
-function updateHint() {
-  const el = document.getElementById('mhint');
-  if (el) el.textContent = `Arrastatu erlauntzak mugitzeko · Sareta: ${COLS}×${ROWS} · ⚙ konfiguratu goiburuan`;
-}
-
-function openCfg() {
-  document.getElementById('cfg-cols').value     = COLS;
-  document.getElementById('cfg-rows').value     = ROWS;
-  document.getElementById('cfg-cols-now').textContent = COLS;
-  document.getElementById('cfg-rows-now').textContent = ROWS;
-  const warn = document.getElementById('cfg-warn');
-  warn.style.display = 'none'; warn.dataset.confirmed = '0';
-  document.getElementById('cfg-save-btn').textContent = '✓ Gorde';
-  openM('cfg');
-}
-
-async function saveSettings() {
-  const newCols = Math.min(20, Math.max(3, +document.getElementById('cfg-cols').value || COLS));
-  const newRows = Math.min(15, Math.max(3, +document.getElementById('cfg-rows').value || ROWS));
-  const warn    = document.getElementById('cfg-warn');
-
-  // Check hives that would fall outside new bounds
-  const out = hives.filter(h => h.grid_x != null && h.grid_y != null && (h.grid_x >= newCols || h.grid_y >= newRows));
-
-  if (out.length && warn.dataset.confirmed !== '1') {
-    warn.innerHTML = `⚠️ ${out.length} erlauntz mapan kokatuta daude eremu berritik kanpo:<br><strong>${out.map(h => esc(h.name)).join(', ')}</strong><br>Posizioa ezabatuko zaie (erlauntzak bere horretan geratuko dira zerrendan). Berriro sakatu baieztatzeko.`;
-    warn.style.display = '';
-    warn.dataset.confirmed = '1';
-    document.getElementById('cfg-save-btn').textContent = '⚠ Berretsi eta gorde';
-    return;
-  }
-
-  // Clear out-of-bounds positions
-  for (const h of out) {
-    await sb.from('hives').update({ grid_x: null, grid_y: null }).eq('id', h.id);
-    h.grid_x = null; h.grid_y = null;
-  }
-
-  // Upsert settings row in Supabase
-  await sb.from('settings').upsert({ id: 'main', cols: newCols, rows: newRows });
-
-  COLS = newCols; ROWS = newRows;
-  closeM('cfg');
-  updateHint();
-  buildGrid();
-  renderAll();
-  toast(`Sareta ${COLS}×${ROWS} gordeta ✓`);
-}
-
-
-function buildGrid() {
-  const g = document.getElementById('agrid');
-  let h = '<div class="gcont"><div class="ghrow"><div class="gcorner"></div>';
-  for (let c = 0; c < COLS; c++) h += `<div class="clbl">${c + 1}</div>`;
-  h += '</div>';
-  for (let r = 0; r < ROWS; r++) {
-    h += `<div class="gbrow"><div class="rlbl">${RLBLS[r]}</div>`;
-    for (let c = 0; c < COLS; c++)
-      h += `<div class="cell" id="c${c}_${r}" ondragover="ov(event,${c},${r})" ondragleave="ol(event,${c},${r})" ondrop="od(event,${c},${r})" onclick="cc(${c},${r})"><div class="cempty">+</div></div>`;
-    h += '</div>';
-  }
-  h += '</div>';
-  g.innerHTML = h;
-}
-
-function renderAll() { renderGrid(); renderSB(); }
-
-function renderGrid() {
-  for (let r = 0; r < ROWS; r++)
-    for (let c = 0; c < COLS; c++) {
-      const el = document.getElementById(`c${c}_${r}`);
-      if (el) el.innerHTML = '<div class="cempty">+</div>';
+    // ── Auth ──────────────────────────────────────────────────────────────────────
+    function showTab(t) {
+      document.getElementById('tab-in').style.display = t === 'in' ? '' : 'none';
+      document.getElementById('tab-up').style.display = t === 'up' ? '' : 'none';
+      document.getElementById('tbin').classList.toggle('on', t === 'in');
+      document.getElementById('tbup').classList.toggle('on', t === 'up');
     }
-  hives.forEach(h => {
-    if (h.grid_x == null || h.grid_y == null) return;
-    const el = document.getElementById(`c${h.grid_x}_${h.grid_y}`);
-    if (!el) return;
-    el.innerHTML = `<div class="tok st-${h.status}" id="t${h.id}" draggable="true"
+
+    async function doLogin() {
+      const username = document.getElementById('liu').value.trim();
+      const password = document.getElementById('lip').value;
+      const er = document.getElementById('lie');
+      er.textContent = '';
+      if (!username) { er.textContent = 'Idatzi erabiltzaile izena.'; return; }
+      try {
+        const { data, error } = await sb.auth.signInWithPassword({ email: `${username}@erlekide.local`, password });
+        if (error) throw new Error('Erabiltzaile izena edo pasahitza okerrak.');
+        me = data.user.user_metadata?.username || username;
+        userId = data.user.id; token = data.session.access_token;
+        await enterApp();
+      } catch (e) { er.textContent = e.message; }
+    }
+
+    async function doReg() {
+      const username = document.getElementById('ruu').value.trim();
+      const password = document.getElementById('rup').value;
+      const p2 = document.getElementById('rup2').value;
+      const er = document.getElementById('rue');
+      er.textContent = '';
+      if (username.length < 2) { er.textContent = 'Erabiltzaile izenak gutxienez 2 karaktere behar ditu.'; return; }
+      if (password.length < 6) { er.textContent = 'Pasahitzak gutxienez 6 karaktere behar ditu.'; return; }
+      if (password !== p2) { er.textContent = 'Pasahitzak ez datoz bat.'; return; }
+      try {
+        const { data, error } = await sb.auth.signUp({
+          email: `${username}@erlekide.local`, password,
+          options: { data: { username } }
+        });
+        if (error) {
+          throw new Error((error.message || '').toLowerCase().includes('already') || error.status === 422
+            ? 'Erabiltzaile izen hori dagoeneko hartuta dago.'
+            : error.message);
+        }
+        if (!data.session) {
+          er.style.color = 'var(--honey-d)';
+          er.textContent = 'Kontua sortuta. Saioa hasi beharko duzu.';
+          return;
+        }
+        me = username; userId = data.user.id; token = data.session.access_token;
+        await enterApp();
+      } catch (e) { er.textContent = e.message; }
+    }
+
+    async function doLogout() {
+      await sb.auth.signOut();
+      me = userId = token = selId = null; hives = []; insps = [];
+      clearInterval(pollTimer);
+      document.getElementById('scr-app').style.display = 'none';
+      showLogin();
+    }
+
+    function showLogin() {
+      document.getElementById('scr-login').style.display = 'flex';
+      document.getElementById('scr-app').style.display = 'none';
+    }
+
+    async function enterApp() {
+      document.getElementById('scr-login').style.display = 'none';
+      const app = document.getElementById('scr-app');
+      app.style.display = 'flex';
+      document.getElementById('ubadge').textContent = '👤 ' + me;
+      if (window.innerWidth <= 700)
+        document.getElementById('hdr-add-btn').style.display = 'inline-flex';
+      await Promise.all([loadSettings(), loadHives(), loadMembers(), loadExpenses(), loadMaterials()]);
+      buildGrid();
+      renderAll();
+      pollTimer = setInterval(async () => {
+        await Promise.all([loadHives(), loadExpenses(), loadMaterials()]);
+        renderAll();
+        if (document.getElementById('view-gastuak').style.display !== 'none') renderExpenses();
+        if (document.getElementById('view-materialak').style.display !== 'none') renderMaterials();
+      }, 30000);
+    }
+
+    // ── Datuak ────────────────────────────────────────────────────────────────────
+    async function loadHives() {
+      const { data, error } = await sb.from('hives').select('*').order('name');
+      if (!error && data) hives = data;
+    }
+
+    async function loadInsps(hiveId) {
+      const { data } = await sb.from('inspections').select('*')
+        .eq('hive_id', hiveId).order('date', { ascending: false }).order('created_at', { ascending: false });
+      insps = data || [];
+    }
+
+    // ── Konfigurazioa / Settings ──────────────────────────────────────────────────
+    async function loadSettings() {
+      try {
+        const { data } = await sb.from('settings').select('cols,rows').eq('id', 'main').maybeSingle();
+        if (data) { COLS = Math.max(3, Math.min(20, data.cols || 14)); ROWS = Math.max(3, Math.min(15, data.rows || 10)); }
+      } catch { /* use defaults 14×10 */ }
+      updateHint();
+    }
+
+    function updateHint() {
+      const el = document.getElementById('mhint');
+      if (el) el.textContent = `Arrastatu erlauntzak mugitzeko · Sareta: ${COLS}×${ROWS} · ⚙ konfiguratu goiburuan`;
+    }
+
+    function openCfg() {
+      document.getElementById('cfg-cols').value = COLS;
+      document.getElementById('cfg-rows').value = ROWS;
+      document.getElementById('cfg-cols-now').textContent = COLS;
+      document.getElementById('cfg-rows-now').textContent = ROWS;
+      const warn = document.getElementById('cfg-warn');
+      warn.style.display = 'none'; warn.dataset.confirmed = '0';
+      document.getElementById('cfg-save-btn').textContent = '✓ Gorde';
+      openM('cfg');
+    }
+
+    async function saveSettings() {
+      const newCols = Math.min(20, Math.max(3, +document.getElementById('cfg-cols').value || COLS));
+      const newRows = Math.min(15, Math.max(3, +document.getElementById('cfg-rows').value || ROWS));
+      const warn = document.getElementById('cfg-warn');
+
+      // Check hives that would fall outside new bounds
+      const out = hives.filter(h => h.grid_x != null && h.grid_y != null && (h.grid_x >= newCols || h.grid_y >= newRows));
+
+      if (out.length && warn.dataset.confirmed !== '1') {
+        warn.innerHTML = `⚠️ ${out.length} erlauntz mapan kokatuta daude eremu berritik kanpo:<br><strong>${out.map(h => esc(h.name)).join(', ')}</strong><br>Posizioa ezabatuko zaie (erlauntzak bere horretan geratuko dira zerrendan). Berriro sakatu baieztatzeko.`;
+        warn.style.display = '';
+        warn.dataset.confirmed = '1';
+        document.getElementById('cfg-save-btn').textContent = '⚠ Berretsi eta gorde';
+        return;
+      }
+
+      // Clear out-of-bounds positions
+      for (const h of out) {
+        await sb.from('hives').update({ grid_x: null, grid_y: null }).eq('id', h.id);
+        h.grid_x = null; h.grid_y = null;
+      }
+
+      // Upsert settings row in Supabase
+      await sb.from('settings').upsert({ id: 'main', cols: newCols, rows: newRows });
+
+      COLS = newCols; ROWS = newRows;
+      closeM('cfg');
+      updateHint();
+      buildGrid();
+      renderAll();
+      toast(`Sareta ${COLS}×${ROWS} gordeta ✓`);
+    }
+
+
+    function buildGrid() {
+      const g = document.getElementById('agrid');
+      let h = '<div class="gcont"><div class="ghrow"><div class="gcorner"></div>';
+      for (let c = 0; c < COLS; c++) h += `<div class="clbl">${c + 1}</div>`;
+      h += '</div>';
+      for (let r = 0; r < ROWS; r++) {
+        h += `<div class="gbrow"><div class="rlbl">${RLBLS[r]}</div>`;
+        for (let c = 0; c < COLS; c++)
+          h += `<div class="cell" id="c${c}_${r}" ondragover="ov(event,${c},${r})" ondragleave="ol(event,${c},${r})" ondrop="od(event,${c},${r})" onclick="cc(${c},${r})"><div class="cempty">+</div></div>`;
+        h += '</div>';
+      }
+      h += '</div>';
+      g.innerHTML = h;
+    }
+
+    function renderAll() { renderGrid(); renderSB(); }
+
+    function renderGrid() {
+      for (let r = 0; r < ROWS; r++)
+        for (let c = 0; c < COLS; c++) {
+          const el = document.getElementById(`c${c}_${r}`);
+          if (el) el.innerHTML = '<div class="cempty">+</div>';
+        }
+      hives.forEach(h => {
+        if (h.grid_x == null || h.grid_y == null) return;
+        const el = document.getElementById(`c${h.grid_x}_${h.grid_y}`);
+        if (!el) return;
+        el.innerHTML = `<div class="tok st-${h.status}" id="t${h.id}" draggable="true"
       style="--tok-w:${h.frames != null ? (0.5 + (h.frames - 5) * 0.08).toFixed(2) : 0.85}"
       ondragstart="ds(event,'${h.id}')" ondragend="de(event,'${h.id}')"
       onclick="tc(event,'${h.id}')">
@@ -684,39 +1832,39 @@ function renderGrid() {
       </div>
       <div class="tname">${esc(h.name)}</div>
     </div>`;
-  });
-}
+      });
+    }
 
-function renderSB() {
-  const hl = document.getElementById('hl');
-  if (!hives.length) {
-    hl.innerHTML = '<div class="empty-st"><span class="ei">🐝</span>Oraindik erlauntzik ez.<br>Egin klik mapan gehitzeko.</div>';
-    document.getElementById('sbfoot').innerHTML = ''; return;
-  }
-  hl.innerHTML = hives.map(h => {
-    const pos = h.grid_x != null ? `${RLBLS[h.grid_y]}${h.grid_x + 1}` : '—';
-    return `<div class="hli ${selId === h.id ? 'on' : ''}" onclick="selHive('${h.id}')">
+    function renderSB() {
+      const hl = document.getElementById('hl');
+      if (!hives.length) {
+        hl.innerHTML = '<div class="empty-st"><span class="ei">🐝</span>Oraindik erlauntzik ez.<br>Egin klik mapan gehitzeko.</div>';
+        document.getElementById('sbfoot').innerHTML = ''; return;
+      }
+      hl.innerHTML = hives.map(h => {
+        const pos = h.grid_x != null ? `${RLBLS[h.grid_y]}${h.grid_x + 1}` : '—';
+        return `<div class="hli ${selId === h.id ? 'on' : ''}" onclick="selHive('${h.id}')">
       <div class="sdot ${h.status[0]}"></div>
       <span class="hln">${esc(h.name)}</span>
       <span class="hpos">${pos}</span>
     </div>`;
-  }).join('');
-  const g = hives.filter(h => h.status === 'good').length;
-  const w = hives.filter(h => h.status === 'warn').length;
-  const b = hives.filter(h => h.status === 'bad').length;
-  document.getElementById('sbfoot').innerHTML =
-    `<span style="color:var(--good)">● ${g} on</span> &nbsp;<span style="color:var(--warn)">● ${w} kontuz</span> &nbsp;<span style="color:var(--bad)">● ${b} kritiko</span>`;
-}
+      }).join('');
+      const g = hives.filter(h => h.status === 'good').length;
+      const w = hives.filter(h => h.status === 'warn').length;
+      const b = hives.filter(h => h.status === 'bad').length;
+      document.getElementById('sbfoot').innerHTML =
+        `<span style="color:var(--good)">● ${g} on</span> &nbsp;<span style="color:var(--warn)">● ${w} kontuz</span> &nbsp;<span style="color:var(--bad)">● ${b} kritiko</span>`;
+    }
 
-// ── Detail modal ──────────────────────────────────────────────────────────────
-async function renderDP(id) {
-  const h = hives.find(x => x.id === id);
-  if (!h) return;
-  await loadInsps(id);
-  const pos  = h.grid_x != null ? `${RLBLS[h.grid_y]}${h.grid_x + 1} posizioa` : 'Mapan kokatu gabe';
-  const stL  = { good: 'Ona', warn: 'Kontuz', bad: 'Kritikoa' };
-  const stC  = { good: 'var(--good)', warn: 'var(--warn)', bad: 'var(--bad)' };
-  document.getElementById('mod-dp-content').innerHTML = `
+    // ── Detail modal ──────────────────────────────────────────────────────────────
+    async function renderDP(id) {
+      const h = hives.find(x => x.id === id);
+      if (!h) return;
+      await loadInsps(id);
+      const pos = h.grid_x != null ? `${RLBLS[h.grid_y]}${h.grid_x + 1} posizioa` : 'Mapan kokatu gabe';
+      const stL = { good: 'Ona', warn: 'Kontuz', bad: 'Kritikoa' };
+      const stC = { good: 'var(--good)', warn: 'var(--warn)', bad: 'var(--bad)' };
+      document.getElementById('mod-dp-content').innerHTML = `
     <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:12px">
       <div style="flex:1">
         <div style="font-size:18px;font-weight:700">${esc(h.name)}</div>
@@ -747,296 +1895,296 @@ async function renderDP(id) {
         </div>
         ${i.ai_summary ? `<div class="ainote"><div class="ainote-lbl">✦ IA ANALISIA</div>${esc(i.ai_summary)}</div>` : ''}
       </div>`).join('') :
-    '<div style="font-size:12px;color:var(--bark-l)">Oraindik ez du inspekziorik.</div>'}
+          '<div style="font-size:12px;color:var(--bark-l)">Oraindik ez du inspekziorik.</div>'}
   `;
-  openM('dp');
-}
+      openM('dp');
+    }
 
-function selHive(id) { selId = id; renderSB(); renderDP(id); }
+    function selHive(id) { selId = id; renderSB(); renderDP(id); }
 
-// ── Drag & Drop ───────────────────────────────────────────────────────────────
-function ds(e, id) { dragId = id; e.dataTransfer.effectAllowed = 'move'; setTimeout(() => document.getElementById('t' + id)?.classList.add('drag'), 0); }
-function de(e, id) { document.getElementById('t' + id)?.classList.remove('drag'); dragId = null; }
-function ov(e, x, y) { if (!dragId) return; e.preventDefault(); document.getElementById(`c${x}_${y}`)?.classList.add('dov'); }
-function ol(e, x, y) { document.getElementById(`c${x}_${y}`)?.classList.remove('dov'); }
+    // ── Drag & Drop ───────────────────────────────────────────────────────────────
+    function ds(e, id) { dragId = id; e.dataTransfer.effectAllowed = 'move'; setTimeout(() => document.getElementById('t' + id)?.classList.add('drag'), 0); }
+    function de(e, id) { document.getElementById('t' + id)?.classList.remove('drag'); dragId = null; }
+    function ov(e, x, y) { if (!dragId) return; e.preventDefault(); document.getElementById(`c${x}_${y}`)?.classList.add('dov'); }
+    function ol(e, x, y) { document.getElementById(`c${x}_${y}`)?.classList.remove('dov'); }
 
-async function od(e, x, y) {
-  e.preventDefault();
-  document.getElementById(`c${x}_${y}`)?.classList.remove('dov');
-  if (!dragId) return;
-  const occ = hives.find(h => h.grid_x === x && h.grid_y === y && h.id !== dragId);
-  if (occ) { toast(`${occ.name}ek hartuta`, 'warn'); dragId = null; return; }
-  const hive = hives.find(h => h.id === dragId);
-  if (!hive) return;
-  const [px, py] = [hive.grid_x, hive.grid_y];
-  hive.grid_x = x; hive.grid_y = y; renderGrid();
-  const { error } = await sb.from('hives').update({ grid_x: x, grid_y: y }).eq('id', dragId);
-  if (error) { hive.grid_x = px; hive.grid_y = py; renderGrid(); toast(error.message, 'bad'); }
-  else toast(`${hive.name} → ${RLBLS[y]}${x + 1}`);
-  dragId = null;
-}
+    async function od(e, x, y) {
+      e.preventDefault();
+      document.getElementById(`c${x}_${y}`)?.classList.remove('dov');
+      if (!dragId) return;
+      const occ = hives.find(h => h.grid_x === x && h.grid_y === y && h.id !== dragId);
+      if (occ) { toast(`${occ.name}ek hartuta`, 'warn'); dragId = null; return; }
+      const hive = hives.find(h => h.id === dragId);
+      if (!hive) return;
+      const [px, py] = [hive.grid_x, hive.grid_y];
+      hive.grid_x = x; hive.grid_y = y; renderGrid();
+      const { error } = await sb.from('hives').update({ grid_x: x, grid_y: y }).eq('id', dragId);
+      if (error) { hive.grid_x = px; hive.grid_y = py; renderGrid(); toast(error.message, 'bad'); }
+      else toast(`${hive.name} → ${RLBLS[y]}${x + 1}`);
+      dragId = null;
+    }
 
-function cc(x, y) {
-  const occ = hives.find(h => h.grid_x === x && h.grid_y === y);
-  if (occ) selHive(occ.id); else openAddModal(x, y);
-}
-function tc(e, id) { e.stopPropagation(); selHive(id); }
+    function cc(x, y) {
+      const occ = hives.find(h => h.grid_x === x && h.grid_y === y);
+      if (occ) selHive(occ.id); else openAddModal(x, y);
+    }
+    function tc(e, id) { e.stopPropagation(); selHive(id); }
 
-// ── Modalak ───────────────────────────────────────────────────────────────────
-function openM(n)  { document.getElementById('mod-' + n).style.display = 'flex'; }
-function closeM(n) { document.getElementById('mod-' + n).style.display = 'none'; }
+    // ── Modalak ───────────────────────────────────────────────────────────────────
+    function openM(n) { document.getElementById('mod-' + n).style.display = 'flex'; }
+    function closeM(n) { document.getElementById('mod-' + n).style.display = 'none'; }
 
-function openAddModal(x, y) {
-  pendX = x; pendY = y;
-  ['ahn','ahno'].forEach(i => document.getElementById(i).value = '');
-  document.getElementById('ahf').value  = '';
-  document.getElementById('ahd').value  = new Date().toISOString().slice(0, 10);
-  document.getElementById('ahs').value  = 'good';
-  const pi = document.getElementById('ahpos');
-  if (x != null) { pi.textContent = `📍 ${RLBLS[y]}${x + 1} posizioan kokatuko da`; pi.style.display = ''; }
-  else pi.style.display = 'none';
-  openM('ah');
-}
+    function openAddModal(x, y) {
+      pendX = x; pendY = y;
+      ['ahn', 'ahno'].forEach(i => document.getElementById(i).value = '');
+      document.getElementById('ahf').value = '';
+      document.getElementById('ahd').value = new Date().toISOString().slice(0, 10);
+      document.getElementById('ahs').value = 'good';
+      const pi = document.getElementById('ahpos');
+      if (x != null) { pi.textContent = `📍 ${RLBLS[y]}${x + 1} posizioan kokatuko da`; pi.style.display = ''; }
+      else pi.style.display = 'none';
+      openM('ah');
+    }
 
-async function saveHive() {
-  const name = document.getElementById('ahn').value.trim();
-  if (!name) { toast('Idatzi izen bat', 'warn'); return; }
-  const rawF = document.getElementById('ahf').value;
-  const frames = rawF === '' ? null : Math.min(10, Math.max(5, +rawF));
-  const { data, error } = await sb.from('hives').insert({
-    name, type: document.getElementById('aht').value, race: document.getElementById('ahr').value,
-    status: document.getElementById('ahs').value, color: document.getElementById('ahc').value,
-    install_date: document.getElementById('ahd').value || null,
-    notes: document.getElementById('ahno').value,
-    frames, grid_x: pendX, grid_y: pendY, created_by: userId
-  }).select().single();
-  if (error) { toast(error.message, 'bad'); return; }
-  hives.push(data); hives.sort((a, b) => a.name.localeCompare(b.name));
-  closeM('ah'); renderAll(); selHive(data.id); toast(`${name} sortuta ✓`);
-}
+    async function saveHive() {
+      const name = document.getElementById('ahn').value.trim();
+      if (!name) { toast('Idatzi izen bat', 'warn'); return; }
+      const rawF = document.getElementById('ahf').value;
+      const frames = rawF === '' ? null : Math.min(10, Math.max(5, +rawF));
+      const { data, error } = await sb.from('hives').insert({
+        name, type: document.getElementById('aht').value, race: document.getElementById('ahr').value,
+        status: document.getElementById('ahs').value, color: document.getElementById('ahc').value,
+        install_date: document.getElementById('ahd').value || null,
+        notes: document.getElementById('ahno').value,
+        frames, grid_x: pendX, grid_y: pendY, created_by: userId
+      }).select().single();
+      if (error) { toast(error.message, 'bad'); return; }
+      hives.push(data); hives.sort((a, b) => a.name.localeCompare(b.name));
+      closeM('ah'); renderAll(); selHive(data.id); toast(`${name} sortuta ✓`);
+    }
 
-function openEdit(id) {
-  editId = id; const h = hives.find(x => x.id === id); if (!h) return;
-  document.getElementById('ehn').value  = h.name;
-  document.getElementById('eht').value  = h.type;
-  document.getElementById('ehr').value  = h.race;
-  document.getElementById('ehs').value  = h.status;
-  document.getElementById('ehf').value  = h.frames ?? '';
-  document.getElementById('ehno').value = h.notes || '';
-  resetDelBtn();
-  openM('eh');
-}
+    function openEdit(id) {
+      editId = id; const h = hives.find(x => x.id === id); if (!h) return;
+      document.getElementById('ehn').value = h.name;
+      document.getElementById('eht').value = h.type;
+      document.getElementById('ehr').value = h.race;
+      document.getElementById('ehs').value = h.status;
+      document.getElementById('ehf').value = h.frames ?? '';
+      document.getElementById('ehno').value = h.notes || '';
+      resetDelBtn();
+      openM('eh');
+    }
 
-async function updHive() {
-  const h = hives.find(x => x.id === editId); if (!h) return;
-  const rawF = document.getElementById('ehf').value;
-  const frames = rawF === '' ? null : Math.min(10, Math.max(5, +rawF));
-  const upd = {
-    name: document.getElementById('ehn').value.trim() || h.name,
-    type: document.getElementById('eht').value,
-    race: document.getElementById('ehr').value,
-    status: document.getElementById('ehs').value,
-    notes: document.getElementById('ehno').value,
-    frames
-  };
-  const { error } = await sb.from('hives').update(upd).eq('id', editId);
-  if (error) { toast(error.message, 'bad'); return; }
-  Object.assign(h, upd); closeM('eh'); renderAll();
-  if (selId === editId) renderDP(editId);
-  toast('Erlaunutza eguneratuta ✓');
-}
+    async function updHive() {
+      const h = hives.find(x => x.id === editId); if (!h) return;
+      const rawF = document.getElementById('ehf').value;
+      const frames = rawF === '' ? null : Math.min(10, Math.max(5, +rawF));
+      const upd = {
+        name: document.getElementById('ehn').value.trim() || h.name,
+        type: document.getElementById('eht').value,
+        race: document.getElementById('ehr').value,
+        status: document.getElementById('ehs').value,
+        notes: document.getElementById('ehno').value,
+        frames
+      };
+      const { error } = await sb.from('hives').update(upd).eq('id', editId);
+      if (error) { toast(error.message, 'bad'); return; }
+      Object.assign(h, upd); closeM('eh'); renderAll();
+      if (selId === editId) renderDP(editId);
+      toast('Erlaunutza eguneratuta ✓');
+    }
 
-function stepDelete() {
-  const btn  = document.getElementById('btn-del');
-  const warn = document.getElementById('del-warn');
-  if (delStep === 0) {
-    delStep = 1;
-    warn.style.display = '';
-    btn.textContent    = '⚠ Berretsi ezabatzea';
-    btn.style.cssText  = 'background:var(--bad);border-color:var(--bad);color:#fff';
-    delTimer = setTimeout(resetDelBtn, 4000);
-  } else {
-    clearTimeout(delTimer);
-    delHive();
-  }
-}
+    function stepDelete() {
+      const btn = document.getElementById('btn-del');
+      const warn = document.getElementById('del-warn');
+      if (delStep === 0) {
+        delStep = 1;
+        warn.style.display = '';
+        btn.textContent = '⚠ Berretsi ezabatzea';
+        btn.style.cssText = 'background:var(--bad);border-color:var(--bad);color:#fff';
+        delTimer = setTimeout(resetDelBtn, 4000);
+      } else {
+        clearTimeout(delTimer);
+        delHive();
+      }
+    }
 
-function resetDelBtn() {
-  delStep = 0;
-  clearTimeout(delTimer);
-  const btn  = document.getElementById('btn-del');
-  const warn = document.getElementById('del-warn');
-  if (btn)  { btn.textContent = '🗑 Ezabatu'; btn.style.cssText = ''; }
-  if (warn)   warn.style.display = 'none';
-}
+    function resetDelBtn() {
+      delStep = 0;
+      clearTimeout(delTimer);
+      const btn = document.getElementById('btn-del');
+      const warn = document.getElementById('del-warn');
+      if (btn) { btn.textContent = '🗑 Ezabatu'; btn.style.cssText = ''; }
+      if (warn) warn.style.display = 'none';
+    }
 
-async function delHive() {
-  const { error } = await sb.from('hives').delete().eq('id', editId);
-  if (error) { toast(error.message, 'bad'); return; }
-  hives = hives.filter(h => h.id !== editId);
-  closeM('eh'); closeM('dp'); selId = null; renderAll(); toast('Erlaunutza ezabatuta');
-}
+    async function delHive() {
+      const { error } = await sb.from('hives').delete().eq('id', editId);
+      if (error) { toast(error.message, 'bad'); return; }
+      hives = hives.filter(h => h.id !== editId);
+      closeM('eh'); closeM('dp'); selId = null; renderAll(); toast('Erlaunutza ezabatuta');
+    }
 
-function openInsp(hiveId) {
-  inspHiveId = hiveId; aiTxt = '';
-  document.getElementById('aid').value  = new Date().toISOString().slice(0, 10);
-  document.getElementById('ais').value  = '7';
-  document.getElementById('aib').value  = '6';
-  document.getElementById('aim').value  = '4';
-  document.getElementById('aiq').value  = 'yes';
-  document.getElementById('aiv').value  = 'low';
-  document.getElementById('aist').value = 'good';
-  document.getElementById('aino').value = '';
-  document.getElementById('aibox-wrap').innerHTML = '';
-  const btn = document.getElementById('btn-ai'); btn.innerHTML = '✦ IArekin aztertu'; btn.disabled = false;
-  openM('ai');
-}
+    function openInsp(hiveId) {
+      inspHiveId = hiveId; aiTxt = '';
+      document.getElementById('aid').value = new Date().toISOString().slice(0, 10);
+      document.getElementById('ais').value = '7';
+      document.getElementById('aib').value = '6';
+      document.getElementById('aim').value = '4';
+      document.getElementById('aiq').value = 'yes';
+      document.getElementById('aiv').value = 'low';
+      document.getElementById('aist').value = 'good';
+      document.getElementById('aino').value = '';
+      document.getElementById('aibox-wrap').innerHTML = '';
+      const btn = document.getElementById('btn-ai'); btn.innerHTML = '✦ IArekin aztertu'; btn.disabled = false;
+      openM('ai');
+    }
 
-async function runAI() {
-  const h = hives.find(x => x.id === inspHiveId);
-  const btn = document.getElementById('btn-ai');
-  btn.innerHTML = '<span class="spin"></span> Aztertzen...'; btn.disabled = true;
-  const prompt = `Erlazain esperta zara. Ikuskaritza hau aztertu eta 2-3 gomendio zehatz eta praktiko eman itzazu euskaraz (gehienez 90 hitz).
+    async function runAI() {
+      const h = hives.find(x => x.id === inspHiveId);
+      const btn = document.getElementById('btn-ai');
+      btn.innerHTML = '<span class="spin"></span> Aztertzen...'; btn.disabled = true;
+      const prompt = `Erlazain esperta zara. Ikuskaritza hau aztertu eta 2-3 gomendio zehatz eta praktiko eman itzazu euskaraz (gehienez 90 hitz).
 Erlaunutza: ${h ? h.name : ''} (${h ? h.type : ''}, ${h ? h.race : ''})
 Indarra: ${document.getElementById('ais').value}/10 · Hazkuntza: ${document.getElementById('aib').value} · Eztia: ${document.getElementById('aim').value}
 Erregina: ${document.getElementById('aiq').value} · Varroa: ${document.getElementById('aiv').value}
 Behaketak: ${document.getElementById('aino').value || 'bat ere ez'}`;
-  try {
-    const r = await fetch('/api/analyze', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }, body: JSON.stringify({ prompt }) });
-    const d = await r.json();
-    if (!r.ok) throw new Error(d.error || 'AI errorea');
-    aiTxt = d.text;
-    document.getElementById('aibox-wrap').innerHTML = `<div class="aibox"><div class="aibox-lbl">✦ IA GOMENDIAK</div>${esc(aiTxt)}</div>`;
-  } catch (e) {
-    document.getElementById('aibox-wrap').innerHTML = `<div style="font-size:11px;color:var(--bad);margin-top:8px">${esc(e.message)}</div>`;
-  }
-  btn.innerHTML = '✦ IArekin aztertu'; btn.disabled = false;
-}
+      try {
+        const r = await fetch('/api/analyze', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }, body: JSON.stringify({ prompt }) });
+        const d = await r.json();
+        if (!r.ok) throw new Error(d.error || 'AI errorea');
+        aiTxt = d.text;
+        document.getElementById('aibox-wrap').innerHTML = `<div class="aibox"><div class="aibox-lbl">✦ IA GOMENDIAK</div>${esc(aiTxt)}</div>`;
+      } catch (e) {
+        document.getElementById('aibox-wrap').innerHTML = `<div style="font-size:11px;color:var(--bad);margin-top:8px">${esc(e.message)}</div>`;
+      }
+      btn.innerHTML = '✦ IArekin aztertu'; btn.disabled = false;
+    }
 
-async function saveInsp() {
-  if (!inspHiveId) return;
-  const status = document.getElementById('aist').value;
-  const { error } = await sb.from('inspections').insert({
-    hive_id: inspHiveId, date: document.getElementById('aid').value,
-    strength: +document.getElementById('ais').value, brood: +document.getElementById('aib').value,
-    honey: +document.getElementById('aim').value, queen: document.getElementById('aiq').value,
-    varroa: document.getElementById('aiv').value, status,
-    notes: document.getElementById('aino').value, ai_summary: aiTxt,
-    username: me, created_by: userId
-  });
-  if (error) { toast(error.message, 'bad'); return; }
-  await sb.from('hives').update({ status }).eq('id', inspHiveId);
-  const h = hives.find(x => x.id === inspHiveId); if (h) h.status = status;
-  closeM('ai'); renderAll();
-  if (selId === inspHiveId) await renderDP(inspHiveId);
-  toast('Inspekzioa gordeta ✓');
-}
+    async function saveInsp() {
+      if (!inspHiveId) return;
+      const status = document.getElementById('aist').value;
+      const { error } = await sb.from('inspections').insert({
+        hive_id: inspHiveId, date: document.getElementById('aid').value,
+        strength: +document.getElementById('ais').value, brood: +document.getElementById('aib').value,
+        honey: +document.getElementById('aim').value, queen: document.getElementById('aiq').value,
+        varroa: document.getElementById('aiv').value, status,
+        notes: document.getElementById('aino').value, ai_summary: aiTxt,
+        username: me, created_by: userId
+      });
+      if (error) { toast(error.message, 'bad'); return; }
+      await sb.from('hives').update({ status }).eq('id', inspHiveId);
+      const h = hives.find(x => x.id === inspHiveId); if (h) h.status = status;
+      closeM('ai'); renderAll();
+      if (selId === inspHiveId) await renderDP(inspHiveId);
+      toast('Inspekzioa gordeta ✓');
+    }
 
-function esc(s) { return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+    function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
 
-function toast(msg, t = 'ok') {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.style.background = t === 'bad' ? 'var(--bad)' : t === 'warn' ? 'var(--warn)' : 'var(--bark)';
-  el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 2800);
-}
+    function toast(msg, t = 'ok') {
+      const el = document.getElementById('toast');
+      el.textContent = msg;
+      el.style.background = t === 'bad' ? 'var(--bad)' : t === 'warn' ? 'var(--warn)' : 'var(--bark)';
+      el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 2800);
+    }
 
-// ── Ikuspegia aldatu / Switch main view ──────────────────────────────────────
-function setMainView(v) {
-  const views = ['map','gastuak','materialak'];
-  views.forEach(n => {
-    const el = document.getElementById('view-' + n);
-    if (el) el.style.display = n === v ? (n === 'map' ? 'flex' : 'flex') : 'none';
-  });
-  document.querySelectorAll('.mnav').forEach((b,i) => b.classList.toggle('on', views[i] === v));
-  const sb = document.getElementById('sb');
-  if (sb) sb.style.display = v === 'map' ? '' : 'none';
-  if (v === 'gastuak')    renderExpenses();
-  if (v === 'materialak') renderMaterials();
-}
+    // ── Ikuspegia aldatu / Switch main view ──────────────────────────────────────
+    function setMainView(v) {
+      const views = ['map', 'gastuak', 'materialak'];
+      views.forEach(n => {
+        const el = document.getElementById('view-' + n);
+        if (el) el.style.display = n === v ? (n === 'map' ? 'flex' : 'flex') : 'none';
+      });
+      document.querySelectorAll('.mnav').forEach((b, i) => b.classList.toggle('on', views[i] === v));
+      const sb = document.getElementById('sb');
+      if (sb) sb.style.display = v === 'map' ? '' : 'none';
+      if (v === 'gastuak') renderExpenses();
+      if (v === 'materialak') renderMaterials();
+    }
 
-// ── Datuak kargatu / Load data ────────────────────────────────────────────────
-async function loadExpenses() {
-  const { data } = await sb.from('expenses').select('*').order('date', {ascending:false}).order('created_at',{ascending:false});
-  expenses = data || [];
-}
-async function loadMembers() {
-  const { data } = await sb.from('members').select('*').order('name');
-  members = data || [];
-}
-async function loadMaterials() {
-  const { data } = await sb.from('materials').select('*').order('category').order('name');
-  materials = data || [];
-}
+    // ── Datuak kargatu / Load data ────────────────────────────────────────────────
+    async function loadExpenses() {
+      const { data } = await sb.from('expenses').select('*').order('date', { ascending: false }).order('created_at', { ascending: false });
+      expenses = data || [];
+    }
+    async function loadMembers() {
+      const { data } = await sb.from('members').select('*').order('name');
+      members = data || [];
+    }
+    async function loadMaterials() {
+      const { data } = await sb.from('materials').select('*').order('category').order('name');
+      materials = data || [];
+    }
 
-// ── Tricount algoritmoa / Debt calculation ────────────────────────────────────
-function calcDebts() {
-  const N = members.length;
-  if (!N || !expenses.length) return { balances:{}, transactions:[] };
-  const bal = {};
-  members.forEach(m => bal[m.name] = 0);
-  expenses.forEach(exp => {
-    const share = exp.amount / N;
-    bal[exp.paid_by] = (bal[exp.paid_by] || 0) + Number(exp.amount);
-    members.forEach(m => { bal[m.name] = (bal[m.name] || 0) - share; });
-  });
-  // Minimum transactions
-  const cred = Object.entries(bal).filter(([,v])=>v>0.005).map(([k,v])=>({n:k,v})).sort((a,b)=>b.v-a.v);
-  const debt = Object.entries(bal).filter(([,v])=>v<-0.005).map(([k,v])=>({n:k,v:-v})).sort((a,b)=>b.v-a.v);
-  const txns = [];
-  let ci=0, di=0;
-  while (ci<cred.length && di<debt.length) {
-    const amt = Math.min(cred[ci].v, debt[di].v);
-    txns.push({ from: debt[di].n, to: cred[ci].n, amt: Math.round(amt*100)/100 });
-    cred[ci].v -= amt; debt[di].v -= amt;
-    if (cred[ci].v < 0.005) ci++;
-    if (debt[di].v < 0.005) di++;
-  }
-  return { balances: bal, transactions: txns };
-}
+    // ── Tricount algoritmoa / Debt calculation ────────────────────────────────────
+    function calcDebts() {
+      const N = members.length;
+      if (!N || !expenses.length) return { balances: {}, transactions: [] };
+      const bal = {};
+      members.forEach(m => bal[m.name] = 0);
+      expenses.forEach(exp => {
+        const share = exp.amount / N;
+        bal[exp.paid_by] = (bal[exp.paid_by] || 0) + Number(exp.amount);
+        members.forEach(m => { bal[m.name] = (bal[m.name] || 0) - share; });
+      });
+      // Minimum transactions
+      const cred = Object.entries(bal).filter(([, v]) => v > 0.005).map(([k, v]) => ({ n: k, v })).sort((a, b) => b.v - a.v);
+      const debt = Object.entries(bal).filter(([, v]) => v < -0.005).map(([k, v]) => ({ n: k, v: -v })).sort((a, b) => b.v - a.v);
+      const txns = [];
+      let ci = 0, di = 0;
+      while (ci < cred.length && di < debt.length) {
+        const amt = Math.min(cred[ci].v, debt[di].v);
+        txns.push({ from: debt[di].n, to: cred[ci].n, amt: Math.round(amt * 100) / 100 });
+        cred[ci].v -= amt; debt[di].v -= amt;
+        if (cred[ci].v < 0.005) ci++;
+        if (debt[di].v < 0.005) di++;
+      }
+      return { balances: bal, transactions: txns };
+    }
 
-// ── Gastuak errendatu / Render expenses ──────────────────────────────────────
-function renderExpenses() {
-  const { balances, transactions } = calcDebts();
-  let html = '';
+    // ── Gastuak errendatu / Render expenses ──────────────────────────────────────
+    function renderExpenses() {
+      const { balances, transactions } = calcDebts();
+      let html = '';
 
-  // Saldoak
-  html += '<div style="margin-bottom:16px">';
-  html += '<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--bark-l);margin-bottom:8px">Saldoak</div>';
-  if (!members.length) {
-    html += '<div style="font-size:13px;color:var(--bark-l);padding:10px;background:#fff;border:1px solid var(--border);border-radius:10px">Ez dago soziorik. Gehitu sozioak 👥 botoiarekin.</div>';
-  } else {
-    html += '<div class="balance-grid">';
-    members.forEach(m => {
-      const bal = balances[m.name] || 0;
-      const color = bal > 0.5 ? 'var(--good)' : bal < -0.5 ? 'var(--bad)' : 'var(--bark-l)';
-      const lbl = bal > 0.5 ? 'besteak zor diote' : bal < -0.5 ? 'zor du' : 'kitto';
-      html += `<div class="bal-card"><div class="bal-name">${esc(m.name)}</div><div class="bal-amt" style="color:${color}">${bal>=0?'+':''}${bal.toFixed(2)}€</div><div class="bal-lbl">${lbl}</div></div>`;
-    });
-    html += '</div>';
-  }
-  html += '</div>';
+      // Saldoak
+      html += '<div style="margin-bottom:16px">';
+      html += '<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--bark-l);margin-bottom:8px">Saldoak</div>';
+      if (!members.length) {
+        html += '<div style="font-size:13px;color:var(--bark-l);padding:10px;background:#fff;border:1px solid var(--border);border-radius:10px">Ez dago soziorik. Gehitu sozioak 👥 botoiarekin.</div>';
+      } else {
+        html += '<div class="balance-grid">';
+        members.forEach(m => {
+          const bal = balances[m.name] || 0;
+          const color = bal > 0.5 ? 'var(--good)' : bal < -0.5 ? 'var(--bad)' : 'var(--bark-l)';
+          const lbl = bal > 0.5 ? 'besteak zor diote' : bal < -0.5 ? 'zor du' : 'kitto';
+          html += `<div class="bal-card"><div class="bal-name">${esc(m.name)}</div><div class="bal-amt" style="color:${color}">${bal >= 0 ? '+' : ''}${bal.toFixed(2)}€</div><div class="bal-lbl">${lbl}</div></div>`;
+        });
+        html += '</div>';
+      }
+      html += '</div>';
 
-  // Kitapenak
-  if (transactions.length) {
-    html += '<div style="margin-bottom:16px"><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--bark-l);margin-bottom:8px">Kitapena (beharrezko transferentziak)</div>';
-    html += '<div class="txn-box">';
-    transactions.forEach(t => {
-      html += `<div class="txn-item"><span class="txn-from">${esc(t.from)}</span><span class="txn-arr">→</span><span class="txn-to">${esc(t.to)}</span><span class="txn-amt">${t.amt.toFixed(2)}€</span></div>`;
-    });
-    html += '</div></div>';
-  } else if (members.length && expenses.length) {
-    html += '<div style="font-size:12px;color:var(--good);background:var(--good-bg);border:1px solid rgba(30,107,64,.2);border-radius:8px;padding:8px 11px;margin-bottom:14px">✓ Denek kitto daude</div>';
-  }
+      // Kitapenak
+      if (transactions.length) {
+        html += '<div style="margin-bottom:16px"><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--bark-l);margin-bottom:8px">Kitapena (beharrezko transferentziak)</div>';
+        html += '<div class="txn-box">';
+        transactions.forEach(t => {
+          html += `<div class="txn-item"><span class="txn-from">${esc(t.from)}</span><span class="txn-arr">→</span><span class="txn-to">${esc(t.to)}</span><span class="txn-amt">${t.amt.toFixed(2)}€</span></div>`;
+        });
+        html += '</div></div>';
+      } else if (members.length && expenses.length) {
+        html += '<div style="font-size:12px;color:var(--good);background:var(--good-bg);border:1px solid rgba(30,107,64,.2);border-radius:8px;padding:8px 11px;margin-bottom:14px">✓ Denek kitto daude</div>';
+      }
 
-  // Gastu historia
-  html += '<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--bark-l);margin-bottom:8px">Gastu historia (' + expenses.length + ')</div>';
-  if (!expenses.length) {
-    html += '<div style="font-size:13px;color:var(--bark-l);text-align:center;padding:20px">Oraindik ez dago gasturik</div>';
-  } else {
-    expenses.forEach(e => {
-      const total = Number(e.amount).toFixed(2);
-      html += `<div class="exp-item">
+      // Gastu historia
+      html += '<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--bark-l);margin-bottom:8px">Gastu historia (' + expenses.length + ')</div>';
+      if (!expenses.length) {
+        html += '<div style="font-size:13px;color:var(--bark-l);text-align:center;padding:20px">Oraindik ez dago gasturik</div>';
+      } else {
+        expenses.forEach(e => {
+          const total = Number(e.amount).toFixed(2);
+          html += `<div class="exp-item">
         <div class="exp-body">
           <div class="exp-desc">${esc(e.description)}</div>
           <div class="exp-meta">${e.date} · <span class="paid-chip">${esc(e.paid_by)}</span>${e.notes ? ' · ' + esc(e.notes) : ''}</div>
@@ -1044,100 +2192,100 @@ function renderExpenses() {
         <div class="exp-amt">${total}€</div>
         <button class="exp-del" onclick="deleteExp('${e.id}')" title="Ezabatu">🗑</button>
       </div>`;
-    });
-  }
+        });
+      }
 
-  document.getElementById('exp-balances').innerHTML = '';
-  document.getElementById('exp-list').innerHTML = html;
-}
+      document.getElementById('exp-balances').innerHTML = '';
+      document.getElementById('exp-list').innerHTML = html;
+    }
 
-// ── Gastu CRUD ────────────────────────────────────────────────────────────────
-function openAddExp() {
-  document.getElementById('exp-modal-title').innerHTML = 'Gastu berria <button class="mclose" onclick="closeM('exp')">✕</button>';
-  document.getElementById('exp-desc').value  = '';
-  document.getElementById('exp-amt').value   = '';
-  document.getElementById('exp-notes').value = '';
-  document.getElementById('exp-date').value  = new Date().toISOString().slice(0,10);
-  const sel = document.getElementById('exp-payer');
-  sel.innerHTML = members.length
-    ? members.map(m => `<option value="${esc(m.name)}">${esc(m.name)}</option>`).join('')
-    : `<option value="${esc(me)}">${esc(me)}</option>`;
-  expEditId = null;
-  openM('exp');
-}
+    // ── Gastu CRUD ────────────────────────────────────────────────────────────────
+    function openAddExp() {
+      document.getElementById('exp-modal-title').innerHTML = `Gastu berria <button onclick="closeM('exp')">✕</button>`;
+      document.getElementById('exp-desc').value = '';
+      document.getElementById('exp-amt').value = '';
+      document.getElementById('exp-notes').value = '';
+      document.getElementById('exp-date').value = new Date().toISOString().slice(0, 10);
+      const sel = document.getElementById('exp-payer');
+      sel.innerHTML = members.length
+        ? members.map(m => `<option value="${esc(m.name)}">${esc(m.name)}</option>`).join('')
+        : `<option value="${esc(me)}">${esc(me)}</option>`;
+      expEditId = null;
+      openM('exp');
+    }
 
-async function saveExp() {
-  const description = document.getElementById('exp-desc').value.trim();
-  const amount      = parseFloat(document.getElementById('exp-amt').value);
-  const paid_by     = document.getElementById('exp-payer').value;
-  const date        = document.getElementById('exp-date').value;
-  const notes       = document.getElementById('exp-notes').value;
-  if (!description) { toast('Idatzi deskribapena', 'warn'); return; }
-  if (!amount || amount <= 0) { toast('Sartu zenbateko baliogarri bat', 'warn'); return; }
-  const { error } = await sb.from('expenses').insert({ description, amount, paid_by, date, notes, created_by: userId });
-  if (error) { toast(error.message, 'bad'); return; }
-  await loadExpenses();
-  closeM('exp'); renderExpenses(); toast('Gastua gordeta ✓');
-}
+    async function saveExp() {
+      const description = document.getElementById('exp-desc').value.trim();
+      const amount = parseFloat(document.getElementById('exp-amt').value);
+      const paid_by = document.getElementById('exp-payer').value;
+      const date = document.getElementById('exp-date').value;
+      const notes = document.getElementById('exp-notes').value;
+      if (!description) { toast('Idatzi deskribapena', 'warn'); return; }
+      if (!amount || amount <= 0) { toast('Sartu zenbateko baliogarri bat', 'warn'); return; }
+      const { error } = await sb.from('expenses').insert({ description, amount, paid_by, date, notes, created_by: userId });
+      if (error) { toast(error.message, 'bad'); return; }
+      await loadExpenses();
+      closeM('exp'); renderExpenses(); toast('Gastua gordeta ✓');
+    }
 
-async function deleteExp(id) {
-  if (!confirm('Gastua ezabatu nahi duzu?')) return;
-  const { error } = await sb.from('expenses').delete().eq('id', id);
-  if (error) { toast(error.message, 'bad'); return; }
-  await loadExpenses(); renderExpenses(); toast('Gastua ezabatuta');
-}
+    async function deleteExp(id) {
+      if (!confirm('Gastua ezabatu nahi duzu?')) return;
+      const { error } = await sb.from('expenses').delete().eq('id', id);
+      if (error) { toast(error.message, 'bad'); return; }
+      await loadExpenses(); renderExpenses(); toast('Gastua ezabatuta');
+    }
 
-// ── Sozioak CRUD / Members ────────────────────────────────────────────────────
-function openMembers() {
-  renderMembersList();
-  document.getElementById('mbr-name').value = '';
-  openM('members');
-}
+    // ── Sozioak CRUD / Members ────────────────────────────────────────────────────
+    function openMembers() {
+      renderMembersList();
+      document.getElementById('mbr-name').value = '';
+      openM('members');
+    }
 
-function renderMembersList() {
-  const el = document.getElementById('members-list');
-  if (!members.length) { el.innerHTML = '<div style="font-size:12px;color:var(--bark-l);padding:6px 0">Oraindik soziorik ez.</div>'; return; }
-  el.innerHTML = members.map(m =>
-    `<div class="member-row"><span>${esc(m.name)}</span><button class="member-del" onclick="deleteMember('${m.id}')" title="Ezabatu">✕</button></div>`
-  ).join('');
-}
+    function renderMembersList() {
+      const el = document.getElementById('members-list');
+      if (!members.length) { el.innerHTML = '<div style="font-size:12px;color:var(--bark-l);padding:6px 0">Oraindik soziorik ez.</div>'; return; }
+      el.innerHTML = members.map(m =>
+        `<div class="member-row"><span>${esc(m.name)}</span><button class="member-del" onclick="deleteMember('${m.id}')" title="Ezabatu">✕</button></div>`
+      ).join('');
+    }
 
-async function addMember() {
-  const name = document.getElementById('mbr-name').value.trim();
-  if (!name) return;
-  const { error } = await sb.from('members').insert({ name });
-  if (error) { toast(error.message, 'bad'); return; }
-  await loadMembers();
-  document.getElementById('mbr-name').value = '';
-  renderMembersList();
-  toast(`${name} gehituta ✓`);
-}
+    async function addMember() {
+      const name = document.getElementById('mbr-name').value.trim();
+      if (!name) return;
+      const { error } = await sb.from('members').insert({ name });
+      if (error) { toast(error.message, 'bad'); return; }
+      await loadMembers();
+      document.getElementById('mbr-name').value = '';
+      renderMembersList();
+      toast(`${name} gehituta ✓`);
+    }
 
-async function deleteMember(id) {
-  const m = members.find(x => x.id === id);
-  if (!confirm(`"${m?.name}" sozioa ezabatu nahi duzu?`)) return;
-  const { error } = await sb.from('members').delete().eq('id', id);
-  if (error) { toast(error.message, 'bad'); return; }
-  await loadMembers(); renderMembersList();
-  toast('Sozioa ezabatuta');
-}
+    async function deleteMember(id) {
+      const m = members.find(x => x.id === id);
+      if (!confirm(`"${m?.name}" sozioa ezabatu nahi duzu?`)) return;
+      const { error } = await sb.from('members').delete().eq('id', id);
+      if (error) { toast(error.message, 'bad'); return; }
+      await loadMembers(); renderMembersList();
+      toast('Sozioa ezabatuta');
+    }
 
-// ── Materialak CRUD ──────────────────────────────────────────────────────────
-const MAT_ICONS = { kaxak:'📦', jantziak:'🥼', tresnak:'🔧', bestelakoa:'📋' };
-const MAT_LABELS = { kaxak:'Kaxak', jantziak:'Jantziak', tresnak:'Tresnak', bestelakoa:'Bestelakoa' };
+    // ── Materialak CRUD ──────────────────────────────────────────────────────────
+    const MAT_ICONS = { kaxak: '📦', jantziak: '🥼', tresnak: '🔧', bestelakoa: '📋' };
+    const MAT_LABELS = { kaxak: 'Kaxak', jantziak: 'Jantziak', tresnak: 'Tresnak', bestelakoa: 'Bestelakoa' };
 
-function renderMaterials() {
-  const cats = ['kaxak','jantziak','tresnak','bestelakoa'];
-  let html = '';
-  cats.forEach(cat => {
-    const items = materials.filter(m => m.category === cat);
-    html += `<div class="mat-cat">
+    function renderMaterials() {
+      const cats = ['kaxak', 'jantziak', 'tresnak', 'bestelakoa'];
+      let html = '';
+      cats.forEach(cat => {
+        const items = materials.filter(m => m.category === cat);
+        html += `<div class="mat-cat">
       <div class="mat-cat-hdr">${MAT_ICONS[cat]} ${MAT_LABELS[cat]} <span class="mat-cat-count">${items.length}</span></div>`;
-    if (!items.length) {
-      html += `<div style="font-size:12px;color:var(--bark-l);padding:4px 2px">Ez dago materialik kategoria honetan.</div>`;
-    } else {
-      items.forEach(m => {
-        html += `<div class="mat-item">
+        if (!items.length) {
+          html += `<div style="font-size:12px;color:var(--bark-l);padding:4px 2px">Ez dago materialik kategoria honetan.</div>`;
+        } else {
+          items.forEach(m => {
+            html += `<div class="mat-item">
           <div class="mat-body">
             <div class="mat-name">${esc(m.name)}</div>
             ${m.notes ? `<div class="mat-notes">${esc(m.notes)}</div>` : ''}
@@ -1148,59 +2296,60 @@ function renderMaterials() {
             <button class="icon-btn del" onclick="deleteMat('${m.id}')">🗑</button>
           </div>
         </div>`;
+          });
+        }
+        html += '</div>';
       });
+      document.getElementById('mat-list').innerHTML = html;
     }
-    html += '</div>';
-  });
-  document.getElementById('mat-list').innerHTML = html;
-}
 
-function openAddMat() {
-  matEditId = null;
-  document.getElementById('mat-modal-title').innerHTML = 'Material berria <button class="mclose" onclick="closeM('mat')">✕</button>';
-  document.getElementById('mat-name').value  = '';
-  document.getElementById('mat-cat').value   = 'kaxak';
-  document.getElementById('mat-qty').value   = '1';
-  document.getElementById('mat-notes').value = '';
-  openM('mat');
-}
+    function openAddMat() {
+      matEditId = null;
+      document.getElementById('mat-modal-title').innerHTML = 'Material berria <button class="mclose" onclick="closeM('mat')">✕</button>';
+      document.getElementById('mat-name').value = '';
+      document.getElementById('mat-cat').value = 'kaxak';
+      document.getElementById('mat-qty').value = '1';
+      document.getElementById('mat-notes').value = '';
+      openM('mat');
+    }
 
-function openEditMat(id) {
-  const m = materials.find(x => x.id === id); if (!m) return;
-  matEditId = id;
-  document.getElementById('mat-modal-title').innerHTML = 'Materiala editatu <button class="mclose" onclick="closeM('mat')">✕</button>';
-  document.getElementById('mat-name').value  = m.name;
-  document.getElementById('mat-cat').value   = m.category;
-  document.getElementById('mat-qty').value   = m.quantity;
-  document.getElementById('mat-notes').value = m.notes || '';
-  openM('mat');
-}
+    function openEditMat(id) {
+      const m = materials.find(x => x.id === id); if (!m) return;
+      matEditId = id;
+      document.getElementById('mat-modal-title').innerHTML = 'Materiala editatu <button class="mclose" onclick="closeM('mat')">✕</button>';
+      document.getElementById('mat-name').value = m.name;
+      document.getElementById('mat-cat').value = m.category;
+      document.getElementById('mat-qty').value = m.quantity;
+      document.getElementById('mat-notes').value = m.notes || '';
+      openM('mat');
+    }
 
-async function saveMat() {
-  const name     = document.getElementById('mat-name').value.trim();
-  const category = document.getElementById('mat-cat').value;
-  const quantity = Math.max(0, parseInt(document.getElementById('mat-qty').value) || 0);
-  const notes    = document.getElementById('mat-notes').value;
-  if (!name) { toast('Idatzi izena', 'warn'); return; }
-  const payload = { name, category, quantity, notes };
-  const { error } = matEditId
-    ? await sb.from('materials').update(payload).eq('id', matEditId)
-    : await sb.from('materials').insert({ ...payload, created_by: userId });
-  if (error) { toast(error.message, 'bad'); return; }
-  await loadMaterials();
-  closeM('mat'); renderMaterials(); toast(matEditId ? 'Materiala eguneratuta ✓' : 'Materiala gordeta ✓');
-}
+    async function saveMat() {
+      const name = document.getElementById('mat-name').value.trim();
+      const category = document.getElementById('mat-cat').value;
+      const quantity = Math.max(0, parseInt(document.getElementById('mat-qty').value) || 0);
+      const notes = document.getElementById('mat-notes').value;
+      if (!name) { toast('Idatzi izena', 'warn'); return; }
+      const payload = { name, category, quantity, notes };
+      const { error } = matEditId
+        ? await sb.from('materials').update(payload).eq('id', matEditId)
+        : await sb.from('materials').insert({ ...payload, created_by: userId });
+      if (error) { toast(error.message, 'bad'); return; }
+      await loadMaterials();
+      closeM('mat'); renderMaterials(); toast(matEditId ? 'Materiala eguneratuta ✓' : 'Materiala gordeta ✓');
+    }
 
-async function deleteMat(id) {
-  const m = materials.find(x => x.id === id);
-  if (!confirm(`"${m?.name}" ezabatu nahi duzu?`)) return;
-  const { error } = await sb.from('materials').delete().eq('id', id);
-  if (error) { toast(error.message, 'bad'); return; }
-  await loadMaterials(); renderMaterials(); toast('Materiala ezabatuta');
-}
+    async function deleteMat(id) {
+      const m = materials.find(x => x.id === id);
+      if (!confirm(`"${m?.name}" ezabatu nahi duzu?`)) return;
+      const { error } = await sb.from('materials').delete().eq('id', id);
+      if (error) { toast(error.message, 'bad'); return; }
+      await loadMaterials(); renderMaterials(); toast('Materiala ezabatuta');
+    }
 
 
-boot();
-</script>
+    boot();
+  </script>
 </body>
+
 </html>
