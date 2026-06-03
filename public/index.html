@@ -2305,7 +2305,7 @@ Behaketak: ${document.getElementById('aino').value || 'bat ere ez'}`;
 
     function openAddMat() {
       matEditId = null;
-      document.getElementById('mat-modal-title').innerHTML = 'Material berria <button class="mclose" onclick="closeM('mat')">✕</button>';
+      document.getElementById('mat-modal-title').innerHTML = `Material berria <button class="mclose" onclick="closeM('mat')">✕</button>`;
       document.getElementById('mat-name').value = '';
       document.getElementById('mat-cat').value = 'kaxak';
       document.getElementById('mat-qty').value = '1';
@@ -2316,7 +2316,7 @@ Behaketak: ${document.getElementById('aino').value || 'bat ere ez'}`;
     function openEditMat(id) {
       const m = materials.find(x => x.id === id); if (!m) return;
       matEditId = id;
-      document.getElementById('mat-modal-title').innerHTML = 'Materiala editatu <button class="mclose" onclick="closeM('mat')">✕</button>';
+      document.getElementById('mat-modal-title').innerHTML = `Materiala editatu <button class="mclose" onclick="closeM('mat')">✕</button>`;
       document.getElementById('mat-name').value = m.name;
       document.getElementById('mat-cat').value = m.category;
       document.getElementById('mat-qty').value = m.quantity;
