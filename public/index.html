@@ -25,7 +25,7 @@
       --bad-bg: #FCEAEA;
       --border: rgba(150, 95, 25, .2);
       --sh: 0 2px 14px rgba(40, 20, 0, .13);
-      --cell: 68px;
+      --cell: 100px;
     }
 
     * {
@@ -411,7 +411,8 @@
       -webkit-overflow-scrolling: touch;
       display: flex;
       align-items: flex-start;
-      justify-content: center
+      justify-content: center;
+      align-items: center;
     }
 
     .mhint {
@@ -453,7 +454,8 @@
 
     .clbl {
       width: var(--cell);
-      height: 22px
+      height: 22px;
+      margin: 10px;
     }
 
     .rlbl {
@@ -465,12 +467,15 @@
       width: var(--cell);
       height: var(--cell);
       flex-shrink: 0;
-      border: .5px solid rgba(0, 0, 0, .35);
+      border: 1px solid rgb(169 169 169 / 72%);
+      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: background .12s
+      transition: background .12s;
+      box-shadow: 0 3px 10px rgb(149 149 149 / 66%);
+      margin: 10px;
     }
 
     .cell:hover {
@@ -1588,7 +1593,7 @@
         </div>
         <div class="ff">
           <label>Errenkadak (3 – 15)</label>
-          <input id="cfg-rows" type="number" min="3" max="15">
+          <input id="cfg-rows" type="number" min="1" max="15">
           <div style="font-size:10px;color:var(--bark-l);margin-top:3px">Orain: <span id="cfg-rows-now"></span></div>
         </div>
       </div>
