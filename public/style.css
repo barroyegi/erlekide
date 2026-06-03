@@ -850,8 +850,15 @@ textarea { resize: vertical; min-height: 58px; line-height: 1.55 }
   .movl { align-items: flex-end }
   .mbox { border-radius: 20px 20px 0 0; max-height: 85vh }
 
-  #cv-wrap { align-items: flex-start; justify-content: flex-start }
+  #cv-wrap { align-items: flex-start; justify-content: flex-start; overflow: auto }
   .hlogo { font-size: 22px }
+
+  /* Grid rotado 90° CW: contra-rotamos el contenido para que aparezca recto */
+  .tok { transform: rotate(-90deg) }
+  .tok:hover { transform: rotate(-90deg) scale(1.04); filter: drop-shadow(0 6px 12px rgba(40,20,0,.35)) }
+  .cempty { transform: rotate(-90deg) }
+  .clbl { transform: rotate(-90deg) }
+  .rlbl { transform: rotate(-90deg) }
 }
 
 @media (min-width: 701px) {

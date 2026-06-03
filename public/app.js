@@ -196,6 +196,41 @@ function buildGrid() {
   }
   h += '</div>';
   g.innerHTML = h;
+  // Necesitamos dos frames para que el navegador calcule el layout antes de medir
+  requestAnimationFrame(() => requestAnimationFrame(applyMobileRotation));
+}
+
+function applyMobileRotation() {
+  const agrid = document.getElementById('agrid');
+  const gcont = agrid && agrid.querySelector('.gcont');
+  if (!gcont) return;
+
+  if (window.innerWidth > 700) {
+    // Desktop: sin rotación
+    gcont.style.cssText = '';
+    agrid.style.position = '';
+    agrid.style.width = '';
+    agrid.style.height = '';
+    return;
+  }
+
+  const W = gcont.offsetWidth;
+  const H = gcont.offsetHeight;
+  if (!W || !H) return;
+
+  // Rotar 90° CW alrededor de la esquina superior-izquierda.
+  // Tras la rotación el elemento aparece W píxeles más arriba del origen,
+  // así que lo bajamos W px con `top`.
+  gcont.style.transformOrigin = 'top left';
+  gcont.style.transform = 'rotate(90deg)';
+  gcont.style.position = 'absolute';
+  gcont.style.top = W + 'px';
+  gcont.style.left = '0';
+
+  // El contenedor adopta las dimensiones visuales tras la rotación
+  agrid.style.position = 'relative';
+  agrid.style.width = H + 'px';
+  agrid.style.height = W + 'px';
 }
 
 function renderAll() { renderGrid(); renderSB(); }
@@ -388,6 +423,7 @@ function openEdit(id) {
   document.getElementById('ehr').value = h.race;
   document.getElementById('ehs').value = h.status;
   document.getElementById('ehf').value = h.frames ?? '';
+  document.getElementById('ehc').value = h.color || '#C8780A';
   document.getElementById('ehno').value = h.notes || '';
   fillPosSelects('ehpy', 'ehpx', h.grid_x, h.grid_y);
   resetDelBtn();
@@ -405,6 +441,7 @@ async function updHive() {
     type: document.getElementById('eht').value,
     race: document.getElementById('ehr').value,
     status: document.getElementById('ehs').value,
+    color: document.getElementById('ehc').value,
     notes: document.getElementById('ehno').value,
     frames,
     grid_x: pos.x, grid_y: pos.y
@@ -796,5 +833,9 @@ async function deleteMat(id) {
   if (error) { toast(error.message, 'bad'); return; }
   await loadMaterials(); renderMaterials(); toast('Materiala ezabatuta');
 }
+
+window.addEventListener('resize', () => {
+  if (document.getElementById('agrid').querySelector('.gcont')) applyMobileRotation();
+});
 
 boot();
