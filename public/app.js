@@ -211,6 +211,7 @@ function applyMobileRotation() {
     agrid.style.position = '';
     agrid.style.width = '';
     agrid.style.height = '';
+    agrid.style.margin = '';
     return;
   }
 
@@ -231,6 +232,7 @@ function applyMobileRotation() {
   agrid.style.position = 'relative';
   agrid.style.width = H + 'px';
   agrid.style.height = W + 'px';
+  agrid.style.margin = 'auto'; // centra en el flex container; colapsa a 0 cuando desborda
 }
 
 function renderAll() { renderGrid(); renderSB(); }
