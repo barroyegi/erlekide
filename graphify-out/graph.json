@@ -1,0 +1,3181 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "label": "settings.json",
+      "file_type": "code",
+      "source_file": ".claude/settings.json",
+      "source_location": "L1",
+      "id": "claude_settings",
+      "community": 13,
+      "norm_label": "settings.json"
+    },
+    {
+      "label": "hooks",
+      "file_type": "code",
+      "source_file": ".claude/settings.json",
+      "source_location": "L2",
+      "id": "claude_settings_hooks",
+      "community": 13,
+      "norm_label": "hooks"
+    },
+    {
+      "label": "PreToolUse",
+      "file_type": "code",
+      "source_file": ".claude/settings.json",
+      "source_location": "L3",
+      "id": "claude_settings_hooks_pretooluse",
+      "community": 13,
+      "norm_label": "pretooluse"
+    },
+    {
+      "label": "settings.local.json",
+      "file_type": "code",
+      "source_file": ".claude/settings.local.json",
+      "source_location": "L1",
+      "id": "claude_settings_local",
+      "community": 14,
+      "norm_label": "settings.local.json"
+    },
+    {
+      "label": "permissions",
+      "file_type": "code",
+      "source_file": ".claude/settings.local.json",
+      "source_location": "L2",
+      "id": "claude_settings_local_permissions",
+      "community": 14,
+      "norm_label": "permissions"
+    },
+    {
+      "label": "allow",
+      "file_type": "code",
+      "source_file": ".claude/settings.local.json",
+      "source_location": "L3",
+      "id": "claude_settings_local_permissions_allow",
+      "community": 14,
+      "norm_label": "allow"
+    },
+    {
+      "label": "analyze.js",
+      "file_type": "code",
+      "source_file": "api/analyze.js",
+      "source_location": "L1",
+      "id": "api_analyze",
+      "community": 17,
+      "norm_label": "analyze.js"
+    },
+    {
+      "label": "config.js",
+      "file_type": "code",
+      "source_file": "api/config.js",
+      "source_location": "L1",
+      "id": "api_config",
+      "community": 18,
+      "norm_label": "config.js"
+    },
+    {
+      "label": "package.json",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L1",
+      "id": "package",
+      "community": 5,
+      "norm_label": "package.json"
+    },
+    {
+      "label": "name",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L2",
+      "id": "package_name",
+      "community": 5,
+      "norm_label": "name"
+    },
+    {
+      "label": "version",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L3",
+      "id": "package_version",
+      "community": 5,
+      "norm_label": "version"
+    },
+    {
+      "label": "description",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L4",
+      "id": "package_description",
+      "community": 5,
+      "norm_label": "description"
+    },
+    {
+      "label": "engines",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L5",
+      "id": "package_engines",
+      "community": 5,
+      "norm_label": "engines"
+    },
+    {
+      "label": "node",
+      "file_type": "code",
+      "source_file": "package.json",
+      "source_location": "L6",
+      "id": "package_engines_node",
+      "community": 5,
+      "norm_label": "node"
+    },
+    {
+      "label": "app.js",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L1",
+      "id": "public_app",
+      "community": 2,
+      "norm_label": "app.js"
+    },
+    {
+      "label": "hives",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L5",
+      "id": "public_app_hives",
+      "community": 2,
+      "norm_label": "hives"
+    },
+    {
+      "label": "insps",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L5",
+      "id": "public_app_insps",
+      "community": 2,
+      "norm_label": "insps"
+    },
+    {
+      "label": "expenses",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L9",
+      "id": "public_app_expenses",
+      "community": 2,
+      "norm_label": "expenses"
+    },
+    {
+      "label": "members",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L9",
+      "id": "public_app_members",
+      "community": 2,
+      "norm_label": "members"
+    },
+    {
+      "label": "materials",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L9",
+      "id": "public_app_materials",
+      "community": 2,
+      "norm_label": "materials"
+    },
+    {
+      "label": "initSB()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L14",
+      "id": "public_app_initsb",
+      "community": 11,
+      "norm_label": "initsb()"
+    },
+    {
+      "label": "boot()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L22",
+      "id": "public_app_boot",
+      "community": 11,
+      "norm_label": "boot()"
+    },
+    {
+      "label": "showTab()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L37",
+      "id": "public_app_showtab",
+      "community": 2,
+      "norm_label": "showtab()"
+    },
+    {
+      "label": "doLogin()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L44",
+      "id": "public_app_dologin",
+      "community": 4,
+      "norm_label": "dologin()"
+    },
+    {
+      "label": "doReg()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L59",
+      "id": "public_app_doreg",
+      "community": 4,
+      "norm_label": "doreg()"
+    },
+    {
+      "label": "doLogout()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L88",
+      "id": "public_app_dologout",
+      "community": 11,
+      "norm_label": "dologout()"
+    },
+    {
+      "label": "showLogin()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L96",
+      "id": "public_app_showlogin",
+      "community": 11,
+      "norm_label": "showlogin()"
+    },
+    {
+      "label": "enterApp()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L101",
+      "id": "public_app_enterapp",
+      "community": 4,
+      "norm_label": "enterapp()"
+    },
+    {
+      "label": "loadHives()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L120",
+      "id": "public_app_loadhives",
+      "community": 4,
+      "norm_label": "loadhives()"
+    },
+    {
+      "label": "loadInsps()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L125",
+      "id": "public_app_loadinsps",
+      "community": 1,
+      "norm_label": "loadinsps()"
+    },
+    {
+      "label": "loadSettings()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L132",
+      "id": "public_app_loadsettings",
+      "community": 4,
+      "norm_label": "loadsettings()"
+    },
+    {
+      "label": "updateHint()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L140",
+      "id": "public_app_updatehint",
+      "community": 4,
+      "norm_label": "updatehint()"
+    },
+    {
+      "label": "openCfg()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L145",
+      "id": "public_app_opencfg",
+      "community": 10,
+      "norm_label": "opencfg()"
+    },
+    {
+      "label": "saveSettings()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L156",
+      "id": "public_app_savesettings",
+      "community": 4,
+      "norm_label": "savesettings()"
+    },
+    {
+      "label": "buildGrid()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L186",
+      "id": "public_app_buildgrid",
+      "community": 4,
+      "norm_label": "buildgrid()"
+    },
+    {
+      "label": "applyMobileRotation()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L203",
+      "id": "public_app_applymobilerotation",
+      "community": 2,
+      "norm_label": "applymobilerotation()"
+    },
+    {
+      "label": "renderAll()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L243",
+      "id": "public_app_renderall",
+      "community": 1,
+      "norm_label": "renderall()"
+    },
+    {
+      "label": "renderGrid()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L245",
+      "id": "public_app_rendergrid",
+      "community": 1,
+      "norm_label": "rendergrid()"
+    },
+    {
+      "label": "renderSB()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L269",
+      "id": "public_app_rendersb",
+      "community": 1,
+      "norm_label": "rendersb()"
+    },
+    {
+      "label": "renderDP()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L291",
+      "id": "public_app_renderdp",
+      "community": 1,
+      "norm_label": "renderdp()"
+    },
+    {
+      "label": "selHive()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L338",
+      "id": "public_app_selhive",
+      "community": 1,
+      "norm_label": "selhive()"
+    },
+    {
+      "label": "ds()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L341",
+      "id": "public_app_ds",
+      "community": 2,
+      "norm_label": "ds()"
+    },
+    {
+      "label": "de()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L342",
+      "id": "public_app_de",
+      "community": 2,
+      "norm_label": "de()"
+    },
+    {
+      "label": "ov()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L343",
+      "id": "public_app_ov",
+      "community": 2,
+      "norm_label": "ov()"
+    },
+    {
+      "label": "ol()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L344",
+      "id": "public_app_ol",
+      "community": 2,
+      "norm_label": "ol()"
+    },
+    {
+      "label": "od()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L346",
+      "id": "public_app_od",
+      "community": 1,
+      "norm_label": "od()"
+    },
+    {
+      "label": "cc()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L362",
+      "id": "public_app_cc",
+      "community": 8,
+      "norm_label": "cc()"
+    },
+    {
+      "label": "tc()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L366",
+      "id": "public_app_tc",
+      "community": 1,
+      "norm_label": "tc()"
+    },
+    {
+      "label": "openM()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L369",
+      "id": "public_app_openm",
+      "community": 10,
+      "norm_label": "openm()"
+    },
+    {
+      "label": "closeM()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L370",
+      "id": "public_app_closem",
+      "community": 1,
+      "norm_label": "closem()"
+    },
+    {
+      "label": "fillPosSelects()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L373",
+      "id": "public_app_fillposselects",
+      "community": 8,
+      "norm_label": "fillposselects()"
+    },
+    {
+      "label": "readPosSelects()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L384",
+      "id": "public_app_readposselects",
+      "community": 1,
+      "norm_label": "readposselects()"
+    },
+    {
+      "label": "openAddModal()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L394",
+      "id": "public_app_openaddmodal",
+      "community": 8,
+      "norm_label": "openaddmodal()"
+    },
+    {
+      "label": "saveHive()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L407",
+      "id": "public_app_savehive",
+      "community": 1,
+      "norm_label": "savehive()"
+    },
+    {
+      "label": "openEdit()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L426",
+      "id": "public_app_openedit",
+      "community": 8,
+      "norm_label": "openedit()"
+    },
+    {
+      "label": "updHive()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L440",
+      "id": "public_app_updhive",
+      "community": 1,
+      "norm_label": "updhive()"
+    },
+    {
+      "label": "stepDelete()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L463",
+      "id": "public_app_stepdelete",
+      "community": 1,
+      "norm_label": "stepdelete()"
+    },
+    {
+      "label": "resetDelBtn()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L478",
+      "id": "public_app_resetdelbtn",
+      "community": 8,
+      "norm_label": "resetdelbtn()"
+    },
+    {
+      "label": "delHive()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L487",
+      "id": "public_app_delhive",
+      "community": 1,
+      "norm_label": "delhive()"
+    },
+    {
+      "label": "openInsp()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L494",
+      "id": "public_app_openinsp",
+      "community": 10,
+      "norm_label": "openinsp()"
+    },
+    {
+      "label": "openEditInsp()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L510",
+      "id": "public_app_openeditinsp",
+      "community": 12,
+      "norm_label": "openeditinsp()"
+    },
+    {
+      "label": "runAI()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L528",
+      "id": "public_app_runai",
+      "community": 12,
+      "norm_label": "runai()"
+    },
+    {
+      "label": "saveInsp()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L549",
+      "id": "public_app_saveinsp",
+      "community": 1,
+      "norm_label": "saveinsp()"
+    },
+    {
+      "label": "esc()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L581",
+      "id": "public_app_esc",
+      "community": 12,
+      "norm_label": "esc()"
+    },
+    {
+      "label": "toast()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L583",
+      "id": "public_app_toast",
+      "community": 1,
+      "norm_label": "toast()"
+    },
+    {
+      "label": "setMainView()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L591",
+      "id": "public_app_setmainview",
+      "community": 9,
+      "norm_label": "setmainview()"
+    },
+    {
+      "label": "loadExpenses()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L605",
+      "id": "public_app_loadexpenses",
+      "community": 7,
+      "norm_label": "loadexpenses()"
+    },
+    {
+      "label": "loadMembers()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L609",
+      "id": "public_app_loadmembers",
+      "community": 6,
+      "norm_label": "loadmembers()"
+    },
+    {
+      "label": "loadMaterials()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L613",
+      "id": "public_app_loadmaterials",
+      "community": 9,
+      "norm_label": "loadmaterials()"
+    },
+    {
+      "label": "calcDebts()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L619",
+      "id": "public_app_calcdebts",
+      "community": 7,
+      "norm_label": "calcdebts()"
+    },
+    {
+      "label": "renderExpenses()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L644",
+      "id": "public_app_renderexpenses",
+      "community": 7,
+      "norm_label": "renderexpenses()"
+    },
+    {
+      "label": "openAddExp()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L697",
+      "id": "public_app_openaddexp",
+      "community": 12,
+      "norm_label": "openaddexp()"
+    },
+    {
+      "label": "saveExp()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L711",
+      "id": "public_app_saveexp",
+      "community": 7,
+      "norm_label": "saveexp()"
+    },
+    {
+      "label": "deleteExp()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L725",
+      "id": "public_app_deleteexp",
+      "community": 7,
+      "norm_label": "deleteexp()"
+    },
+    {
+      "label": "openMembers()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L733",
+      "id": "public_app_openmembers",
+      "community": 6,
+      "norm_label": "openmembers()"
+    },
+    {
+      "label": "renderMembersList()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L739",
+      "id": "public_app_rendermemberslist",
+      "community": 6,
+      "norm_label": "rendermemberslist()"
+    },
+    {
+      "label": "addMember()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L747",
+      "id": "public_app_addmember",
+      "community": 6,
+      "norm_label": "addmember()"
+    },
+    {
+      "label": "deleteMember()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L758",
+      "id": "public_app_deletemember",
+      "community": 6,
+      "norm_label": "deletemember()"
+    },
+    {
+      "label": "MAT_ICONS",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L768",
+      "id": "public_app_mat_icons",
+      "community": 2,
+      "norm_label": "mat_icons"
+    },
+    {
+      "label": "MAT_LABELS",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L769",
+      "id": "public_app_mat_labels",
+      "community": 2,
+      "norm_label": "mat_labels"
+    },
+    {
+      "label": "renderMaterials()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L771",
+      "id": "public_app_rendermaterials",
+      "community": 9,
+      "norm_label": "rendermaterials()"
+    },
+    {
+      "label": "openAddMat()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L800",
+      "id": "public_app_openaddmat",
+      "community": 10,
+      "norm_label": "openaddmat()"
+    },
+    {
+      "label": "openEditMat()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L810",
+      "id": "public_app_openeditmat",
+      "community": 10,
+      "norm_label": "openeditmat()"
+    },
+    {
+      "label": "saveMat()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L821",
+      "id": "public_app_savemat",
+      "community": 9,
+      "norm_label": "savemat()"
+    },
+    {
+      "label": "deleteMat()",
+      "file_type": "code",
+      "source_file": "public/app.js",
+      "source_location": "L836",
+      "id": "public_app_deletemat",
+      "community": 9,
+      "norm_label": "deletemat()"
+    },
+    {
+      "label": "server.js",
+      "file_type": "code",
+      "source_file": "server.js",
+      "source_location": "L1",
+      "id": "server",
+      "community": 3,
+      "norm_label": "server.js"
+    },
+    {
+      "label": "http",
+      "file_type": "code",
+      "source_file": "server.js",
+      "source_location": "L5",
+      "id": "server_http",
+      "community": 3,
+      "norm_label": "http"
+    },
+    {
+      "label": "fs",
+      "file_type": "code",
+      "source_file": "server.js",
+      "source_location": "L6",
+      "id": "server_fs",
+      "community": 3,
+      "norm_label": "fs"
+    },
+    {
+      "label": "path",
+      "file_type": "code",
+      "source_file": "server.js",
+      "source_location": "L7",
+      "id": "server_path",
+      "community": 3,
+      "norm_label": "path"
+    },
+    {
+      "label": "url",
+      "file_type": "code",
+      "source_file": "server.js",
+      "source_location": "L8",
+      "id": "server_url",
+      "community": 3,
+      "norm_label": "url"
+    },
+    {
+      "label": "envPath",
+      "file_type": "code",
+      "source_file": "server.js",
+      "source_location": "L11",
+      "id": "server_envpath",
+      "community": 3,
+      "norm_label": "envpath"
+    },
+    {
+      "label": "PUBLIC",
+      "file_type": "code",
+      "source_file": "server.js",
+      "source_location": "L20",
+      "id": "server_public",
+      "community": 3,
+      "norm_label": "public"
+    },
+    {
+      "label": "MIME",
+      "file_type": "code",
+      "source_file": "server.js",
+      "source_location": "L22",
+      "id": "server_mime",
+      "community": 3,
+      "norm_label": "mime"
+    },
+    {
+      "label": "serveFile()",
+      "file_type": "code",
+      "source_file": "server.js",
+      "source_location": "L32",
+      "id": "server_servefile",
+      "community": 3,
+      "norm_label": "servefile()"
+    },
+    {
+      "label": "json()",
+      "file_type": "code",
+      "source_file": "server.js",
+      "source_location": "L41",
+      "id": "server_json",
+      "community": 3,
+      "norm_label": "json()"
+    },
+    {
+      "label": "readBody()",
+      "file_type": "code",
+      "source_file": "server.js",
+      "source_location": "L47",
+      "id": "server_readbody",
+      "community": 3,
+      "norm_label": "readbody()"
+    },
+    {
+      "label": "server",
+      "file_type": "code",
+      "source_file": "server.js",
+      "source_location": "L56",
+      "id": "server_server",
+      "community": 3,
+      "norm_label": "server"
+    },
+    {
+      "label": "vercel.json",
+      "file_type": "code",
+      "source_file": "vercel.json",
+      "source_location": "L1",
+      "id": "vercel",
+      "community": 15,
+      "norm_label": "vercel.json"
+    },
+    {
+      "label": "version",
+      "file_type": "code",
+      "source_file": "vercel.json",
+      "source_location": "L2",
+      "id": "vercel_version",
+      "community": 15,
+      "norm_label": "version"
+    },
+    {
+      "label": "rewrites",
+      "file_type": "code",
+      "source_file": "vercel.json",
+      "source_location": "L3",
+      "id": "vercel_rewrites",
+      "community": 15,
+      "norm_label": "rewrites"
+    },
+    {
+      "label": "CLAUDE.md",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L1",
+      "id": "claude",
+      "community": 16,
+      "norm_label": "claude.md"
+    },
+    {
+      "label": "graphify",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L1",
+      "id": "claude_graphify",
+      "community": 16,
+      "norm_label": "graphify"
+    },
+    {
+      "label": "README.md",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L1",
+      "id": "readme",
+      "community": 0,
+      "norm_label": "readme.md"
+    },
+    {
+      "label": "\ud83d\udc1d Erlekide \u2014 Erlategiaren Kudeaketa",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L1",
+      "id": "readme_erlekide_erlategiaren_kudeaketa",
+      "community": 0,
+      "norm_label": "\ud83d\udc1d erlekide \u2014 erlategiaren kudeaketa"
+    },
+    {
+      "label": "\ud83c\udfd7\ufe0f Arkitektura",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L8",
+      "id": "readme_arkitektura",
+      "community": 0,
+      "norm_label": "\ud83c\udfd7\ufe0f arkitektura"
+    },
+    {
+      "label": "\ud83d\ude80 Despliege pausoak / Pasos de despliegue",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L24",
+      "id": "readme_despliege_pausoak_pasos_de_despliegue",
+      "community": 0,
+      "norm_label": "\ud83d\ude80 despliege pausoak / pasos de despliegue"
+    },
+    {
+      "label": "1\ufe0f\u20e3 Supabase proiektua sortu",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L26",
+      "id": "readme_1_supabase_proiektua_sortu",
+      "community": 0,
+      "norm_label": "1\ufe0f\u20e3 supabase proiektua sortu"
+    },
+    {
+      "label": "2\ufe0f\u20e3 Datu-basea sortu",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L31",
+      "id": "readme_2_datu_basea_sortu",
+      "community": 0,
+      "norm_label": "2\ufe0f\u20e3 datu-basea sortu"
+    },
+    {
+      "label": "3\ufe0f\u20e3 Email berrespena desaktibatu \u26a0\ufe0f (garrantzitsua!)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L36",
+      "id": "readme_3_email_berrespena_desaktibatu_garrantzitsua",
+      "community": 0,
+      "norm_label": "3\ufe0f\u20e3 email berrespena desaktibatu \u26a0\ufe0f (garrantzitsua!)"
+    },
+    {
+      "label": "4\ufe0f\u20e3 Supabase gakoak kopiatu",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L45",
+      "id": "readme_4_supabase_gakoak_kopiatu",
+      "community": 0,
+      "norm_label": "4\ufe0f\u20e3 supabase gakoak kopiatu"
+    },
+    {
+      "label": "5\ufe0f\u20e3 GitHub-era igo (aukerazkoa baina gomendatua)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L51",
+      "id": "readme_5_github_era_igo_aukerazkoa_baina_gomendatua",
+      "community": 0,
+      "norm_label": "5\ufe0f\u20e3 github-era igo (aukerazkoa baina gomendatua)"
+    },
+    {
+      "label": "6\ufe0f\u20e3 Vercel-en desplegatu",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L61",
+      "id": "readme_6_vercel_en_desplegatu",
+      "community": 0,
+      "norm_label": "6\ufe0f\u20e3 vercel-en desplegatu"
+    },
+    {
+      "label": "7\ufe0f\u20e3 Ingurune-aldagaiak konfiguratu",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L76",
+      "id": "readme_7_ingurune_aldagaiak_konfiguratu",
+      "community": 0,
+      "norm_label": "7\ufe0f\u20e3 ingurune-aldagaiak konfiguratu"
+    },
+    {
+      "label": "8\ufe0f\u20e3 Prest! \ud83c\udf89",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L88",
+      "id": "readme_8_prest",
+      "community": 0,
+      "norm_label": "8\ufe0f\u20e3 prest! \ud83c\udf89"
+    },
+    {
+      "label": "\ud83d\udd11 Lehen erabiltzailea sortu",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L94",
+      "id": "readme_lehen_erabiltzailea_sortu",
+      "community": 0,
+      "norm_label": "\ud83d\udd11 lehen erabiltzailea sortu"
+    },
+    {
+      "label": "\ud83c\udf0d Domeinua pertsonalizatu (aukerazkoa)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L102",
+      "id": "readme_domeinua_pertsonalizatu_aukerazkoa",
+      "community": 0,
+      "norm_label": "\ud83c\udf0d domeinua pertsonalizatu (aukerazkoa)"
+    },
+    {
+      "label": "\ud83e\udd16 IA analisia (aukerazkoa)",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L108",
+      "id": "readme_ia_analisia_aukerazkoa",
+      "community": 0,
+      "norm_label": "\ud83e\udd16 ia analisia (aukerazkoa)"
+    },
+    {
+      "label": "\ud83d\udcc1 Egitura / Estructura",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L114",
+      "id": "readme_egitura_estructura",
+      "community": 0,
+      "norm_label": "\ud83d\udcc1 egitura / estructura"
+    },
+    {
+      "label": "\ud83d\udd12 Segurtasuna",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L132",
+      "id": "readme_segurtasuna",
+      "community": 0,
+      "norm_label": "\ud83d\udd12 segurtasuna"
+    },
+    {
+      "label": "\ud83d\udc1b Arazoak / Problemas comunes",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L141",
+      "id": "readme_arazoak_problemas_comunes",
+      "community": 0,
+      "norm_label": "\ud83d\udc1b arazoak / problemas comunes"
+    }
+  ],
+  "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".claude/settings.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "claude_settings",
+      "target": "claude_settings_hooks",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".claude/settings.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "claude_settings_hooks",
+      "target": "claude_settings_hooks_pretooluse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".claude/settings.local.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "claude_settings_local",
+      "target": "claude_settings_local_permissions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": ".claude/settings.local.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "claude_settings_local_permissions",
+      "target": "claude_settings_local_permissions_allow",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "package",
+      "target": "package_description",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "package",
+      "target": "package_engines",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "package",
+      "target": "package_name",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "package",
+      "target": "package_version",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "package.json",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "package_engines",
+      "target": "package_engines_node",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L747",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_addmember",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L203",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_applymobilerotation",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_boot",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L186",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_buildgrid",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L619",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_calcdebts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L362",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_cc",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L370",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_closem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L342",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_de",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L725",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_deleteexp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L836",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_deletemat",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L758",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_deletemember",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L487",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_delhive",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L44",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_dologin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L88",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_dologout",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L59",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_doreg",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L341",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_ds",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L101",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_enterapp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L581",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_esc",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_expenses",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L373",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_fillposselects",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_hives",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_initsb",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_insps",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L605",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_loadexpenses",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L120",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_loadhives",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L125",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_loadinsps",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L613",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_loadmaterials",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L609",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_loadmembers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L132",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_loadsettings",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L768",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_mat_icons",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L769",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_mat_labels",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_materials",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_members",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L346",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_od",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L344",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_ol",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L697",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_openaddexp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L800",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_openaddmat",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L394",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_openaddmodal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L145",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_opencfg",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L426",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_openedit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L510",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_openeditinsp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L810",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_openeditmat",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L494",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_openinsp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L369",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_openm",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L733",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_openmembers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L343",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_ov",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L384",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_readposselects",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L243",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_renderall",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L291",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_renderdp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L644",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_renderexpenses",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L245",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_rendergrid",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L771",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_rendermaterials",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L739",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_rendermemberslist",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L269",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_rendersb",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L478",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_resetdelbtn",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L528",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_runai",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L711",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_saveexp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L407",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_savehive",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L549",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_saveinsp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L821",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_savemat",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L156",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_savesettings",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L338",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_selhive",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L591",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_setmainview",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L96",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_showlogin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L37",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_showtab",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L463",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_stepdelete",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L366",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_tc",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L583",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_toast",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L140",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_updatehint",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L440",
+      "weight": 1.0,
+      "source": "public_app",
+      "target": "public_app_updhive",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "public_app_boot",
+      "target": "public_app_initsb",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "public_app_boot",
+      "target": "public_app_enterapp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L31",
+      "weight": 1.0,
+      "source": "public_app_boot",
+      "target": "public_app_showlogin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "public_app_boot",
+      "target": "public_app_toast",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L55",
+      "weight": 1.0,
+      "source": "public_app_dologin",
+      "target": "public_app_enterapp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L84",
+      "weight": 1.0,
+      "source": "public_app_doreg",
+      "target": "public_app_enterapp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L93",
+      "weight": 1.0,
+      "source": "public_app_dologout",
+      "target": "public_app_showlogin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L109",
+      "weight": 1.0,
+      "source": "public_app_enterapp",
+      "target": "public_app_buildgrid",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L108",
+      "weight": 1.0,
+      "source": "public_app_enterapp",
+      "target": "public_app_loadexpenses",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L108",
+      "weight": 1.0,
+      "source": "public_app_enterapp",
+      "target": "public_app_loadhives",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L108",
+      "weight": 1.0,
+      "source": "public_app_enterapp",
+      "target": "public_app_loadmaterials",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L108",
+      "weight": 1.0,
+      "source": "public_app_enterapp",
+      "target": "public_app_loadmembers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L108",
+      "weight": 1.0,
+      "source": "public_app_enterapp",
+      "target": "public_app_loadsettings",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L110",
+      "weight": 1.0,
+      "source": "public_app_enterapp",
+      "target": "public_app_renderall",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L294",
+      "weight": 1.0,
+      "source": "public_app_renderdp",
+      "target": "public_app_loadinsps",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L137",
+      "weight": 1.0,
+      "source": "public_app_loadsettings",
+      "target": "public_app_updatehint",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L180",
+      "weight": 1.0,
+      "source": "public_app_savesettings",
+      "target": "public_app_updatehint",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L153",
+      "weight": 1.0,
+      "source": "public_app_opencfg",
+      "target": "public_app_openm",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L181",
+      "weight": 1.0,
+      "source": "public_app_savesettings",
+      "target": "public_app_buildgrid",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L179",
+      "weight": 1.0,
+      "source": "public_app_savesettings",
+      "target": "public_app_closem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L182",
+      "weight": 1.0,
+      "source": "public_app_savesettings",
+      "target": "public_app_renderall",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L183",
+      "weight": 1.0,
+      "source": "public_app_savesettings",
+      "target": "public_app_toast",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L491",
+      "weight": 1.0,
+      "source": "public_app_delhive",
+      "target": "public_app_renderall",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L243",
+      "weight": 1.0,
+      "source": "public_app_renderall",
+      "target": "public_app_rendergrid",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L243",
+      "weight": 1.0,
+      "source": "public_app_renderall",
+      "target": "public_app_rendersb",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L423",
+      "weight": 1.0,
+      "source": "public_app_savehive",
+      "target": "public_app_renderall",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L576",
+      "weight": 1.0,
+      "source": "public_app_saveinsp",
+      "target": "public_app_renderall",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L458",
+      "weight": 1.0,
+      "source": "public_app_updhive",
+      "target": "public_app_renderall",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L355",
+      "weight": 1.0,
+      "source": "public_app_od",
+      "target": "public_app_rendergrid",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L338",
+      "weight": 1.0,
+      "source": "public_app_selhive",
+      "target": "public_app_rendersb",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L301",
+      "weight": 1.0,
+      "source": "public_app_renderdp",
+      "target": "public_app_esc",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L335",
+      "weight": 1.0,
+      "source": "public_app_renderdp",
+      "target": "public_app_openm",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L577",
+      "weight": 1.0,
+      "source": "public_app_saveinsp",
+      "target": "public_app_renderdp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L338",
+      "weight": 1.0,
+      "source": "public_app_selhive",
+      "target": "public_app_renderdp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L459",
+      "weight": 1.0,
+      "source": "public_app_updhive",
+      "target": "public_app_renderdp",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L364",
+      "weight": 1.0,
+      "source": "public_app_cc",
+      "target": "public_app_selhive",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L423",
+      "weight": 1.0,
+      "source": "public_app_savehive",
+      "target": "public_app_selhive",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L366",
+      "weight": 1.0,
+      "source": "public_app_tc",
+      "target": "public_app_selhive",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L351",
+      "weight": 1.0,
+      "source": "public_app_od",
+      "target": "public_app_toast",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L364",
+      "weight": 1.0,
+      "source": "public_app_cc",
+      "target": "public_app_openaddmodal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L708",
+      "weight": 1.0,
+      "source": "public_app_openaddexp",
+      "target": "public_app_openm",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L807",
+      "weight": 1.0,
+      "source": "public_app_openaddmat",
+      "target": "public_app_openm",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L404",
+      "weight": 1.0,
+      "source": "public_app_openaddmodal",
+      "target": "public_app_openm",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L437",
+      "weight": 1.0,
+      "source": "public_app_openedit",
+      "target": "public_app_openm",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L525",
+      "weight": 1.0,
+      "source": "public_app_openeditinsp",
+      "target": "public_app_openm",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L818",
+      "weight": 1.0,
+      "source": "public_app_openeditmat",
+      "target": "public_app_openm",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L507",
+      "weight": 1.0,
+      "source": "public_app_openinsp",
+      "target": "public_app_openm",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L736",
+      "weight": 1.0,
+      "source": "public_app_openmembers",
+      "target": "public_app_openm",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L491",
+      "weight": 1.0,
+      "source": "public_app_delhive",
+      "target": "public_app_closem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L722",
+      "weight": 1.0,
+      "source": "public_app_saveexp",
+      "target": "public_app_closem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L423",
+      "weight": 1.0,
+      "source": "public_app_savehive",
+      "target": "public_app_closem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L576",
+      "weight": 1.0,
+      "source": "public_app_saveinsp",
+      "target": "public_app_closem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L833",
+      "weight": 1.0,
+      "source": "public_app_savemat",
+      "target": "public_app_closem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L458",
+      "weight": 1.0,
+      "source": "public_app_updhive",
+      "target": "public_app_closem",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L403",
+      "weight": 1.0,
+      "source": "public_app_openaddmodal",
+      "target": "public_app_fillposselects",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L435",
+      "weight": 1.0,
+      "source": "public_app_openedit",
+      "target": "public_app_fillposselects",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L390",
+      "weight": 1.0,
+      "source": "public_app_readposselects",
+      "target": "public_app_toast",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L412",
+      "weight": 1.0,
+      "source": "public_app_savehive",
+      "target": "public_app_readposselects",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L444",
+      "weight": 1.0,
+      "source": "public_app_updhive",
+      "target": "public_app_readposselects",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L409",
+      "weight": 1.0,
+      "source": "public_app_savehive",
+      "target": "public_app_toast",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L436",
+      "weight": 1.0,
+      "source": "public_app_openedit",
+      "target": "public_app_resetdelbtn",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L457",
+      "weight": 1.0,
+      "source": "public_app_updhive",
+      "target": "public_app_toast",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L474",
+      "weight": 1.0,
+      "source": "public_app_stepdelete",
+      "target": "public_app_delhive",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L489",
+      "weight": 1.0,
+      "source": "public_app_delhive",
+      "target": "public_app_toast",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L523",
+      "weight": 1.0,
+      "source": "public_app_openeditinsp",
+      "target": "public_app_esc",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L542",
+      "weight": 1.0,
+      "source": "public_app_runai",
+      "target": "public_app_esc",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L572",
+      "weight": 1.0,
+      "source": "public_app_saveinsp",
+      "target": "public_app_toast",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L706",
+      "weight": 1.0,
+      "source": "public_app_openaddexp",
+      "target": "public_app_esc",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L751",
+      "weight": 1.0,
+      "source": "public_app_addmember",
+      "target": "public_app_toast",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L728",
+      "weight": 1.0,
+      "source": "public_app_deleteexp",
+      "target": "public_app_toast",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L840",
+      "weight": 1.0,
+      "source": "public_app_deletemat",
+      "target": "public_app_toast",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L762",
+      "weight": 1.0,
+      "source": "public_app_deletemember",
+      "target": "public_app_toast",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L717",
+      "weight": 1.0,
+      "source": "public_app_saveexp",
+      "target": "public_app_toast",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L826",
+      "weight": 1.0,
+      "source": "public_app_savemat",
+      "target": "public_app_toast",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L600",
+      "weight": 1.0,
+      "source": "public_app_setmainview",
+      "target": "public_app_renderexpenses",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L601",
+      "weight": 1.0,
+      "source": "public_app_setmainview",
+      "target": "public_app_rendermaterials",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L729",
+      "weight": 1.0,
+      "source": "public_app_deleteexp",
+      "target": "public_app_loadexpenses",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L721",
+      "weight": 1.0,
+      "source": "public_app_saveexp",
+      "target": "public_app_loadexpenses",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L752",
+      "weight": 1.0,
+      "source": "public_app_addmember",
+      "target": "public_app_loadmembers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L763",
+      "weight": 1.0,
+      "source": "public_app_deletemember",
+      "target": "public_app_loadmembers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L841",
+      "weight": 1.0,
+      "source": "public_app_deletemat",
+      "target": "public_app_loadmaterials",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L832",
+      "weight": 1.0,
+      "source": "public_app_savemat",
+      "target": "public_app_loadmaterials",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L645",
+      "weight": 1.0,
+      "source": "public_app_renderexpenses",
+      "target": "public_app_calcdebts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L729",
+      "weight": 1.0,
+      "source": "public_app_deleteexp",
+      "target": "public_app_renderexpenses",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L722",
+      "weight": 1.0,
+      "source": "public_app_saveexp",
+      "target": "public_app_renderexpenses",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L734",
+      "weight": 1.0,
+      "source": "public_app_openmembers",
+      "target": "public_app_rendermemberslist",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L754",
+      "weight": 1.0,
+      "source": "public_app_addmember",
+      "target": "public_app_rendermemberslist",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L763",
+      "weight": 1.0,
+      "source": "public_app_deletemember",
+      "target": "public_app_rendermemberslist",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L841",
+      "weight": 1.0,
+      "source": "public_app_deletemat",
+      "target": "public_app_rendermaterials",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "public/app.js",
+      "source_location": "L833",
+      "weight": 1.0,
+      "source": "public_app_savemat",
+      "target": "public_app_rendermaterials",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server.js",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "server",
+      "target": "server_envpath",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server.js",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "server",
+      "target": "server_fs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "server",
+      "target": "server_http",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server.js",
+      "source_location": "L41",
+      "weight": 1.0,
+      "source": "server",
+      "target": "server_json",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server.js",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "server",
+      "target": "server_mime",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server.js",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "server",
+      "target": "server_path",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server.js",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "server",
+      "target": "server_public",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server.js",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "server",
+      "target": "server_readbody",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server.js",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "server",
+      "target": "server_servefile",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server.js",
+      "source_location": "L56",
+      "weight": 1.0,
+      "source": "server",
+      "target": "server_server",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "server.js",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "server",
+      "target": "server_url",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "vercel.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "vercel",
+      "target": "vercel_rewrites",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "vercel.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "vercel",
+      "target": "vercel_version",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "claude",
+      "target": "claude_graphify",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "readme",
+      "target": "readme_erlekide_erlategiaren_kudeaketa",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L141",
+      "weight": 1.0,
+      "source": "readme_erlekide_erlategiaren_kudeaketa",
+      "target": "readme_arazoak_problemas_comunes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L8",
+      "weight": 1.0,
+      "source": "readme_erlekide_erlategiaren_kudeaketa",
+      "target": "readme_arkitektura",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "readme_erlekide_erlategiaren_kudeaketa",
+      "target": "readme_despliege_pausoak_pasos_de_despliegue",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L102",
+      "weight": 1.0,
+      "source": "readme_erlekide_erlategiaren_kudeaketa",
+      "target": "readme_domeinua_pertsonalizatu_aukerazkoa",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L114",
+      "weight": 1.0,
+      "source": "readme_erlekide_erlategiaren_kudeaketa",
+      "target": "readme_egitura_estructura",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L108",
+      "weight": 1.0,
+      "source": "readme_erlekide_erlategiaren_kudeaketa",
+      "target": "readme_ia_analisia_aukerazkoa",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L94",
+      "weight": 1.0,
+      "source": "readme_erlekide_erlategiaren_kudeaketa",
+      "target": "readme_lehen_erabiltzailea_sortu",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L132",
+      "weight": 1.0,
+      "source": "readme_erlekide_erlategiaren_kudeaketa",
+      "target": "readme_segurtasuna",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "readme_despliege_pausoak_pasos_de_despliegue",
+      "target": "readme_1_supabase_proiektua_sortu",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L31",
+      "weight": 1.0,
+      "source": "readme_despliege_pausoak_pasos_de_despliegue",
+      "target": "readme_2_datu_basea_sortu",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "readme_despliege_pausoak_pasos_de_despliegue",
+      "target": "readme_3_email_berrespena_desaktibatu_garrantzitsua",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "readme_despliege_pausoak_pasos_de_despliegue",
+      "target": "readme_4_supabase_gakoak_kopiatu",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L51",
+      "weight": 1.0,
+      "source": "readme_despliege_pausoak_pasos_de_despliegue",
+      "target": "readme_5_github_era_igo_aukerazkoa_baina_gomendatua",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L61",
+      "weight": 1.0,
+      "source": "readme_despliege_pausoak_pasos_de_despliegue",
+      "target": "readme_6_vercel_en_desplegatu",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L76",
+      "weight": 1.0,
+      "source": "readme_despliege_pausoak_pasos_de_despliegue",
+      "target": "readme_7_ingurune_aldagaiak_konfiguratu",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L88",
+      "weight": 1.0,
+      "source": "readme_despliege_pausoak_pasos_de_despliegue",
+      "target": "readme_8_prest",
+      "confidence_score": 1.0
+    }
+  ],
+  "hyperedges": [],
+  "built_at_commit": "b1acb3af9ea81998c50346686efc64cf4cfb3978"
+}

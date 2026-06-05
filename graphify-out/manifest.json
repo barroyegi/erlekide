@@ -1,0 +1,67 @@
+{
+  ".claude/settings.json": {
+    "mtime": 1780655150.924113,
+    "ast_hash": "af5683cedca023035194f9ad92eb0eef",
+    "semantic_hash": ""
+  },
+  ".claude/settings.local.json": {
+    "mtime": 1780655292.7993076,
+    "ast_hash": "128c6739b8bc07d5b6d476616f97fe1d",
+    "semantic_hash": ""
+  },
+  "api/analyze.js": {
+    "mtime": 1780590752.9668214,
+    "ast_hash": "d79323447d3ae3ddd81c545c5686b7bf",
+    "semantic_hash": ""
+  },
+  "api/config.js": {
+    "mtime": 1780590752.9668214,
+    "ast_hash": "f8670782d857688720b57ff41da3d011",
+    "semantic_hash": ""
+  },
+  "package.json": {
+    "mtime": 1780590752.9668214,
+    "ast_hash": "b30ff2da2123a680721f4ab07947cab1",
+    "semantic_hash": ""
+  },
+  "public/app.js": {
+    "mtime": 1780656640.150492,
+    "ast_hash": "904fc9e19a24301839b291fea3528a83",
+    "semantic_hash": ""
+  },
+  "server.js": {
+    "mtime": 1780590752.97582,
+    "ast_hash": "aa2def4f83c7671dfd8d10d4489e0fd7",
+    "semantic_hash": ""
+  },
+  "supabase/schema.sql": {
+    "mtime": 1780590752.9768224,
+    "ast_hash": "f0d08371190fcd407c3a47074c975d53",
+    "semantic_hash": ""
+  },
+  "vercel.json": {
+    "mtime": 1780590752.9768224,
+    "ast_hash": "a618fd81c0da92132b930236921354b0",
+    "semantic_hash": ""
+  },
+  "CLAUDE.md": {
+    "mtime": 1780655150.924113,
+    "ast_hash": "8a6643a420fdad6bfb583523bc6cef16",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1780590752.9658215,
+    "ast_hash": "b6ec5d4163cd24f3ccb358ddd3300924",
+    "semantic_hash": ""
+  },
+  "public/index.html": {
+    "mtime": 1780590752.97582,
+    "ast_hash": "dd9c2ed3c8f72f34c1359e4bc527018c",
+    "semantic_hash": ""
+  },
+  "public/images/erlekide_bg.png": {
+    "mtime": 1780590752.9748194,
+    "ast_hash": "da12b398c9d1985d577f7ecb2c36ca87",
+    "semantic_hash": ""
+  }
+}

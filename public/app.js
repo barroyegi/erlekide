@@ -219,10 +219,10 @@ function applyMobileRotation() {
   const H = gcont.offsetHeight;
   if (!W || !H) return;
 
-  // Escala: cada gbrow ocupa ~50% del ancho disponible en la vista rotada
-  const firstRow = gcont.querySelector('.gbrow');
-  const rowH = firstRow ? firstRow.offsetHeight : 68;
-  const scale = ((window.innerWidth - 20) * 0.5) / Math.max(1, rowH);
+  // Escala: cabe todo el grid en pantalla
+  const maxW = Math.max(1, window.innerWidth - 20);
+  const maxH = Math.max(1, window.innerHeight - 120);
+  const scale = Math.min(maxW / H, maxH / W);
 
   // Rotar 90° CW: columna 1 queda arriba, última abajo.
   // Tras rotate(90deg) el elemento va hacia la izquierda H*scale px,
@@ -237,7 +237,7 @@ function applyMobileRotation() {
   agrid.style.position = 'relative';
   agrid.style.width = H * scale + 'px';
   agrid.style.height = W * scale + 'px';
-  agrid.style.margin = '0';
+  agrid.style.margin = 'auto';
 }
 
 function renderAll() { renderGrid(); renderSB(); }
