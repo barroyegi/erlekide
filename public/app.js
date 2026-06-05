@@ -219,10 +219,16 @@ function applyMobileRotation() {
   const H = gcont.offsetHeight;
   if (!W || !H) return;
 
-  // Escala: cabe todo el grid en pantalla
   const maxW = Math.max(1, window.innerWidth - 20);
   const maxH = Math.max(1, window.innerHeight - 120);
-  const scale = Math.min(maxW / H, maxH / W);
+  const fitScale = Math.min(maxW / H, maxH / W);
+
+  // Garantizar que cada gbrow ocupe al menos el 50% del ancho visible
+  const firstRow = gcont.querySelector('.gbrow');
+  const rowH = firstRow ? firstRow.offsetHeight : 68;
+  const minScale = (maxW * 0.5) / Math.max(1, rowH);
+
+  const scale = Math.max(fitScale, minScale);
 
   // Rotar 90° CW: columna 1 queda arriba, última abajo.
   // Tras rotate(90deg) el elemento va hacia la izquierda H*scale px,
