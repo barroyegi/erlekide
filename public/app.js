@@ -264,15 +264,11 @@ function renderGrid() {
     if (h.grid_x == null || h.grid_y == null) return;
     const el = document.getElementById(`c${h.grid_x}_${h.grid_y}`);
     if (!el) return;
+    const svg = (h.frames != null && h.frames > 5) ? 'kaja' : 'nukleoa';
     el.innerHTML = `<div class="tok st-${h.status}" id="t${h.id}" draggable="true"
-      style="--tok-w:${h.frames != null ? (0.5 + (h.frames - 5) * 0.08).toFixed(2) : 0.85}"
       ondragstart="ds(event,'${h.id}')" ondragend="de(event,'${h.id}')"
       onclick="tc(event,'${h.id}')">
-      <div class="troof"></div>
-      <div class="tbody">
-        <span class="tbody-bee">🐝</span>
-        ${h.frames != null ? `<span class="tframes">${h.frames}mk</span>` : ''}
-      </div>
+      <img class="tok-svg" src="/images/${svg}.svg" draggable="false" alt="">
       <div class="tname">${esc(h.name)}</div>
     </div>`;
   });
