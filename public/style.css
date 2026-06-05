@@ -291,7 +291,7 @@ textarea { resize: vertical; min-height: 58px; line-height: 1.55 }
 
 
 .clbl, .rlbl {
-  display: flex;
+  display: none; // Hau kendu in det, ez da behar
   align-items: center;
   justify-content: center;
   font-size: 11px;
