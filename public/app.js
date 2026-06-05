@@ -223,7 +223,7 @@ function applyMobileRotation() {
   // Tras la rotación el elemento aparece W píxeles más arriba del origen,
   // así que lo bajamos W px con `top`.
   gcont.style.transformOrigin = 'top left';
-  gcont.style.transform = 'rotate(90deg)';
+  gcont.style.transform = 'rotate(-90deg)';
   gcont.style.position = 'absolute';
   gcont.style.top = W + 'px';
   gcont.style.left = '0';

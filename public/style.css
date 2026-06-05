@@ -850,15 +850,26 @@ textarea { resize: vertical; min-height: 58px; line-height: 1.55 }
   .movl { align-items: flex-end }
   .mbox { border-radius: 20px 20px 0 0; max-height: 85vh }
 
+  /* Imagen de fondo girada para que el top en horizontal aparezca a la derecha en móvil */
+  #scr-app::before {
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    width: 100vh;
+    height: 100vh;
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
   #cv-wrap { align-items: flex-start; justify-content: flex-start; overflow: auto; padding: 16px }
   .hlogo { font-size: 22px }
 
-  /* Grid rotado 90° CW: contra-rotamos el contenido para que aparezca recto */
-  .tok { transform: rotate(-90deg) }
-  .tok:hover { transform: rotate(-90deg) scale(1.04); filter: drop-shadow(0 6px 12px rgba(40,20,0,.35)) }
-  .cempty { transform: rotate(-90deg) }
-  .clbl { transform: rotate(-90deg) }
-  .rlbl { transform: rotate(-90deg) }
+  /* Grid rotado 90° CCW: contra-rotamos el contenido para que aparezca recto */
+  .tok { transform: rotate(90deg) }
+  .tok:hover { transform: rotate(90deg) scale(1.04); filter: drop-shadow(0 6px 12px rgba(40,20,0,.35)) }
+  .cempty { transform: rotate(90deg) }
+  .clbl { transform: rotate(90deg) }
+  .rlbl { transform: rotate(90deg) }
 }
 
 @media (min-width: 701px) {
