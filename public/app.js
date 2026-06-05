@@ -227,8 +227,8 @@ function applyMobileRotation() {
   const firstRow = gcont.querySelector('.gbrow');
   const rowH = firstRow ? firstRow.offsetHeight : 68;
 
-  // Escala mínima: cada fila (gbrow) ocupa al menos el 50% del ancho de pantalla
-  const minScale = (maxW * 0.5) / Math.max(1, rowH);
+  // Escala mínima: cada fila (gbrow) ocupa al menos el 75% del ancho de pantalla
+  const minScale = (maxW * 0.75) / Math.max(1, rowH);
   // Escala máxima: las columnas no superan 2× la altura de pantalla (evitar "demasiado altos")
   const maxScale = (maxH * 2) / Math.max(1, W);
   // fitScale: todo cabe sin scroll
