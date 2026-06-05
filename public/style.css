@@ -866,13 +866,29 @@ textarea { resize: vertical; min-height: 58px; line-height: 1.55 }
   #agrid { width: 100%; max-width: 100%; }
   .hlogo { font-size: 22px }
 
-  /* Grid rotado 90° CCW: contra-rotamos el contenido para que aparezca recto */
+  /* Grid rotado 90° CW en JS: contra-rotamos -90° para que el contenido aparezca recto */
   /* En móvil el tok ocupa el ancho completo de la celda para que el nombre no se trunque */
-  .tok { transform: rotate(90deg); width: var(--cell) }
-  .tok:hover { transform: rotate(90deg) scale(1.04); filter: drop-shadow(0 6px 12px rgba(40,20,0,.35)) }
-  .cempty { transform: rotate(90deg) }
-  .clbl { transform: rotate(90deg) }
-  .rlbl { transform: rotate(90deg) }
+  .tok { transform: rotate(-90deg); width: var(--cell) }
+  .tok:hover { transform: rotate(-90deg) scale(1.04); filter: drop-shadow(0 6px 12px rgba(40,20,0,.35)) }
+  .cempty { transform: rotate(-90deg) }
+  .rlbl { transform: rotate(-90deg) }
+
+  /* clbl: índice de columna, muy sutil, casi invisible */
+  .gcorner { width: 12px; height: 10px }
+  .clbl {
+    transform: rotate(-90deg);
+    width: 14px;
+    height: 10px;
+    margin: 1px 6px;
+    background: none;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    font-size: 8px;
+    color: rgba(122, 72, 6, .30);
+    font-weight: 500;
+    letter-spacing: 0;
+  }
 }
 
 @media (min-width: 701px) {
