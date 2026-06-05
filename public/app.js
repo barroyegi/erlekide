@@ -219,24 +219,25 @@ function applyMobileRotation() {
   const H = gcont.offsetHeight;
   if (!W || !H) return;
 
-  const maxGridWidth = Math.max(1, window.innerWidth - 24);
-  const maxGridHeight = Math.max(1, window.innerHeight - 120);
-  const scale = Math.min(maxGridWidth / H, maxGridHeight / W, 1.8);
+  // Escala: cada gbrow ocupa ~50% del ancho disponible en la vista rotada
+  const firstRow = gcont.querySelector('.gbrow');
+  const rowH = firstRow ? firstRow.offsetHeight : 68;
+  const scale = ((window.innerWidth - 20) * 0.5) / Math.max(1, rowH);
 
-  // Rotar 90° CW alrededor de la esquina superior-izquierda.
-  // Tras la rotación el elemento aparece W píxeles más arriba del origen,
-  // así que lo bajamos W px con `top`.
+  // Rotar 90° CW: columna 1 queda arriba, última abajo.
+  // Tras rotate(90deg) el elemento va hacia la izquierda H*scale px,
+  // así que lo compensamos con `left`.
   gcont.style.transformOrigin = 'top left';
-  gcont.style.transform = `rotate(-90deg) scale(${scale})`;
+  gcont.style.transform = `rotate(90deg) scale(${scale})`;
   gcont.style.position = 'absolute';
-  gcont.style.top = W * scale + 'px';
-  gcont.style.left = '0';
+  gcont.style.top = '0';
+  gcont.style.left = H * scale + 'px';
 
   // El contenedor adopta las dimensiones visuales tras la rotación
   agrid.style.position = 'relative';
   agrid.style.width = H * scale + 'px';
   agrid.style.height = W * scale + 'px';
-  agrid.style.margin = 'auto'; // centra en el flex container; colapsa a 0 cuando desborda
+  agrid.style.margin = '0';
 }
 
 function renderAll() { renderGrid(); renderSB(); }
