@@ -219,19 +219,23 @@ function applyMobileRotation() {
   const H = gcont.offsetHeight;
   if (!W || !H) return;
 
+  const maxGridWidth = Math.max(1, window.innerWidth - 24);
+  const maxGridHeight = Math.max(1, window.innerHeight - 120);
+  const scale = Math.min(maxGridWidth / H, maxGridHeight / W, 1.8);
+
   // Rotar 90° CW alrededor de la esquina superior-izquierda.
   // Tras la rotación el elemento aparece W píxeles más arriba del origen,
   // así que lo bajamos W px con `top`.
   gcont.style.transformOrigin = 'top left';
-  gcont.style.transform = 'rotate(-90deg)';
+  gcont.style.transform = `rotate(-90deg) scale(${scale})`;
   gcont.style.position = 'absolute';
-  gcont.style.top = W + 'px';
+  gcont.style.top = W * scale + 'px';
   gcont.style.left = '0';
 
   // El contenedor adopta las dimensiones visuales tras la rotación
   agrid.style.position = 'relative';
-  agrid.style.width = H + 'px';
-  agrid.style.height = W + 'px';
+  agrid.style.width = H * scale + 'px';
+  agrid.style.height = W * scale + 'px';
   agrid.style.margin = 'auto'; // centra en el flex container; colapsa a 0 cuando desborda
 }
 

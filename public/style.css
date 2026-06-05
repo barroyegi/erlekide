@@ -861,7 +861,8 @@ textarea { resize: vertical; min-height: 58px; line-height: 1.55 }
     transform: translate(-50%, -50%) rotate(90deg);
   }
 
-  #cv-wrap { align-items: flex-start; justify-content: flex-start; overflow: auto; padding: 16px }
+  #cv-wrap { align-items: flex-start; justify-content: flex-start; overflow: auto; padding: 10px 10px 16px }
+  #agrid { width: 100%; max-width: 100%; }
   .hlogo { font-size: 22px }
 
   /* Grid rotado 90° CCW: contra-rotamos el contenido para que aparezca recto */
