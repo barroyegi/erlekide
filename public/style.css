@@ -862,7 +862,7 @@ textarea { resize: vertical; min-height: 58px; line-height: 1.55 }
   }
 
   #cv-wrap { align-items: flex-start; justify-content: flex-start; overflow: auto; padding: 10px 10px 16px }
-  #agrid { width: 100%; max-width: 100%; }
+  #agrid { width: 100%; }
   .hlogo { font-size: 22px }
 
   /* Grid rotado 90° CW: contra-rotamos el contenido -90° para que aparezca recto */

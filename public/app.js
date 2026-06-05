@@ -221,14 +221,20 @@ function applyMobileRotation() {
 
   const maxW = Math.max(1, window.innerWidth - 20);
   const maxH = Math.max(1, window.innerHeight - 120);
-  const fitScale = Math.min(maxW / H, maxH / W);
 
-  // Garantizar que cada gbrow ocupe al menos el 50% del ancho visible
+  // Tras la rotación 90° CW: la dirección FILAS ocupa el ancho (H→screen X)
+  // y la dirección COLUMNAS ocupa el alto (W→screen Y).
   const firstRow = gcont.querySelector('.gbrow');
   const rowH = firstRow ? firstRow.offsetHeight : 68;
-  const minScale = (maxW * 0.5) / Math.max(1, rowH);
 
-  const scale = Math.max(fitScale, minScale);
+  // Escala mínima: cada fila (gbrow) ocupa al menos el 50% del ancho de pantalla
+  const minScale = (maxW * 0.5) / Math.max(1, rowH);
+  // Escala máxima: las columnas no superan 2× la altura de pantalla (evitar "demasiado altos")
+  const maxScale = (maxH * 2) / Math.max(1, W);
+  // fitScale: todo cabe sin scroll
+  const fitScale = Math.min(maxW / H, maxH / W);
+
+  const scale = Math.min(maxScale, Math.max(fitScale, minScale));
 
   // Rotar 90° CW: columna 1 queda arriba, última abajo.
   // Tras rotate(90deg) el elemento va hacia la izquierda H*scale px,
