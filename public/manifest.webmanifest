@@ -1,0 +1,26 @@
+{
+  "name": "Erlekide — Erlategiaren Kudeaketa",
+  "short_name": "Erlekide",
+  "description": "Erlategiaren kudeaketa sistema: erlauntzak, inspekzioak, gastuak eta materialak.",
+  "lang": "eu",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FBF6EA",
+  "theme_color": "#2E1F0F",
+  "icons": [
+    {
+      "src": "/images/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

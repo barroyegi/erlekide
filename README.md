@@ -138,6 +138,20 @@ erlekide/
 
 ---
 
+## 🔧 Migrazioa: inspekzioak editatzeko politika / Migración: política para editar inspecciones
+
+> Lehendik sortutako datu-baseetan `insp_update` RLS politika falta da eta
+> **inspekzioak editatzea isilik huts egiten du**. Konpontzeko, exekutatu hau
+> Supabase > SQL Editor-en behin / Ejecutar una vez en el SQL Editor de Supabase:
+
+```sql
+drop policy if exists "insp_update" on public.inspections;
+create policy "insp_update" on public.inspections for update
+  using (auth.role() = 'authenticated');
+```
+
+---
+
 ## 🐛 Arazoak / Problemas comunes
 
 **"SUPABASE_URL ingurune-aldagaia falta da"**  

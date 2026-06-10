@@ -24,8 +24,10 @@ module.exports = async function handler(req, res) {
     return res.status(503).json({ error: 'AI zerbitzua ez dago konfiguratuta. Gehitu ANTHROPIC_API_KEY Vercel-eko Environment Variables atalean.' });
 
   const { prompt } = req.body || {};
-  if (!prompt)
+  if (!prompt || typeof prompt !== 'string')
     return res.status(400).json({ error: 'prompt falta da.' });
+  if (prompt.length > 4000)
+    return res.status(400).json({ error: 'prompt luzeegia da.' });
 
   try {
     const r = await fetch('https://api.anthropic.com/v1/messages', {
@@ -36,7 +38,7 @@ module.exports = async function handler(req, res) {
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
+        model: 'claude-sonnet-4-6',
         max_tokens: 400,
         messages: [{ role: 'user', content: prompt }]
       })

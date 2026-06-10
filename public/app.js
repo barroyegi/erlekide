@@ -3,7 +3,8 @@
 let COLS = 14, ROWS = 10; const RLBLS = 'ABCDEFGHIJKLMNO';
 let sb = null, me = null, userId = null, token = null;
 let hives = [], insps = [];
-let selId = null, dragId = null, pendX = null, pendY = null;
+let selId = null, dragId = null, moveId = null, pendX = null, pendY = null;
+let saving = false;
 let editId = null, inspHiveId = null, inspEditId = null, aiTxt = '';
 let delStep = 0, delTimer = null;
 let expenses = [], members = [], materials = [];
@@ -318,6 +319,7 @@ async function renderDP(id) {
     </div>
     <div style="display:flex;gap:8px;margin-bottom:12px">
       <button class="btn primary" style="flex:1" onclick="closeM('dp');openInsp('${h.id}')">＋ Inspekzioa</button>
+      <button class="btn" onclick="closeM('dp');startMove('${h.id}')">📍 Mugitu</button>
       <button class="btn" onclick="closeM('dp');openEdit('${h.id}')">✎ Editatu</button>
     </div>
     ${h.notes ? `<div style="font-size:12px;color:var(--bark-m);background:var(--cream);padding:8px 10px;border-radius:8px;margin-bottom:12px;line-height:1.6">${esc(h.notes)}</div>` : ''}
@@ -351,27 +353,62 @@ function de(e, id) { document.getElementById('t' + id)?.classList.remove('drag')
 function ov(e, x, y) { if (!dragId) return; e.preventDefault(); document.getElementById(`c${x}_${y}`)?.classList.add('dov'); }
 function ol(e, x, y) { document.getElementById(`c${x}_${y}`)?.classList.remove('dov'); }
 
+async function placeHive(id, x, y) {
+  const hive = hives.find(h => h.id === id);
+  if (!hive) return;
+  const [px, py] = [hive.grid_x, hive.grid_y];
+  hive.grid_x = x; hive.grid_y = y; renderGrid();
+  const { error } = await sb.from('hives').update({ grid_x: x, grid_y: y }).eq('id', id);
+  if (error) { hive.grid_x = px; hive.grid_y = py; renderGrid(); toast(error.message, 'bad'); }
+  else { toast(`${hive.name} → ${RLBLS[y]}${x + 1}`); renderSB(); }
+}
+
 async function od(e, x, y) {
   e.preventDefault();
   document.getElementById(`c${x}_${y}`)?.classList.remove('dov');
   if (!dragId) return;
-  const occ = hives.find(h => h.grid_x === x && h.grid_y === y && h.id !== dragId);
-  if (occ) { toast(`${occ.name}ek hartuta`, 'warn'); dragId = null; return; }
-  const hive = hives.find(h => h.id === dragId);
-  if (!hive) return;
-  const [px, py] = [hive.grid_x, hive.grid_y];
-  hive.grid_x = x; hive.grid_y = y; renderGrid();
-  const { error } = await sb.from('hives').update({ grid_x: x, grid_y: y }).eq('id', dragId);
-  if (error) { hive.grid_x = px; hive.grid_y = py; renderGrid(); toast(error.message, 'bad'); }
-  else toast(`${hive.name} → ${RLBLS[y]}${x + 1}`);
-  dragId = null;
+  const id = dragId; dragId = null;
+  const occ = hives.find(h => h.grid_x === x && h.grid_y === y && h.id !== id);
+  if (occ) { toast(`${occ.name}ek hartuta`, 'warn'); return; }
+  await placeHive(id, x, y);
 }
 
-function cc(x, y) {
+// Mugitzeko modua (mugikorrean drag & drop ez dabilenez): hautatu eta ukitu helmuga
+function startMove(id) {
+  const h = hives.find(x => x.id === id);
+  if (!h) return;
+  moveId = id;
+  document.getElementById('t' + id)?.classList.add('moving');
+  toast(`Ukitu gelaxka huts bat "${h.name}" hara mugitzeko`, 'warn');
+}
+
+function cancelMove() {
+  document.getElementById('t' + moveId)?.classList.remove('moving');
+  moveId = null;
+  toast('Mugitzea bertan behera utzita');
+}
+
+async function cc(x, y) {
   const occ = hives.find(h => h.grid_x === x && h.grid_y === y);
+  if (moveId) {
+    if (occ && occ.id !== moveId) { toast(`${occ.name}ek hartuta dago`, 'warn'); return; }
+    if (occ) { cancelMove(); return; }
+    const id = moveId; moveId = null;
+    await placeHive(id, x, y);
+    return;
+  }
   if (occ) selHive(occ.id); else openAddModal(x, y);
 }
-function tc(e, id) { e.stopPropagation(); selHive(id); }
+
+function tc(e, id) {
+  e.stopPropagation();
+  if (moveId) {
+    if (id === moveId) cancelMove();
+    else toast('Gelaxka hori hartuta dago', 'warn');
+    return;
+  }
+  selHive(id);
+}
 
 // ── Modalak ───────────────────────────────────────────────────────────────────
 function openM(n) { document.getElementById('mod-' + n).style.display = 'flex'; }
@@ -413,22 +450,26 @@ function openAddModal(x, y) {
 }
 
 async function saveHive() {
+  if (saving) return;
   const name = document.getElementById('ahn').value.trim();
   if (!name) { toast('Idatzi izen bat', 'warn'); return; }
   const rawF = document.getElementById('ahf').value;
   const frames = rawF === '' ? null : Math.min(10, Math.max(5, +rawF));
   const pos = readPosSelects('ahpy', 'ahpx', null);
   if (!pos.ok) return;
-  const { data, error } = await sb.from('hives').insert({
-    name, type: document.getElementById('aht').value, race: document.getElementById('ahr').value,
-    status: document.getElementById('ahs').value, color: document.getElementById('ahc').value,
-    install_date: document.getElementById('ahd').value || null,
-    notes: document.getElementById('ahno').value,
-    frames, grid_x: pos.x, grid_y: pos.y, created_by: userId
-  }).select().single();
-  if (error) { toast(error.message, 'bad'); return; }
-  hives.push(data); hives.sort((a, b) => a.name.localeCompare(b.name));
-  closeM('ah'); renderAll(); selHive(data.id); toast(`${name} sortuta ✓`);
+  saving = true;
+  try {
+    const { data, error } = await sb.from('hives').insert({
+      name, type: document.getElementById('aht').value, race: document.getElementById('ahr').value,
+      status: document.getElementById('ahs').value, color: document.getElementById('ahc').value,
+      install_date: document.getElementById('ahd').value || null,
+      notes: document.getElementById('ahno').value,
+      frames, grid_x: pos.x, grid_y: pos.y, created_by: userId
+    }).select().single();
+    if (error) { toast(error.message, 'bad'); return; }
+    hives.push(data); hives.sort((a, b) => a.name.localeCompare(b.name));
+    closeM('ah'); renderAll(); selHive(data.id); toast(`${name} sortuta ✓`);
+  } finally { saving = false; }
 }
 
 function openEdit(id) {
@@ -446,6 +487,7 @@ function openEdit(id) {
 }
 
 async function updHive() {
+  if (saving) return;
   const h = hives.find(x => x.id === editId); if (!h) return;
   const rawF = document.getElementById('ehf').value;
   const frames = rawF === '' ? null : Math.min(10, Math.max(5, +rawF));
@@ -461,11 +503,14 @@ async function updHive() {
     frames,
     grid_x: pos.x, grid_y: pos.y
   };
-  const { error } = await sb.from('hives').update(upd).eq('id', editId);
-  if (error) { toast(error.message, 'bad'); return; }
-  Object.assign(h, upd); closeM('eh'); renderAll();
-  if (selId === editId) renderDP(editId);
-  toast('Erlaunutza eguneratuta ✓');
+  saving = true;
+  try {
+    const { error } = await sb.from('hives').update(upd).eq('id', editId);
+    if (error) { toast(error.message, 'bad'); return; }
+    Object.assign(h, upd); closeM('eh'); renderAll();
+    if (selId === editId) renderDP(editId);
+    toast('Erlauntza eguneratuta ✓');
+  } finally { saving = false; }
 }
 
 function stepDelete() {
@@ -496,7 +541,7 @@ async function delHive() {
   const { error } = await sb.from('hives').delete().eq('id', editId);
   if (error) { toast(error.message, 'bad'); return; }
   hives = hives.filter(h => h.id !== editId);
-  closeM('eh'); closeM('dp'); selId = null; renderAll(); toast('Erlaunutza ezabatuta');
+  closeM('eh'); closeM('dp'); selId = null; renderAll(); toast('Erlauntza ezabatuta');
 }
 
 function openInsp(hiveId) {
@@ -538,7 +583,7 @@ async function runAI() {
   const btn = document.getElementById('btn-ai');
   btn.innerHTML = '<span class="spin"></span> Aztertzen...'; btn.disabled = true;
   const prompt = `Erlazain esperta zara. Ikuskaritza hau aztertu eta 2-3 gomendio zehatz eta praktiko eman itzazu euskaraz (gehienez 90 hitz).
-Erlaunutza: ${h ? h.name : ''} (${h ? h.type : ''}, ${h ? h.race : ''})
+Erlauntza: ${h ? h.name : ''} (${h ? h.type : ''}, ${h ? h.race : ''})
 Indarra: ${document.getElementById('ais').value}/10 · Hazkuntza: ${document.getElementById('aib').value} · Eztia: ${document.getElementById('aim').value}
 Erregina: ${document.getElementById('aiq').value} · Varroa: ${document.getElementById('aiv').value}
 Behaketak: ${document.getElementById('aino').value || 'bat ere ez'}`;
@@ -554,14 +599,19 @@ Behaketak: ${document.getElementById('aino').value || 'bat ere ez'}`;
   btn.innerHTML = '✦ IArekin aztertu'; btn.disabled = false;
 }
 
+function clampNum(v, lo, hi, def) {
+  const n = v === '' ? NaN : +v;
+  return Number.isFinite(n) ? Math.min(hi, Math.max(lo, n)) : def;
+}
+
 async function saveInsp() {
-  if (!inspHiveId) return;
+  if (!inspHiveId || saving) return;
   const status = document.getElementById('aist').value;
   const payload = {
-    date: document.getElementById('aid').value,
-    strength: +document.getElementById('ais').value,
-    brood: +document.getElementById('aib').value,
-    honey: +document.getElementById('aim').value,
+    date: document.getElementById('aid').value || new Date().toISOString().slice(0, 10),
+    strength: clampNum(document.getElementById('ais').value, 1, 10, 5),
+    brood: clampNum(document.getElementById('aib').value, 0, 20, 0),
+    honey: clampNum(document.getElementById('aim').value, 0, 20, 0),
     queen: document.getElementById('aiq').value,
     varroa: document.getElementById('aiv').value,
     status,
@@ -569,21 +619,24 @@ async function saveInsp() {
     ai_summary: aiTxt
   };
 
-  let error;
-  if (inspEditId) {
-    ({ error } = await sb.from('inspections').update(payload).eq('id', inspEditId));
-  } else {
-    ({ error } = await sb.from('inspections').insert({
-      ...payload, hive_id: inspHiveId, username: me, created_by: userId
-    }));
-  }
-  if (error) { toast(error.message, 'bad'); return; }
+  saving = true;
+  try {
+    let error;
+    if (inspEditId) {
+      ({ error } = await sb.from('inspections').update(payload).eq('id', inspEditId));
+    } else {
+      ({ error } = await sb.from('inspections').insert({
+        ...payload, hive_id: inspHiveId, username: me, created_by: userId
+      }));
+    }
+    if (error) { toast(error.message, 'bad'); return; }
 
-  await sb.from('hives').update({ status }).eq('id', inspHiveId);
-  const h = hives.find(x => x.id === inspHiveId); if (h) h.status = status;
-  closeM('ai'); renderAll();
-  if (selId === inspHiveId) await renderDP(inspHiveId);
-  toast(inspEditId ? 'Inspekzioa eguneratuta ✓' : 'Inspekzioa gordeta ✓');
+    await sb.from('hives').update({ status }).eq('id', inspHiveId);
+    const h = hives.find(x => x.id === inspHiveId); if (h) h.status = status;
+    closeM('ai'); renderAll();
+    if (selId === inspHiveId) await renderDP(inspHiveId);
+    toast(inspEditId ? 'Inspekzioa eguneratuta ✓' : 'Inspekzioa gordeta ✓');
+  } finally { saving = false; }
 }
 
 function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
@@ -717,17 +770,21 @@ function openAddExp() {
 }
 
 async function saveExp() {
+  if (saving) return;
   const description = document.getElementById('exp-desc').value.trim();
   const amount = parseFloat(document.getElementById('exp-amt').value);
   const paid_by = document.getElementById('exp-payer').value;
-  const date = document.getElementById('exp-date').value;
+  const date = document.getElementById('exp-date').value || new Date().toISOString().slice(0, 10);
   const notes = document.getElementById('exp-notes').value;
   if (!description) { toast('Idatzi deskribapena', 'warn'); return; }
   if (!amount || amount <= 0) { toast('Sartu zenbateko baliogarri bat', 'warn'); return; }
-  const { error } = await sb.from('expenses').insert({ description, amount, paid_by, date, notes, created_by: userId });
-  if (error) { toast(error.message, 'bad'); return; }
-  await loadExpenses();
-  closeM('exp'); renderExpenses(); toast('Gastua gordeta ✓');
+  saving = true;
+  try {
+    const { error } = await sb.from('expenses').insert({ description, amount, paid_by, date, notes, created_by: userId });
+    if (error) { toast(error.message, 'bad'); return; }
+    await loadExpenses();
+    closeM('exp'); renderExpenses(); toast('Gastua gordeta ✓');
+  } finally { saving = false; }
 }
 
 async function deleteExp(id) {
@@ -827,18 +884,22 @@ function openEditMat(id) {
 }
 
 async function saveMat() {
+  if (saving) return;
   const name = document.getElementById('mat-name').value.trim();
   const category = document.getElementById('mat-cat').value;
   const quantity = Math.max(0, parseInt(document.getElementById('mat-qty').value) || 0);
   const notes = document.getElementById('mat-notes').value;
   if (!name) { toast('Idatzi izena', 'warn'); return; }
-  const payload = { name, category, quantity, notes };
-  const { error } = matEditId
-    ? await sb.from('materials').update(payload).eq('id', matEditId)
-    : await sb.from('materials').insert({ ...payload, created_by: userId });
-  if (error) { toast(error.message, 'bad'); return; }
-  await loadMaterials();
-  closeM('mat'); renderMaterials(); toast(matEditId ? 'Materiala eguneratuta ✓' : 'Materiala gordeta ✓');
+  saving = true;
+  try {
+    const payload = { name, category, quantity, notes };
+    const { error } = matEditId
+      ? await sb.from('materials').update(payload).eq('id', matEditId)
+      : await sb.from('materials').insert({ ...payload, created_by: userId });
+    if (error) { toast(error.message, 'bad'); return; }
+    await loadMaterials();
+    closeM('mat'); renderMaterials(); toast(matEditId ? 'Materiala eguneratuta ✓' : 'Materiala gordeta ✓');
+  } finally { saving = false; }
 }
 
 async function deleteMat(id) {
@@ -852,5 +913,13 @@ async function deleteMat(id) {
 window.addEventListener('resize', () => {
   if (document.getElementById('agrid').querySelector('.gcont')) applyMobileRotation();
 });
+
+// ── Konexio egoera / Online-offline ──────────────────────────────────────────
+window.addEventListener('offline', () => toast('Konexiorik gabe — aldaketak ezin dira gorde', 'warn'));
+window.addEventListener('online', () => toast('Konexioa berreskuratuta ✓'));
+
+// ── PWA service worker ────────────────────────────────────────────────────────
+if ('serviceWorker' in navigator)
+  navigator.serviceWorker.register('/sw.js').catch(() => { /* aukerazkoa */ });
 
 boot();

@@ -291,7 +291,7 @@ textarea { resize: vertical; min-height: 58px; line-height: 1.55 }
 
 
 .clbl, .rlbl {
-  display: none; // Hau kendu in det, ez da behar
+  display: none; /* etiketak ezkutatuta — ez dira behar */
   align-items: center;
   justify-content: center;
   font-size: 11px;
@@ -374,6 +374,26 @@ textarea { resize: vertical; min-height: 58px; line-height: 1.55 }
 
 .tok:active { cursor: grabbing }
 .tok.drag { opacity: .3 }
+
+.tok.moving {
+  animation: movepulse 1s ease-in-out infinite;
+  filter: drop-shadow(0 0 10px rgba(200, 120, 10, .9));
+}
+
+@keyframes movepulse {
+  0%, 100% { transform: scale(1) }
+  50% { transform: scale(1.08) }
+}
+
+@media (max-width: 700px) {
+  .tok.moving {
+    animation: movepulse-m 1s ease-in-out infinite;
+  }
+  @keyframes movepulse-m {
+    0%, 100% { transform: rotate(-90deg) scale(1) }
+    50% { transform: rotate(-90deg) scale(1.08) }
+  }
+}
 
 .tok-svg {
   flex: 1;

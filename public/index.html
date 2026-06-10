@@ -5,6 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <title>Erlekide — Erlategiaren Kudeaketa</title>
+  <meta name="theme-color" content="#2E1F0F">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/images/icon.svg" type="image/svg+xml">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -192,7 +195,7 @@
   <div id="mod-eh" class="movl" style="display:none" onclick="if(event.target===this)closeM('eh')">
     <div class="mbox">
       <div class="mhandle"></div>
-      <div class="mtitle">Erlaunutza editatu <button class="mclose" onclick="closeM('eh')">✕</button></div>
+      <div class="mtitle">Erlauntza editatu <button class="mclose" onclick="closeM('eh')">✕</button></div>
       <div class="fg2">
         <div class="ff"><label>Izena</label><input id="ehn"></div>
         <div class="ff"><label>Mota</label>
@@ -247,7 +250,7 @@
       </div>
       <div id="del-warn"
         style="display:none;background:var(--bad-bg);border:1px solid rgba(174,43,43,.3);border-radius:8px;padding:9px 11px;font-size:12px;color:var(--bad);margin-bottom:10px;line-height:1.6">
-        ⚠️ Erlaunutza eta bere inspekzio guztiak <strong>behin betiko ezabatuko dira</strong>. Berriro sakatu
+        ⚠️ Erlauntza eta bere inspekzio guztiak <strong>behin betiko ezabatuko dira</strong>. Berriro sakatu
         baieztatzeko.
       </div>
       <div class="brow">
@@ -275,6 +278,14 @@
             <option value="yes">Ikusi da</option>
             <option value="signs">Aztarnak bakarrik</option>
             <option value="no">Ez da aurkitu</option>
+          </select>
+        </div>
+        <div class="ff"><label>Varroa maila</label>
+          <select id="aiv">
+            <option value="unknown">Ezezaguna</option>
+            <option value="low">Baxua (&lt;2%)</option>
+            <option value="med">Ertaina (2–5%)</option>
+            <option value="high">Altua (&gt;5%)</option>
           </select>
         </div>
         <div class="ff fg1"><label>Egoera berria</label>

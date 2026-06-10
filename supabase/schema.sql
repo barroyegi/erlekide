@@ -83,6 +83,14 @@ create policy "insp_insert" on public.inspections for insert
 create policy "insp_delete" on public.inspections for delete
   using (auth.role() = 'authenticated');
 
+-- ⚠️ Politika hau falta zen: gabe, inspekzioak EZIN dira editatu (isilik huts egiten du).
+--    Dagoeneko sortutako datu-baseetan, exekutatu bi lerro hauek Supabase SQL Editor-en.
+-- ⚠️ Esta política faltaba: sin ella, EDITAR inspecciones falla silenciosamente.
+--    En bases de datos ya creadas, ejecutar estas dos líneas en el SQL Editor de Supabase.
+drop policy if exists "insp_update" on public.inspections;
+create policy "insp_update" on public.inspections for update
+  using (auth.role() = 'authenticated');
+
 -- ── Konfigurazioa (grid neurria) / Configuración del grid ────────────────────
 create table if not exists public.settings (
   id         text        primary key default 'main',
