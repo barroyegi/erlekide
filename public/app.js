@@ -289,7 +289,7 @@ function renderGrid() {
       onclick="tc(event,'${h.id}')">
       <img class="tok-svg" src="/images/${svg}.svg" draggable="false" alt="">
       ${beesHTML(h.status)}
-      <div class="tname">${esc(h.name)}</div>
+      <div class="tbrand">${esc(h.name)}</div>
     </div>`;
   });
 }

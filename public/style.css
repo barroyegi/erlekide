@@ -468,17 +468,24 @@ textarea { resize: vertical; min-height: 58px; line-height: 1.55 }
   .bee { display: none }
 }
 
-.tname {
-  font-size: 9px;
-  font-weight: 700;
-  color: rgba(255, 255, 255, .95);
-  width: 100%;
+/* Izena erlauntzaren aurrealdean, egurrean erreta bezala /
+   nombre en el frontal, como pirograbado en la madera */
+.tbrand {
+  position: absolute;
+  left: 50%;
+  bottom: 27%;
+  transform: translateX(-50%);
+  max-width: 62%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   text-align: center;
-  margin-top: 2px;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, .6)
+  font-family: 'ADLaM Display', system-ui;
+  font-size: calc(var(--cell) * 0.095);
+  letter-spacing: .5px;
+  color: #5a3a10;
+  text-shadow: 0 1px 0 rgba(255, 244, 200, .55), 0 0 2px rgba(74, 40, 6, .45);
+  pointer-events: none;
 }
 
 .st-good .troof { background: #1E6B40 }
