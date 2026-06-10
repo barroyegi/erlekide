@@ -258,7 +258,7 @@ function renderAll() { renderGrid(); renderSB(); }
 // ── Erle txikiak piqueran / Abejas animadas en la piquera ────────────────────
 // Kopurua egoeraren araberakoa: ona=3, kontuz=2, kritikoa=1
 function beesHTML(status) {
-  const n = status === 'bad' ? 1 : status === 'warn' ? 2 : 3;
+  const n = status === 'bad' ? 3 : status === 'warn' ? 7 : 15;
   let out = '<div class="bees" aria-hidden="true">';
   for (let i = 0; i < n; i++) {
     const dir = Math.random() < .5 ? -1 : 1;
