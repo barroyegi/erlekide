@@ -356,6 +356,7 @@ textarea { resize: vertical; min-height: 58px; line-height: 1.55 }
 
 /* ── TOKENS ── */
 .tok {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -413,6 +414,58 @@ textarea { resize: vertical; min-height: 58px; line-height: 1.55 }
   border-color: transparent;
   box-shadow: none;
   transform: none;
+}
+
+/* ── ERLE TXIKIAK / Abejas en la piquera ── */
+.bees {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.bee {
+  position: absolute;
+  left: 50%;
+  bottom: 20%;  /* piqueraren parean, gutxi gorabehera */
+  width: 6px;
+  height: 4px;
+  margin-left: -3px;
+  border-radius: 50% / 60%;
+  background: repeating-linear-gradient(90deg, #2E1F0F 0 1.6px, #F2B705 1.6px 3.2px);
+  opacity: 0;
+  animation: beefly var(--d, 4.5s) ease-in-out var(--dl, 0s) infinite;
+  will-change: transform, opacity;
+}
+
+.bee::before {
+  content: '';
+  position: absolute;
+  left: 1px;
+  top: -2px;
+  width: 3.5px;
+  height: 2.5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .85);
+  animation: beewing .14s linear infinite alternate;
+}
+
+@keyframes beefly {
+  0%   { transform: translate(0, 0) scale(.4); opacity: 0 }
+  10%  { transform: translate(calc(var(--x1) * .35), calc(var(--y1) * .5)) scale(1); opacity: 1 }
+  35%  { transform: translate(var(--x1), var(--y1)) scale(1) }
+  60%  { transform: translate(var(--x2), var(--y2)) scale(1) }
+  80%  { transform: translate(calc(var(--x2) * .3), calc(var(--y1) * .6)) scale(1); opacity: 1 }
+  100% { transform: translate(0, 0) scale(.4); opacity: 0 }
+}
+
+@keyframes beewing {
+  from { transform: scaleY(.5) }
+  to   { transform: scaleY(1.4) }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bee { display: none }
 }
 
 .tname {

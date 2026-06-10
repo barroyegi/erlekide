@@ -255,6 +255,24 @@ function applyMobileRotation() {
 
 function renderAll() { renderGrid(); renderSB(); }
 
+// ── Erle txikiak piqueran / Abejas animadas en la piquera ────────────────────
+// Kopurua egoeraren araberakoa: ona=3, kontuz=2, kritikoa=1
+function beesHTML(status) {
+  const n = status === 'bad' ? 1 : status === 'warn' ? 2 : 3;
+  let out = '<div class="bees" aria-hidden="true">';
+  for (let i = 0; i < n; i++) {
+    const dir = Math.random() < .5 ? -1 : 1;
+    const x1 = (dir * (16 + Math.random() * 20)).toFixed(0);
+    const y1 = (-(8 + Math.random() * 16)).toFixed(0);
+    const x2 = (dir * (8 + Math.random() * 36)).toFixed(0);
+    const y2 = (-(22 + Math.random() * 20)).toFixed(0);
+    const d = (3.6 + Math.random() * 3.2).toFixed(2);
+    const dl = (-Math.random() * 7).toFixed(2); // atzerapen negatiboa: hegaldia jada hasita
+    out += `<span class="bee" style="--x1:${x1}px;--y1:${y1}px;--x2:${x2}px;--y2:${y2}px;--d:${d}s;--dl:${dl}s"></span>`;
+  }
+  return out + '</div>';
+}
+
 function renderGrid() {
   for (let r = 0; r < ROWS; r++)
     for (let c = 0; c < COLS; c++) {
@@ -270,6 +288,7 @@ function renderGrid() {
       ondragstart="ds(event,'${h.id}')" ondragend="de(event,'${h.id}')"
       onclick="tc(event,'${h.id}')">
       <img class="tok-svg" src="/images/${svg}.svg" draggable="false" alt="">
+      ${beesHTML(h.status)}
       <div class="tname">${esc(h.name)}</div>
     </div>`;
   });
