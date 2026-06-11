@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=ADLaM+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=ADLaM+Display&family=Rye&display=swap');
 
 :root {
   --honey: #C8780A;
@@ -47,10 +47,10 @@ body { display: flex; flex-direction: column; overflow: hidden }
   content: '';
   position: fixed;
   inset: 0;
-  background-image: url('/images/erlekide_bg.png');
+  background-image: linear-gradient(rgba(200, 120, 10, .06), rgba(200, 120, 10, .06)), url('/images/erlekide_bg2.png');
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: center top;
   pointer-events: none;
   z-index: 0;
 }
@@ -308,34 +308,29 @@ textarea { resize: vertical; min-height: 58px; line-height: 1.55 }
 .clbl { width: var(--cell); height: 22px; margin: 10px; }
 .rlbl { width: 22px; height: var(--cell) }
 
+/* Gelaxka hutsak: belar zapaldutako gune bat, ez txartel zuri bat /
+   celda vacía = parche de hierba pisada, no una tarjeta de UI */
 .cell {
   width: var(--cell);
   height: var(--cell);
   flex-shrink: 0;
-  border: 1px solid rgba(200, 120, 10, .28);
-  border-radius: 14px;
+  border: none;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  background: linear-gradient(150deg, rgba(255, 255, 255, .55), rgba(249, 234, 196, .4));
-  box-shadow: 0 4px 14px rgba(122, 72, 6, .16), inset 0 1px 0 rgba(255, 255, 255, .55);
-  transition: transform .14s, box-shadow .14s, background .14s, border-color .14s;
+  background: radial-gradient(ellipse 62% 46% at 50% 58%, rgba(212, 202, 120, .42), rgba(212, 202, 120, 0) 72%);
+  transition: background .14s;
   margin: 10px;
 }
 
 .cell:hover {
-  background: linear-gradient(150deg, rgba(255, 255, 255, .82), rgba(249, 234, 196, .68));
-  border-color: rgba(200, 120, 10, .55);
-  box-shadow: 0 8px 22px rgba(122, 72, 6, .26), inset 0 1px 0 rgba(255, 255, 255, .6);
-  transform: translateY(-2px);
+  background: radial-gradient(ellipse 64% 48% at 50% 58%, rgba(235, 218, 130, .5), rgba(235, 218, 130, 0) 75%);
 }
 
 .cell.dov {
-  background: linear-gradient(150deg, rgba(255, 210, 50, .42), rgba(255, 190, 30, .32));
-  border-color: var(--honey);
-  box-shadow: 0 8px 24px rgba(200, 120, 10, .4);
-  transform: translateY(-2px) scale(1.03);
+  background: radial-gradient(ellipse 66% 50% at 50% 58%, rgba(255, 200, 60, .55), rgba(255, 200, 60, 0) 75%);
 }
 
 .cempty {
@@ -355,6 +350,8 @@ textarea { resize: vertical; min-height: 58px; line-height: 1.55 }
 .cell:hover .cempty { opacity: 1 }
 
 /* ── TOKENS ── */
+/* --base: irudiaren beheko ertza gelaxkan (letterbox desberdina modeloko) /
+   borde inferior real de la imagen según el modelo */
 .tok {
   position: relative;
   display: flex;
@@ -364,13 +361,42 @@ textarea { resize: vertical; min-height: 58px; line-height: 1.55 }
   height: 100%;
   cursor: grab;
   user-select: none;
-  transition: transform .14s, filter .14s;
-  filter: drop-shadow(0 3px 8px rgba(40, 20, 0, .32));
+  transition: transform .14s;
+  --base: 13%;
+  --brand: 35%;
+  --bwidth: 62%;
+  --shw: 118%;
+}
+
+.tok-nukleoa { --base: 1%; --brand: 28%; --bwidth: 50%; --shw: 94%; }
+
+/* Kontaktu-itzala: erlauntza lurrean bermatzen duen elipsea /
+   sombra de contacto elíptica que ancla la colmena al suelo */
+.tok::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--base) - 4.5%);
+  transform: translateX(-50%);
+  width: var(--shw);
+  height: 11%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(25, 32, 8, .48) 0%, rgba(25, 32, 8, .24) 55%, rgba(25, 32, 8, 0) 75%);
+  z-index: -1;
+}
+
+/* Belar-izpiak oinarriaren aurrean / briznas por delante de la base */
+.tgrass {
+  position: absolute;
+  left: 5%;
+  bottom: calc(var(--base) - 4%);
+  width: 90%;
+  height: 10%;
+  pointer-events: none;
 }
 
 .tok:hover {
   transform: translateY(-2px) scale(1.05);
-  filter: drop-shadow(0 6px 14px rgba(40, 20, 0, .4));
 }
 
 .tok:active { cursor: grabbing }
@@ -403,17 +429,10 @@ textarea { resize: vertical; min-height: 58px; line-height: 1.55 }
   min-height: 0;
 }
 
-/* Celda con colmena: sin fondo ni borde, solo el SVG */
-.cell:has(.tok):not(.dov) {
-  background: transparent;
-  border-color: transparent;
-  box-shadow: none;
-}
+/* Celda con colmena: sin parche, la sombra de contacto hace de suelo */
+.cell:has(.tok):not(.dov),
 .cell:has(.tok):not(.dov):hover {
   background: transparent;
-  border-color: transparent;
-  box-shadow: none;
-  transform: none;
 }
 
 /* ── ERLE TXIKIAK / Abejas en la piquera ── */
@@ -473,18 +492,21 @@ textarea { resize: vertical; min-height: 58px; line-height: 1.55 }
 .tbrand {
   position: absolute;
   left: 50%;
-  bottom: 27%;
+  bottom: var(--brand);
   transform: translateX(-50%);
-  max-width: 62%;
+  width: var(--bwidth);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  word-break: break-word;
   text-align: center;
-  font-family: 'ADLaM Display', system-ui;
-  font-size: calc(var(--cell) * 0.095);
-  letter-spacing: .5px;
-  color: #5a3a10;
-  text-shadow: 0 1px 0 rgba(255, 244, 200, .55), 0 0 2px rgba(74, 40, 6, .45);
+  line-height: 1.1;
+  font-family: 'Rye', 'ADLaM Display', system-ui;
+  font-size: calc(var(--cell) * 0.082);
+  letter-spacing: .4px;
+  color: #4a2c0a;
+  text-shadow: 0 0 1px rgba(46, 24, 4, .6), 0 0 5px rgba(80, 44, 10, .4), 0 1px 0 rgba(255, 238, 190, .35);
   pointer-events: none;
 }
 
@@ -937,16 +959,9 @@ textarea { resize: vertical; min-height: 58px; line-height: 1.55 }
   .movl { align-items: flex-end }
   .mbox { border-radius: 20px 20px 0 0; max-height: 85vh }
 
-  /* Imagen de fondo girada para que el top en horizontal aparezca a la derecha en móvil */
-  #scr-app::before {
-    top: 50%;
-    left: 50%;
-    right: auto;
-    bottom: auto;
-    width: 100vh;
-    height: 100vh;
-    transform: translate(-50%, -50%) rotate(90deg);
-  }
+  /* Fondo con perspectiva: se mantiene vertical también en móvil
+     (las colmenas contra-rotadas quedan rectas sobre él) */
+  .cempty { opacity: .4 }
 
   #cv-wrap { align-items: flex-start; justify-content: flex-start; overflow: auto; padding: 10px 10px 16px }
   #agrid { width: 100%; max-width: 100%; }

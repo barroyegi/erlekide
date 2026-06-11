@@ -2,7 +2,7 @@
 // Network-first con cache de respaldo para uso en el campo
 'use strict';
 
-const CACHE = 'erlekide-v1';
+const CACHE = 'erlekide-v2';
 const PRECACHE = [
   '/',
   '/style.css',
@@ -11,7 +11,7 @@ const PRECACHE = [
   '/images/icon.svg',
   '/images/kaja.svg',
   '/images/nukleoa.svg',
-  '/images/erlekide_bg.png'
+  '/images/erlekide_bg2.png'
 ];
 
 self.addEventListener('install', e => {

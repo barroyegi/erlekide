@@ -255,6 +255,19 @@ function applyMobileRotation() {
 
 function renderAll() { renderGrid(); renderSB(); }
 
+// ── Belar-izpiak erlauntzaren oinarrian / Briznas delante de la base ─────────
+const GRASS_BLADES = (() => {
+  const cols = ['#4e6b2a', '#557334', '#62823a'];
+  let p = '';
+  for (let x = 2; x < 98; x += 4 + Math.random() * 7) {
+    const hh = 5 + Math.random() * 8;
+    const lean = (Math.random() - .5) * 5;
+    const c = cols[Math.floor(Math.random() * cols.length)];
+    p += `<path d="M${x.toFixed(1)} 14 Q${(x + lean).toFixed(1)} ${(14 - hh).toFixed(1)} ${(x + lean * 1.5).toFixed(1)} ${(13 - hh).toFixed(1)} Q${(x + lean + 1.5).toFixed(1)} ${(14 - hh * .4).toFixed(1)} ${(x + 2.6).toFixed(1)} 14 Z" fill="${c}"/>`;
+  }
+  return p;
+})();
+
 // ── Erle txikiak piqueran / Abejas animadas en la piquera ────────────────────
 // Kopurua egoeraren araberakoa: ona=3, kontuz=2, kritikoa=1
 function beesHTML(status) {
@@ -284,11 +297,12 @@ function renderGrid() {
     const el = document.getElementById(`c${h.grid_x}_${h.grid_y}`);
     if (!el) return;
     const svg = (h.frames != null && h.frames > 5) ? 'kaja' : 'nukleoa';
-    el.innerHTML = `<div class="tok st-${h.status}" id="t${h.id}" draggable="true"
+    el.innerHTML = `<div class="tok tok-${svg} st-${h.status}" id="t${h.id}" draggable="true"
       ondragstart="ds(event,'${h.id}')" ondragend="de(event,'${h.id}')"
       onclick="tc(event,'${h.id}')">
       <img class="tok-svg" src="/images/${svg}.svg" draggable="false" alt="">
       ${beesHTML(h.status)}
+      <svg class="tgrass" viewBox="0 0 100 14" preserveAspectRatio="none" aria-hidden="true">${GRASS_BLADES}</svg>
       <div class="tbrand">${esc(h.name)}</div>
     </div>`;
   });
