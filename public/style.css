@@ -375,17 +375,18 @@ textarea { resize: vertical; min-height: 58px; line-height: 1.55 }
   left: 0;
   top: 0;
   width: calc(200% + 20px);
+  --base: 1%;
+  --brand: 29%;
   --bwidth: 50%;
+  --shw: 80%;
 }
 
-/* altura visual igual que en celda cuadrada (71%), solo se estira el ancho;
-   scaleX porque el SVG ignora object-fit:fill (preserveAspectRatio interno) */
-.tok-kaja .tok-svg {
-  flex: none;
-  height: 71%;
-  margin: auto 0;
-  transform: scaleX(2);
-}
+/* misma altura que el nukleoa (celda completa); anchura = 2 nukleoa:
+   kaja natural 1.269 de aspecto × 1.178 = 1.495 = 2 × 0.7475 (nukleoa).
+   scaleX porque el SVG ignora object-fit (preserveAspectRatio interno) */
+.tok-kaja .tok-svg { transform: scaleX(1.178) }
+
+.tok-kaja .tgrass { left: 15%; width: 70% }
 
 .cell.covered { background: none; cursor: pointer }
 .cell.covered:hover { background: none }
@@ -425,8 +426,9 @@ textarea { resize: vertical; min-height: 58px; line-height: 1.55 }
 @media (max-width: 700px) {
   /* mugikorrean kaja zabalak gelaxka bakarrean marrazten da (ondokoa erreserbatuta):
      en móvil la caja ancha se dibuja en su celda y reserva la contigua */
-  .tok-kaja { width: 100% }
-  .tok-kaja .tok-svg { flex: 1; height: auto; margin: 0; transform: none }
+  .tok-kaja { width: 100%; --base: 13%; --brand: 35%; --bwidth: 62%; --shw: 108% }
+  .tok-kaja .tok-svg { transform: none }
+  .tok-kaja .tgrass { left: 5%; width: 90% }
 }
 
 .tok.moving {
