@@ -476,7 +476,7 @@ textarea {
 }
 
 .cell.wide {
-  width: calc(var(--cell) * 2 + 20px);
+  width: 210px;
 }
 
 .cell:hover {
@@ -556,7 +556,12 @@ textarea {
 }
 
 .cell.covered {
-  display: none
+  background: none;
+  cursor: pointer
+}
+
+.cell.covered:hover {
+  background: none
 }
 
 /* Kontaktu-itzala: erlauntza lurrean bermatzen duen elipsea /
@@ -618,12 +623,12 @@ textarea {
   }
 
   .cell.wide {
-    width: var(--cell);
+    width: 170px;
   }
 
   .cell.covered {
-    display: flex;
-    visibility: hidden;
+    background: none;
+    cursor: pointer;
   }
 }
 

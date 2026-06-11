@@ -107,7 +107,6 @@ async function enterApp() {
   if (window.innerWidth <= 700)
     document.getElementById('hdr-add-btn').style.display = 'inline-flex';
   await Promise.all([loadSettings(), loadHives(), loadMembers(), loadExpenses(), loadMaterials()]);
-  await reconcileWide();
   buildGrid();
   renderAll();
   pollTimer = setInterval(async () => {
@@ -293,32 +292,13 @@ function beesHTML(status) {
 const isWide = h => h && h.frames != null && h.frames > 5;
 
 function occAt(x, y, ignoreId) {
-  return hives.find(h => h.id !== ignoreId && h.grid_y === y && h.grid_x != null &&
-    (h.grid_x === x || (isWide(h) && h.grid_x === x - 1)));
+  return hives.find(h => h.id !== ignoreId && h.grid_y === y && h.grid_x === x);
 }
 
-// Arau berriaren aurreko kokapenak garbitu: erlauntza zabal batek bere bigarren
-// gelaxka hartuta badu (edo saretatik kanpo), mapatik kendu eta abisatu /
-// limpia colocaciones anteriores a la regla de doble celda
-async function reconcileWide() {
-  const bad = [];
-  for (const h of hives) {
-    if (!isWide(h) || h.grid_x == null || h.grid_y == null) continue;
-    if (h.grid_x + 1 >= COLS || occAt(h.grid_x + 1, h.grid_y, h.id)) {
-      const { error } = await sb.from('hives').update({ grid_x: null, grid_y: null }).eq('id', h.id);
-      if (!error) { h.grid_x = null; h.grid_y = null; bad.push(h.name); }
-    }
-  }
-  if (bad.length)
-    toast(`⚠ ${bad.join(', ')}: mapatik kenduta — erlauntza zabalek bi gelaxka behar dituzte. Kokatu berriro (behar bada, handitu sareta ⚙).`, 'warn', 7000);
-}
 
 function canPlace(x, y, wide, ignoreId) {
-  if (wide && x + 1 >= COLS) { toast('Erlauntza zabalak bi gelaxka behar ditu errenkadan', 'warn'); return false; }
-  for (const cx of wide ? [x, x + 1] : [x]) {
-    const occ = occAt(cx, y, ignoreId);
-    if (occ) { toast(`${occ.name}ek hartuta dago`, 'warn'); return false; }
-  }
+  const occ = occAt(x, y, ignoreId);
+  if (occ) { toast(`${occ.name}ek hartuta dago`, 'warn'); return false; }
   return true;
 }
 
@@ -333,11 +313,7 @@ function renderGrid() {
     const el = document.getElementById(`c${h.grid_x}_${h.grid_y}`);
     if (!el) return;
     const svg = isWide(h) ? 'kaja' : 'nukleoa';
-    if (isWide(h)) {
-      el.classList.add('wide');
-      const el2 = document.getElementById(`c${h.grid_x + 1}_${h.grid_y}`);
-      if (el2) { el2.innerHTML = ''; el2.classList.add('covered'); }
-    }
+    if (isWide(h)) el.classList.add('wide');
     el.innerHTML = `<div class="tok tok-${svg} st-${h.status}" id="t${h.id}" draggable="true"
       ondragstart="ds(event,'${h.id}')" ondragend="de(event,'${h.id}')"
       onclick="tc(event,'${h.id}')">
