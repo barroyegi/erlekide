@@ -43,16 +43,13 @@ body { display: flex; flex-direction: column; overflow: hidden }
 #scr-app { display: none }
 
 /* ── ATZEKO PLANOA ── */
-#scr-app::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: linear-gradient(rgba(200, 120, 10, .06), rgba(200, 120, 10, .06)), url('/images/erlekide_bg2.png');
+/* Fondo en el propio contenedor del mapa: ocupa exactamente el área
+   bajo el header y el nav, con el seto y el vallado siempre a la vista */
+#bdy {
+  background-image: linear-gradient(rgba(200, 120, 10, .06), rgba(200, 120, 10, .06)), url('/images/erlekide_bg2.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center top;
-  pointer-events: none;
-  z-index: 0;
 }
 
 /* ── LOGIN ── */
@@ -311,6 +308,7 @@ textarea { resize: vertical; min-height: 58px; line-height: 1.55 }
 /* Gelaxka hutsak: belar zapaldutako gune bat, ez txartel zuri bat /
    celda vacía = parche de hierba pisada, no una tarjeta de UI */
 .cell {
+  position: relative;
   width: var(--cell);
   height: var(--cell);
   flex-shrink: 0;
@@ -359,16 +357,38 @@ textarea { resize: vertical; min-height: 58px; line-height: 1.55 }
   align-items: center;
   width: 100%;
   height: 100%;
-  cursor: grab;
+  cursor: pointer;
   user-select: none;
   transition: transform .14s;
   --base: 13%;
   --brand: 35%;
   --bwidth: 62%;
-  --shw: 118%;
+  --shw: 108%;
 }
 
 .tok-nukleoa { --base: 1%; --brand: 28%; --bwidth: 50%; --shw: 94%; }
+
+/* Kaja zabala: bi gelaxka hartzen ditu (berea + eskuinekoa) /
+   la caja ancha ocupa dos celdas; la imagen se estira a lo ancho */
+.tok-kaja {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: calc(200% + 20px);
+  --bwidth: 50%;
+}
+
+/* altura visual igual que en celda cuadrada (71%), solo se estira el ancho;
+   scaleX porque el SVG ignora object-fit:fill (preserveAspectRatio interno) */
+.tok-kaja .tok-svg {
+  flex: none;
+  height: 71%;
+  margin: auto 0;
+  transform: scaleX(2);
+}
+
+.cell.covered { background: none; cursor: pointer }
+.cell.covered:hover { background: none }
 
 /* Kontaktu-itzala: erlauntza lurrean bermatzen duen elipsea /
    sombra de contacto elíptica que ancla la colmena al suelo */
@@ -401,6 +421,13 @@ textarea { resize: vertical; min-height: 58px; line-height: 1.55 }
 
 .tok:active { cursor: grabbing }
 .tok.drag { opacity: .3 }
+
+@media (max-width: 700px) {
+  /* mugikorrean kaja zabalak gelaxka bakarrean marrazten da (ondokoa erreserbatuta):
+     en móvil la caja ancha se dibuja en su celda y reserva la contigua */
+  .tok-kaja { width: 100% }
+  .tok-kaja .tok-svg { flex: 1; height: auto; margin: 0; transform: none }
+}
 
 .tok.moving {
   animation: movepulse 1s ease-in-out infinite;
@@ -959,8 +986,13 @@ textarea { resize: vertical; min-height: 58px; line-height: 1.55 }
   .movl { align-items: flex-end }
   .mbox { border-radius: 20px 20px 0 0; max-height: 85vh }
 
-  /* Fondo con perspectiva: se mantiene vertical también en móvil
-     (las colmenas contra-rotadas quedan rectas sobre él) */
+  /* Variante móvil del fondo: seto y vallado en la banda derecha,
+     coherente con el grid rotado (la fila A queda hacia la derecha) */
+  #bdy {
+    background-image: linear-gradient(rgba(200, 120, 10, .06), rgba(200, 120, 10, .06)), url('/images/erlekide_bg2_m.jpg');
+    background-position: right top;
+  }
+
   .cempty { opacity: .4 }
 
   #cv-wrap { align-items: flex-start; justify-content: flex-start; overflow: auto; padding: 10px 10px 16px }

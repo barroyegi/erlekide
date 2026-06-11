@@ -159,7 +159,8 @@ async function saveSettings() {
   const newRows = Math.min(15, Math.max(1, +document.getElementById('cfg-rows').value || ROWS));
   const warn = document.getElementById('cfg-warn');
 
-  const out = hives.filter(h => h.grid_x != null && h.grid_y != null && (h.grid_x >= newCols || h.grid_y >= newRows));
+  const out = hives.filter(h => h.grid_x != null && h.grid_y != null &&
+    (h.grid_x >= newCols || h.grid_y >= newRows || (isWide(h) && h.grid_x + 1 >= newCols)));
 
   if (out.length && warn.dataset.confirmed !== '1') {
     warn.innerHTML = `⚠️ ${out.length} erlauntz mapan kokatuta daude eremu berritik kanpo:<br><strong>${out.map(h => esc(h.name)).join(', ')}</strong><br>Posizioa ezabatuko zaie (erlauntzak bere horretan geratuko dira zerrendan). Berriro sakatu baieztatzeko.`;
@@ -286,17 +287,39 @@ function beesHTML(status) {
   return out + '</div>';
 }
 
+// Erlauntza zabala (kaja) bi gelaxka hartzen ditu: berea eta eskuinekoa /
+// la colmena ancha ocupa su celda y la contigua derecha
+const isWide = h => h && h.frames != null && h.frames > 5;
+
+function occAt(x, y, ignoreId) {
+  return hives.find(h => h.id !== ignoreId && h.grid_y === y && h.grid_x != null &&
+    (h.grid_x === x || (isWide(h) && h.grid_x === x - 1)));
+}
+
+function canPlace(x, y, wide, ignoreId) {
+  if (wide && x + 1 >= COLS) { toast('Erlauntza zabalak bi gelaxka behar ditu errenkadan', 'warn'); return false; }
+  for (const cx of wide ? [x, x + 1] : [x]) {
+    const occ = occAt(cx, y, ignoreId);
+    if (occ) { toast(`${occ.name}ek hartuta dago`, 'warn'); return false; }
+  }
+  return true;
+}
+
 function renderGrid() {
   for (let r = 0; r < ROWS; r++)
     for (let c = 0; c < COLS; c++) {
       const el = document.getElementById(`c${c}_${r}`);
-      if (el) el.innerHTML = '<div class="cempty">+</div>';
+      if (el) { el.innerHTML = '<div class="cempty">+</div>'; el.classList.remove('covered'); }
     }
   hives.forEach(h => {
     if (h.grid_x == null || h.grid_y == null) return;
     const el = document.getElementById(`c${h.grid_x}_${h.grid_y}`);
     if (!el) return;
-    const svg = (h.frames != null && h.frames > 5) ? 'kaja' : 'nukleoa';
+    const svg = isWide(h) ? 'kaja' : 'nukleoa';
+    if (isWide(h)) {
+      const el2 = document.getElementById(`c${h.grid_x + 1}_${h.grid_y}`);
+      if (el2) { el2.innerHTML = ''; el2.classList.add('covered'); }
+    }
     el.innerHTML = `<div class="tok tok-${svg} st-${h.status}" id="t${h.id}" draggable="true"
       ondragstart="ds(event,'${h.id}')" ondragend="de(event,'${h.id}')"
       onclick="tc(event,'${h.id}')">
@@ -401,8 +424,8 @@ async function od(e, x, y) {
   document.getElementById(`c${x}_${y}`)?.classList.remove('dov');
   if (!dragId) return;
   const id = dragId; dragId = null;
-  const occ = hives.find(h => h.grid_x === x && h.grid_y === y && h.id !== id);
-  if (occ) { toast(`${occ.name}ek hartuta`, 'warn'); return; }
+  const hive = hives.find(h => h.id === id);
+  if (!hive || !canPlace(x, y, isWide(hive), id)) return;
   await placeHive(id, x, y);
 }
 
@@ -422,10 +445,11 @@ function cancelMove() {
 }
 
 async function cc(x, y) {
-  const occ = hives.find(h => h.grid_x === x && h.grid_y === y);
+  const occ = occAt(x, y, null);
   if (moveId) {
-    if (occ && occ.id !== moveId) { toast(`${occ.name}ek hartuta dago`, 'warn'); return; }
-    if (occ) { cancelMove(); return; }
+    if (occ && occ.id === moveId) { cancelMove(); return; }
+    const mv = hives.find(h => h.id === moveId);
+    if (!mv || !canPlace(x, y, isWide(mv), moveId)) return;
     const id = moveId; moveId = null;
     await placeHive(id, x, y);
     return;
@@ -459,13 +483,12 @@ function fillPosSelects(rowSelId, colSelId, selX, selY) {
   cs.value = selX != null ? String(selX) : '';
 }
 
-function readPosSelects(rowSelId, colSelId, ignoreId) {
+function readPosSelects(rowSelId, colSelId, ignoreId, wide) {
   const rv = document.getElementById(rowSelId).value;
   const cv = document.getElementById(colSelId).value;
   if (rv === '' || cv === '') return { ok: true, x: null, y: null };
   const x = +cv, y = +rv;
-  const occ = hives.find(h => h.grid_x === x && h.grid_y === y && h.id !== ignoreId);
-  if (occ) { toast(`${occ.name}ek hartuta dago posizio hori`, 'warn'); return { ok: false }; }
+  if (!canPlace(x, y, !!wide, ignoreId)) return { ok: false };
   return { ok: true, x, y };
 }
 
@@ -488,7 +511,7 @@ async function saveHive() {
   if (!name) { toast('Idatzi izen bat', 'warn'); return; }
   const rawF = document.getElementById('ahf').value;
   const frames = rawF === '' ? null : Math.min(10, Math.max(5, +rawF));
-  const pos = readPosSelects('ahpy', 'ahpx', null);
+  const pos = readPosSelects('ahpy', 'ahpx', null, frames != null && frames > 5);
   if (!pos.ok) return;
   saving = true;
   try {
@@ -524,7 +547,7 @@ async function updHive() {
   const h = hives.find(x => x.id === editId); if (!h) return;
   const rawF = document.getElementById('ehf').value;
   const frames = rawF === '' ? null : Math.min(10, Math.max(5, +rawF));
-  const pos = readPosSelects('ehpy', 'ehpx', editId);
+  const pos = readPosSelects('ehpy', 'ehpx', editId, frames != null && frames > 5);
   if (!pos.ok) return;
   const upd = {
     name: document.getElementById('ehn').value.trim() || h.name,
