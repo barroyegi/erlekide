@@ -107,6 +107,7 @@ async function enterApp() {
   if (window.innerWidth <= 700)
     document.getElementById('hdr-add-btn').style.display = 'inline-flex';
   await Promise.all([loadSettings(), loadHives(), loadMembers(), loadExpenses(), loadMaterials()]);
+  await reconcileWide();
   buildGrid();
   renderAll();
   pollTimer = setInterval(async () => {
@@ -296,6 +297,22 @@ function occAt(x, y, ignoreId) {
     (h.grid_x === x || (isWide(h) && h.grid_x === x - 1)));
 }
 
+// Arau berriaren aurreko kokapenak garbitu: erlauntza zabal batek bere bigarren
+// gelaxka hartuta badu (edo saretatik kanpo), mapatik kendu eta abisatu /
+// limpia colocaciones anteriores a la regla de doble celda
+async function reconcileWide() {
+  const bad = [];
+  for (const h of hives) {
+    if (!isWide(h) || h.grid_x == null || h.grid_y == null) continue;
+    if (h.grid_x + 1 >= COLS || occAt(h.grid_x + 1, h.grid_y, h.id)) {
+      const { error } = await sb.from('hives').update({ grid_x: null, grid_y: null }).eq('id', h.id);
+      if (!error) { h.grid_x = null; h.grid_y = null; bad.push(h.name); }
+    }
+  }
+  if (bad.length)
+    toast(`⚠ ${bad.join(', ')}: mapatik kenduta — erlauntza zabalek bi gelaxka behar dituzte. Kokatu berriro (behar bada, handitu sareta ⚙).`, 'warn', 7000);
+}
+
 function canPlace(x, y, wide, ignoreId) {
   if (wide && x + 1 >= COLS) { toast('Erlauntza zabalak bi gelaxka behar ditu errenkadan', 'warn'); return false; }
   for (const cx of wide ? [x, x + 1] : [x]) {
@@ -309,7 +326,7 @@ function renderGrid() {
   for (let r = 0; r < ROWS; r++)
     for (let c = 0; c < COLS; c++) {
       const el = document.getElementById(`c${c}_${r}`);
-      if (el) { el.innerHTML = '<div class="cempty">+</div>'; el.classList.remove('covered'); }
+      if (el) { el.innerHTML = '<div class="cempty">+</div>'; el.classList.remove('covered', 'wide'); }
     }
   hives.forEach(h => {
     if (h.grid_x == null || h.grid_y == null) return;
@@ -317,6 +334,7 @@ function renderGrid() {
     if (!el) return;
     const svg = isWide(h) ? 'kaja' : 'nukleoa';
     if (isWide(h)) {
+      el.classList.add('wide');
       const el2 = document.getElementById(`c${h.grid_x + 1}_${h.grid_y}`);
       if (el2) { el2.innerHTML = ''; el2.classList.add('covered'); }
     }
@@ -697,11 +715,14 @@ async function saveInsp() {
 
 function esc(s) { return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
 
-function toast(msg, t = 'ok') {
+let toastTimer = null;
+function toast(msg, t = 'ok', ms = 2800) {
   const el = document.getElementById('toast');
   el.textContent = msg;
   el.style.background = t === 'bad' ? 'var(--bad)' : t === 'warn' ? 'var(--warn)' : 'var(--bark)';
-  el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 2800);
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), ms);
 }
 
 // ── Ikuspegia aldatu / Switch main view ──────────────────────────────────────
