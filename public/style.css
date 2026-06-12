@@ -522,6 +522,7 @@ textarea {
   --brand: 35%;
   --bwidth: 62%;
   --shw: 108%;
+  --awidth: 85%
 }
 
 .tok-nukleoa {
@@ -541,6 +542,7 @@ textarea {
   --brand: 29%;
   --bwidth: 50%;
   --shw: 80%;
+  --awidth: 63.5%
 }
 
 /* misma altura que el nukleoa (celda completa); anchura = 2 nukleoa:
@@ -610,10 +612,15 @@ textarea {
     --base: 13%;
     --brand: 35%;
     --bwidth: 62%;
-    --shw: 108%
+    --shw: 108%;
+    --awidth: 85%
   }
 
   .tok-kaja .tok-svg {
+    transform: none
+  }
+
+  .tok-kaja .tok-alza {
     transform: none
   }
 
@@ -782,6 +789,87 @@ textarea {
   color: #4a2c0a;
   text-shadow: 0 0 1px rgba(46, 24, 4, .6), 0 0 5px rgba(80, 44, 10, .4), 0 1px 0 rgba(255, 238, 190, .35);
   pointer-events: none;
+}
+
+/* ── ALZAK: Gain-kaxak erlauntzaren gainean / Alzas apiladas sobre el cuerpo ── */
+.tok-alzas {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: var(--awidth);
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  pointer-events: none;
+}
+
+.tok-alza {
+  width: 100%;
+  display: block;
+}
+
+.tok-kaja .tok-alza {
+  transform: scaleX(1.178)
+}
+
+.alza-card {
+  background: var(--cream);
+  border-radius: 10px;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  border-left: 3px solid #C8780A
+}
+
+.alza-hdr {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px
+}
+
+.alza-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #C8780A;
+  color: #fff
+}
+
+.alza-badge-erdia {
+  background: #8B6914
+}
+
+.alza-fields {
+  display: flex;
+  gap: 6px
+}
+
+.alza-fld {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px
+}
+
+.alza-fld label {
+  font-size: 10px;
+  color: var(--bark-l);
+  text-align: center
+}
+
+.alza-fld input[type="number"] {
+  padding: 4px 2px;
+  font-size: 14px;
+  text-align: center;
+  -moz-appearance: textfield
+}
+
+.alza-fld input[type="number"]::-webkit-inner-spin-button,
+.alza-fld input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none
 }
 
 .st-good .troof {

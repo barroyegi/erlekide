@@ -1,0 +1,22 @@
+module.exports = {
+  plugins: [
+    'removeDoctype',
+    'removeXMLProcInst',
+    'removeComments',
+    'removeMetadata',
+    'removeEditorsNSData',
+    'cleanupAttrs',
+    'removeUselessDefs',
+    'cleanupNumericValues',
+    'convertColors',
+    'removeUnknownsAndDefaults',
+    'removeNonInheritableGroupAttrs',
+    'removeUselessStrokeAndFill',
+    'cleanupIds',
+    'collapseGroups',
+    'mergePaths',
+    'convertPathData',
+    'sortAttrs',
+  ],
+  multipass: true,
+};

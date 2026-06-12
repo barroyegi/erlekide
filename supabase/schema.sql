@@ -56,6 +56,7 @@ create table if not exists public.hives (
   install_date date,
   notes        text        not null default '',
   frames       integer     check (frames >= 5 and frames <= 10),
+  alzas        jsonb       not null default '[]'::jsonb,
   grid_x       integer,
   grid_y       integer,
   created_by   uuid        references auth.users(id) on delete set null,

@@ -51,6 +51,7 @@ create index if not exists project_members_user_idx on public.project_members(us
 -- ── project_id zutabea datu-tauletan (NULLABLE oraingoz) ─────────────────────
 -- Columna project_id en las tablas de datos (NULLABLE de momento)
 alter table public.hives       add column if not exists project_id text references public.projects(id) on delete cascade;
+alter table public.hives       add column if not exists alzas      jsonb not null default '[]'::jsonb;
 alter table public.inspections add column if not exists project_id text references public.projects(id) on delete cascade;
 alter table public.expenses    add column if not exists project_id text references public.projects(id) on delete cascade;
 alter table public.materials   add column if not exists project_id text references public.projects(id) on delete cascade;

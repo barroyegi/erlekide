@@ -536,6 +536,37 @@ function beesHTML(status) {
   return out + '</div>';
 }
 
+function alzaHtml(h) {
+  const alzas = h.alzas || [];
+  if (!alzas.length) return '';
+  return '<div class="tok-alzas">' +
+    alzas.map((a, i) => {
+      const top = i === alzas.length - 1;
+      const name = a.type === 'osoa' ? 'alzaOsoa' : 'alzaErdia';
+      return `<img class="tok-alza" src="/images/${name}${top ? '' : '_sinTapa'}.svg" draggable="false" alt="">`;
+    }).join('') + '</div>';
+}
+
+function buildAlzaCards(h) {
+  const alzas = h.alzas || [];
+  if (!alzas.length && !canEdit()) return '';
+  let out = '<div class="sec-title" style="margin-top:8px">Alzak</div>';
+  if (canEdit()) out += `<div style="display:flex;gap:8px;margin-bottom:8px">
+      <button class="btn sm" onclick="addAlza('${h.id}','osoa')">＋ Osoa</button>
+      <button class="btn sm" onclick="addAlza('${h.id}','erdia')">＋ Erdia</button>
+    </div>`;
+  alzas.forEach((a, i) => {
+    const badge = a.type === 'osoa' ? 'OSOA' : 'ERDIA';
+    const del = canEdit() ? `<button class="icon-btn" style="margin-left:auto" onclick="removeAlza('${h.id}',${i})">✕</button>` : '';
+    const mkFld = (lbl, key) => `<div class="alza-fld"><label>${lbl}</label><input type="number" min="0" max="20" value="${a[key]}"${canEdit() ? ` onchange="updateAlzaField('${h.id}',${i},'${key}',+this.value)"` : ' disabled'}></div>`;
+    out += `<div class="alza-card">
+      <div class="alza-hdr"><span class="alza-badge alza-badge-${a.type}">${badge}</span><span style="font-size:11px;color:var(--bark-l);margin-left:4px">${i + 1}. alza</span>${del}</div>
+      <div class="alza-fields">${mkFld('Markoak', 'frames')}${mkFld('Estiratuta', 'stretched')}${mkFld('Eztiduna', 'honey')}</div>
+    </div>`;
+  });
+  return out;
+}
+
 // Erlauntza zabala (kaja) bi gelaxka hartzen ditu: berea eta eskuinekoa /
 // la colmena ancha ocupa su celda y la contigua derecha
 const isWide = h => h && h.frames != null && h.frames > 5;
@@ -561,12 +592,16 @@ function renderGrid() {
     if (h.grid_x == null || h.grid_y == null) return;
     const el = document.getElementById(`c${h.grid_x}_${h.grid_y}`);
     if (!el) return;
-    const svg = isWide(h) ? 'kaja' : 'nukleoa';
-    if (isWide(h)) el.classList.add('wide');
-    el.innerHTML = `<div class="tok tok-${svg} st-${h.status}" id="t${h.id}" draggable="${canEdit()}"
+    const wide = isWide(h);
+    const hasAlzas = (h.alzas || []).length > 0;
+    const svgBase = wide ? 'kaja' : 'nukleoa';
+    const svgFile = hasAlzas ? svgBase + '_sinTapa' : svgBase;
+    if (wide) el.classList.add('wide');
+    el.innerHTML = `<div class="tok tok-${svgBase} st-${h.status}" id="t${h.id}" draggable="${canEdit()}"
       ondragstart="ds(event,'${h.id}')" ondragend="de(event,'${h.id}')"
       onclick="tc(event,'${h.id}')">
-      <img class="tok-svg" src="/images/${svg}.svg" draggable="false" alt="">
+      ${alzaHtml(h)}
+      <img class="tok-svg" src="/images/${svgFile}.svg" draggable="false" alt="">
       ${beesHTML(h.status)}
       <svg class="tgrass" viewBox="0 0 100 14" preserveAspectRatio="none" aria-hidden="true">${GRASS_BLADES}</svg>
       <div class="tbrand">${esc(h.name)}</div>
@@ -603,6 +638,7 @@ async function renderDP(id) {
   const pos = h.grid_x != null ? `${RLBLS[h.grid_y]}${h.grid_x + 1} posizioa` : 'Mapan kokatu gabe';
   const stL = { good: 'Ona', warn: 'Kontuz', bad: 'Kritikoa' };
   const stC = { good: 'var(--good)', warn: 'var(--warn)', bad: 'var(--bad)' };
+  const alzaSection = buildAlzaCards(h);
   document.getElementById('mod-dp-content').innerHTML = `
     <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:12px">
       <div style="flex:1">
@@ -622,6 +658,7 @@ async function renderDP(id) {
       <button class="btn" onclick="closeM('dp');openEdit('${h.id}')">✎ Editatu</button>
     </div>` : ''}
     ${h.notes ? `<div style="font-size:12px;color:var(--bark-m);background:var(--cream);padding:8px 10px;border-radius:8px;margin-bottom:12px;line-height:1.6">${esc(h.notes)}</div>` : ''}
+    ${alzaSection}
     <div class="sec-title">Inspekzio historia</div>
     ${insps.length ? insps.slice(0, 15).map(i => `
       <div class="icard">
@@ -645,6 +682,34 @@ async function renderDP(id) {
 }
 
 function selHive(id) { selId = id; renderSB(); renderDP(id); }
+
+// ── Alzak CRUD ────────────────────────────────────────────────────────────────
+async function saveAlzas(hiveId, alzas) {
+  const { error } = await sb.from('hives').update({ alzas }).eq('id', hiveId);
+  if (error) { toast('Errorea gordetzean', 'bad'); return; }
+  const h = hives.find(x => x.id === hiveId);
+  if (h) h.alzas = alzas;
+  renderGrid();
+  renderDP(hiveId);
+}
+
+async function addAlza(hiveId, type) {
+  const h = hives.find(x => x.id === hiveId);
+  if (!h) return;
+  await saveAlzas(hiveId, [...(h.alzas || []), { type, frames: 0, stretched: 0, honey: 0 }]);
+}
+
+async function removeAlza(hiveId, idx) {
+  const h = hives.find(x => x.id === hiveId);
+  if (!h) return;
+  await saveAlzas(hiveId, (h.alzas || []).filter((_, i) => i !== idx));
+}
+
+async function updateAlzaField(hiveId, idx, field, value) {
+  const h = hives.find(x => x.id === hiveId);
+  if (!h) return;
+  await saveAlzas(hiveId, (h.alzas || []).map((a, i) => i === idx ? { ...a, [field]: value } : a));
+}
 
 // ── Drag & Drop ───────────────────────────────────────────────────────────────
 function ds(e, id) { if (!canEdit()) { e.preventDefault(); return; } dragId = id; e.dataTransfer.effectAllowed = 'move'; setTimeout(() => document.getElementById('t' + id)?.classList.add('drag'), 0); }

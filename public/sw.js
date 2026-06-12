@@ -2,7 +2,7 @@
 // Network-first con cache de respaldo para uso en el campo
 'use strict';
 
-const CACHE = 'erlekide-v4';
+const CACHE = 'erlekide-v5';
 const PRECACHE = [
   '/',
   '/style.css',
@@ -11,6 +11,12 @@ const PRECACHE = [
   '/images/icon.svg',
   '/images/kaja.svg',
   '/images/nukleoa.svg',
+  '/images/kaja_sinTapa.svg',
+  '/images/nukleoa_sinTapa.svg',
+  '/images/alzaOsoa.svg',
+  '/images/alzaOsoa_sinTapa.svg',
+  '/images/alzaErdia.svg',
+  '/images/alzaErdia_sinTapa.svg',
   '/images/erlekide_bg2.jpg',
   '/images/erlekide_bg2_m.jpg'
 ];
