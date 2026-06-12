@@ -138,6 +138,31 @@ erlekide/
 
 ---
 
+## 🗂 Migrazioa: PROIEKTU ANITZ / Migración: MULTIPROYECTO
+
+> Erabiltzaileek hainbat proiektu izan ditzakete (erlategi bereiziak), gonbidapen-kode
+> baten bidez partekatu, eta rol bidez kudeatu (jabea / editorea / ikuslea).
+> Los usuarios pueden tener varios proyectos, compartirlos con un código de invitación
+> y gestionarlos por roles (propietario / editor / lector).
+
+**BD bizia (datuekin) / BD viva (con datos):** exekutatu `supabase/migrate-projects.sql`
+**bi tandatan** / ejecutar en **dos tandas**:
+
+1. **TANDA 1** (orain / ahora) — gehigarria; lehendik dauden datuak «Nire erlategia»
+   proiektura eramaten ditu eta uneko erabiltzaileak kide bihurtzen ditu. App zaharrak
+   lanean jarraitzen du. / aditiva; mueve los datos a un proyecto por defecto y conserva
+   el acceso de los usuarios actuales. La app sigue funcionando.
+2. **TANDA 2** (front berria zabaldu **ondoren** / **tras** desplegar el frontend nuevo) —
+   `project_id` derrigortzen du eta politika zaharrak proiektukoengatik ordezten ditu
+   (proiektuak isolatzen ditu). / fija `project_id` y cambia las políticas (aísla los proyectos).
+   Fitxategian iruzkinduta dago; deskomentatu eta exekutatu. / Va comentada en el archivo;
+   descomentar y ejecutar.
+
+> Instalazio berrietan / En instalaciones nuevas: erabili `supabase/schema.sql` (dena
+> azken egoeran dakar) / usa `supabase/schema.sql` (ya incluye todo en su estado final).
+
+---
+
 ## 🔧 Migrazioa: inspekzioak editatzeko politika / Migración: política para editar inspecciones
 
 > Lehendik sortutako datu-baseetan `insp_update` RLS politika falta da eta

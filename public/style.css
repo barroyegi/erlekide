@@ -1392,6 +1392,82 @@ textarea {
   margin-bottom: .5rem
 }
 
+/* ── PROIEKTUAK / Proyectos ── */
+.proj-btn {
+  background: rgba(255, 255, 255, .14);
+  border-color: rgba(255, 255, 255, .22);
+  color: #fff;
+  max-width: 200px;
+  gap: 4px;
+}
+.proj-btn #proj-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+.proj-caret { opacity: .65; font-size: 10px }
+
+/* viewer (ikuslea): edizio-kontrolak ezkutatu / ocultar controles de edición */
+body.viewer .needs-edit { display: none !important }
+
+.proj-list { display: flex; flex-direction: column; gap: 5px; margin-bottom: 4px }
+
+.proj-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+  padding: 9px 11px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: #fff;
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition: .12s;
+}
+.proj-row:hover { background: var(--cream) }
+.proj-row.on { border-color: var(--honey); background: var(--honey-l) }
+.proj-row-name { flex: 1; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+.proj-row-role {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--honey-d);
+  background: var(--honey-l);
+  border-radius: 10px;
+  padding: 2px 8px;
+  flex-shrink: 0;
+}
+.proj-row.on .proj-row-role { background: #fff }
+
+.proj-hr { border: none; border-top: 1px solid var(--border); margin: 16px 0 4px }
+
+.code-box { display: flex; align-items: center; gap: 7px; margin-bottom: 4px }
+.code-val {
+  flex: 1;
+  font-family: 'Segoe UI', monospace;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  color: var(--honey-d);
+  background: var(--cream);
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  text-align: center;
+}
+
+.pm-list { display: flex; flex-direction: column; gap: 5px; margin-bottom: 4px }
+.pm-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 2px;
+  border-bottom: .5px solid var(--border);
+  font-size: 13px;
+}
+.pm-row:last-child { border-bottom: none }
+.pm-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+.pm-role { font-size: 11px; font-weight: 700; color: var(--bark-l) }
+.pm-sel { width: auto; padding: 4px 8px; font-size: 12px; flex-shrink: 0 }
+
 /* ── KARGATZEA ── */
 #loading {
   position: fixed;

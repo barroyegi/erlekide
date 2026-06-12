@@ -54,11 +54,13 @@
   <div id="scr-app" class="scr" style="display:none">
     <header id="hdr">
       <span class="hlogo">Erlekide</span>
+      <button class="btn sm proj-btn" id="proj-btn" onclick="openProj()" title="Proiektuak">
+        <span id="proj-name">—</span><span class="proj-caret">▾</span></button>
       <span class="ubadge" id="ubadge">—</span>
-      <button class="btn sm" id="hdr-add-btn"
+      <button class="btn sm needs-edit" id="hdr-add-btn"
         style="display:none;background:var(--honey);border-color:var(--honey);color:#fff;padding:5px 13px"
         onclick="openAddModal(null,null)">＋ Berria</button>
-      <button class="btn sm"
+      <button class="btn sm needs-edit"
         style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);color:#fff;font-size:16px;padding:4px 9px"
         onclick="openCfg()" title="Sareta konfigurazioa">⚙</button>
       <button class="btn sm" style="background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);color:#fff"
@@ -73,7 +75,7 @@
       <aside id="sb">
         <div class="sb-hdr">
           <span>Erlauntzak</span>
-          <button class="btn sm" style="padding:2px 9px;font-size:15px;line-height:1.2"
+          <button class="btn sm needs-edit" style="padding:2px 9px;font-size:15px;line-height:1.2"
             onclick="openAddModal(null,null)" title="Erlauntza berria">+</button>
         </div>
         <div id="hl"></div>
@@ -92,8 +94,8 @@
           <div class="view-hdr">
             <h3>💸 Gastuak</h3>
             <div style="display:flex;gap:7px">
-              <button class="btn sm" onclick="openMembers()">👥 Sozioak</button>
-              <button class="btn sm primary" onclick="openAddExp()">＋ Gastua</button>
+              <button class="btn sm needs-edit" onclick="openMembers()">👥 Sozioak</button>
+              <button class="btn sm primary needs-edit" onclick="openAddExp()">＋ Gastua</button>
             </div>
           </div>
           <div id="exp-balances"></div>
@@ -105,13 +107,13 @@
         <div class="view-inner">
           <div class="view-hdr">
             <h3>🔧 Materialak</h3>
-            <button class="btn sm primary" onclick="openAddMat()">＋ Materiala</button>
+            <button class="btn sm primary needs-edit" onclick="openAddMat()">＋ Materiala</button>
           </div>
           <div id="mat-list"></div>
         </div>
       </div>
     </div>
-    <button class="fab" onclick="openAddModal(null,null)" title="Erlauntza berria">＋</button>
+    <button class="fab needs-edit" onclick="openAddModal(null,null)" title="Erlauntza berria">＋</button>
   </div>
 
   <!-- ══════════ MODALAK ══════════ -->
@@ -396,6 +398,49 @@
       <div class="brow">
         <button class="btn" onclick="closeM('cfg')">Utzi</button>
         <button class="btn primary" id="cfg-save-btn" onclick="saveSettings()">✓ Gorde</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: PROIEKTUAK (gestión) -->
+  <div id="mod-proj" class="movl" style="display:none" onclick="if(event.target===this)closeM('proj')">
+    <div class="mbox" style="max-width:420px">
+      <div class="mhandle"></div>
+      <div class="mtitle">🗂 Proiektuak <button class="mclose" onclick="closeM('proj')">✕</button></div>
+      <div id="proj-body"></div>
+    </div>
+  </div>
+
+  <!-- MODAL: LEHEN / PROIEKTU BERRIA -->
+  <div id="mod-fp" class="movl" style="display:none">
+    <div class="mbox" style="max-width:360px">
+      <div class="mhandle"></div>
+      <div class="mtitle">Proiektu berria</div>
+      <p style="font-size:12px;color:var(--bark-l);margin-bottom:12px;line-height:1.6">Eman izen bat zure
+        erlategiari. Geroago beste proiektu batzuk sor ditzakezu edo kode batekin beste batera batu.</p>
+      <div class="ff"><label>Proiektuaren izena</label><input id="fp-name" placeholder="Adib: Mendiko erlategia">
+      </div>
+      <div id="fp-err" class="lerr"></div>
+      <div class="brow">
+        <button class="btn" id="fp-cancel" onclick="closeM('fp')" style="display:none">Utzi</button>
+        <button class="btn primary" onclick="createFirstProject()">✓ Sortu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: KODEAREKIN BATU -->
+  <div id="mod-join" class="movl" style="display:none" onclick="if(event.target===this)closeM('join')">
+    <div class="mbox" style="max-width:340px">
+      <div class="mhandle"></div>
+      <div class="mtitle">🔑 Kodearekin batu <button class="mclose" onclick="closeM('join')">✕</button></div>
+      <p style="font-size:12px;color:var(--bark-l);margin-bottom:12px;line-height:1.6">Sartu proiektuaren jabeak
+        emandako gonbidapen-kodea. Ikusle gisa sartuko zara; jabeak editore bihur zaitzake.</p>
+      <div class="ff"><label>Gonbidapen-kodea</label><input id="join-code" placeholder="K7M2QX" maxlength="6"
+          style="text-transform:uppercase;letter-spacing:3px;font-weight:700;text-align:center"></div>
+      <div id="join-err" class="lerr"></div>
+      <div class="brow">
+        <button class="btn" onclick="closeM('join')">Utzi</button>
+        <button class="btn primary" onclick="joinProject()">Batu →</button>
       </div>
     </div>
   </div>

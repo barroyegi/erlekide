@@ -2,7 +2,7 @@
 // Network-first con cache de respaldo para uso en el campo
 'use strict';
 
-const CACHE = 'erlekide-v3';
+const CACHE = 'erlekide-v4';
 const PRECACHE = [
   '/',
   '/style.css',

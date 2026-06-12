@@ -10,6 +10,11 @@ let delStep = 0, delTimer = null;
 let expenses = [], members = [], materials = [];
 let expEditId = null, matEditId = null;
 let pollTimer = null;
+// ── Proiektuak / Proyectos ──
+let projectId = null, projects = [], myRole = 'viewer', projMembers = [];
+let pdelStep = 0, pdelTimer = null;
+const canEdit = () => myRole === 'owner' || myRole === 'editor';
+const isOwner = () => myRole === 'owner';
 
 // ── Supabase ──────────────────────────────────────────────────────────────────
 async function initSB() {
@@ -88,7 +93,9 @@ async function doReg() {
 
 async function doLogout() {
   await sb.auth.signOut();
-  me = userId = token = selId = null; hives = []; insps = [];
+  me = userId = token = selId = projectId = null;
+  hives = []; insps = []; projects = []; projMembers = []; myRole = 'viewer';
+  document.body.classList.remove('viewer');
   clearInterval(pollTimer);
   document.getElementById('scr-app').style.display = 'none';
   showLogin();
@@ -104,11 +111,39 @@ async function enterApp() {
   const app = document.getElementById('scr-app');
   app.style.display = 'flex';
   document.getElementById('ubadge').textContent = '👤 ' + me;
-  if (window.innerWidth <= 700)
+  await loadProjects();
+  if (!projects.length) { showFirstProject(); return; }
+  const saved = localStorage.getItem('erlekide.project');
+  const p = projects.find(x => x.id === saved) || projects[0];
+  await selectProject(p.id);
+}
+
+// ── Proiektuak kargatu/aukeratu / Cargar y seleccionar proyectos ───────────────
+async function loadProjects() {
+  const { data } = await sb.from('project_members').select('role, projects(*)').eq('user_id', userId);
+  projects = (data || [])
+    .filter(r => r.projects)
+    .map(r => ({ ...r.projects, role: r.role }))
+    .sort((a, b) => a.name.localeCompare(b.name));
+}
+
+async function selectProject(id) {
+  const p = projects.find(x => x.id === id);
+  if (!p) return;
+  projectId = id; myRole = p.role;
+  localStorage.setItem('erlekide.project', id);
+  clampGrid(p.cols, p.rows);
+  selId = null; moveId = null;
+  clearInterval(pollTimer);
+  await Promise.all([loadHives(), loadMembers(), loadExpenses(), loadMaterials()]);
+  renderProjectBar();
+  applyRoleUI();
+  if (window.innerWidth <= 700 && canEdit())
     document.getElementById('hdr-add-btn').style.display = 'inline-flex';
-  await Promise.all([loadSettings(), loadHives(), loadMembers(), loadExpenses(), loadMaterials()]);
+  updateHint();
   buildGrid();
   renderAll();
+  setMainView('map');
   pollTimer = setInterval(async () => {
     await Promise.all([loadHives(), loadExpenses(), loadMaterials()]);
     renderAll();
@@ -117,9 +152,228 @@ async function enterApp() {
   }, 30000);
 }
 
+function clampGrid(c, r) {
+  COLS = Math.max(3, Math.min(20, c || 14));
+  ROWS = Math.max(1, Math.min(15, r || 10));
+}
+
+async function switchProject(id) {
+  if (id === projectId) { closeM('proj'); return; }
+  closeM('proj');
+  await selectProject(id);
+  toast(`${projects.find(p => p.id === id)?.name || ''} ✓`);
+}
+
+// ── Proiektu-barra goiburuan / Barra de proyecto en la cabecera ────────────────
+function renderProjectBar() {
+  const cur = projects.find(p => p.id === projectId);
+  const el = document.getElementById('proj-name');
+  if (el && cur) el.textContent = cur.name;
+}
+
+// ── Lehen proiektua sortu (erabiltzaile berria) / Crear el primer proyecto ─────
+function showFirstProject() {
+  document.getElementById('fp-name').value = me ? `${me} erlategia` : '';
+  document.getElementById('fp-err').textContent = '';
+  openM('fp');
+}
+
+async function createFirstProject() {
+  const name = document.getElementById('fp-name').value.trim();
+  const er = document.getElementById('fp-err');
+  if (name.length < 2) { er.textContent = 'Idatzi proiektuaren izena (gutxienez 2 karaktere).'; return; }
+  const ok = await doCreateProject(name);
+  if (ok) closeM('fp');
+}
+
+async function doCreateProject(name) {
+  const { data, error } = await sb.rpc('create_project', { p_name: name });
+  if (error) { toast(error.message, 'bad'); return false; }
+  const row = Array.isArray(data) ? data[0] : data;
+  await loadProjects();
+  await selectProject(row.id);
+  toast(`«${row.name}» sortuta ✓`);
+  return true;
+}
+
+async function joinProject() {
+  const code = document.getElementById('join-code').value.trim();
+  const er = document.getElementById('join-err');
+  er.textContent = '';
+  if (code.length < 4) { er.textContent = 'Idatzi gonbidapen-kodea.'; return; }
+  const { data, error } = await sb.rpc('join_project', { p_code: code });
+  if (error) { er.textContent = 'Kode baliogabea.'; return; }
+  const row = Array.isArray(data) ? data[0] : data;
+  closeM('join'); closeM('proj'); closeM('fp');
+  await loadProjects();
+  await selectProject(row.id);
+  toast(`«${row.name}» proiektura batu zara ✓`);
+}
+
+// ── Rol-aren araberako UI / UI según el rol (viewer = solo lectura) ────────────
+function applyRoleUI() {
+  const ed = canEdit();
+  document.body.classList.toggle('viewer', !ed);
+  const addBtn = document.getElementById('hdr-add-btn');
+  if (addBtn && (!ed || window.innerWidth > 700)) addBtn.style.display = 'none';
+}
+
+// ── Proiektua kudeatu / Gestionar proyecto (modal) ────────────────────────────
+function roleLabel(r) { return r === 'owner' ? 'Jabea' : r === 'editor' ? 'Editorea' : 'Ikuslea'; }
+
+async function loadProjMembers() {
+  const { data } = await sb.from('project_members').select('user_id, role, username').eq('project_id', projectId);
+  projMembers = (data || []).sort((a, b) => (a.role === 'owner' ? -1 : 1) - (b.role === 'owner' ? -1 : 1));
+}
+
+async function openProj() {
+  if (projectId) await loadProjMembers();
+  renderProj();
+  openM('proj');
+}
+
+function openNewProject() {
+  closeM('proj');
+  document.getElementById('fp-name').value = '';
+  document.getElementById('fp-err').textContent = '';
+  document.getElementById('fp-cancel').style.display = '';
+  openM('fp');
+}
+
+function openJoin() {
+  closeM('proj');
+  document.getElementById('join-code').value = '';
+  document.getElementById('join-err').textContent = '';
+  openM('join');
+}
+
+function renderProj() {
+  const cur = projects.find(p => p.id === projectId);
+  const owner = isOwner();
+  let h = '<div class="sec-title">Zure proiektuak</div><div class="proj-list">';
+  projects.forEach(p => {
+    h += `<button class="proj-row ${p.id === projectId ? 'on' : ''}" onclick="switchProject('${p.id}')">
+      <span class="proj-row-name">${esc(p.name)}</span>
+      <span class="proj-row-role">${roleLabel(p.role)}</span>
+    </button>`;
+  });
+  h += '</div><div style="display:flex;gap:7px;margin:10px 0 4px">'
+    + '<button class="btn sm" style="flex:1" onclick="openNewProject()">＋ Proiektu berria</button>'
+    + '<button class="btn sm" style="flex:1" onclick="openJoin()">🔑 Kodearekin batu</button></div>';
+
+  if (cur) {
+    h += '<hr class="proj-hr">';
+    if (owner) {
+      h += `<div class="sec-title">Proiektua</div>
+      <div style="display:flex;gap:7px;margin-bottom:14px">
+        <input id="proj-rename" value="${esc(cur.name)}" style="flex:1">
+        <button class="btn sm" onclick="doRename()">Izena</button>
+      </div>
+      <div class="sec-title">Gonbidapen-kodea</div>
+      <div style="font-size:11px;color:var(--bark-l);margin-bottom:7px;line-height:1.55">Partekatu kode hau norbaitek proiektura batzeko. Ikusle gisa sartuko da; ondoren editore bihur dezakezu.</div>
+      <div class="code-box">
+        <span class="code-val" id="code-val">${esc(cur.join_code || '——')}</span>
+        <button class="btn sm" onclick="copyCode()">📋 Kopiatu</button>
+        <button class="btn sm" onclick="doRegenCode()" title="Kode berria">↻</button>
+      </div>
+      <div class="sec-title">Taldekideak (${projMembers.length})</div><div class="pm-list">`;
+      projMembers.forEach(m => {
+        const isMe = m.user_id === userId;
+        const meTag = isMe ? ' <em style="color:var(--bark-l)">(zu)</em>' : '';
+        if (m.role === 'owner') {
+          h += `<div class="pm-row"><span class="pm-name">${esc(m.username || '—')}${meTag}</span><span class="pm-role">Jabea</span></div>`;
+        } else {
+          h += `<div class="pm-row"><span class="pm-name">${esc(m.username || '—')}${meTag}</span>
+            <select class="pm-sel" onchange="setRole('${m.user_id}', this.value)">
+              <option value="editor" ${m.role === 'editor' ? 'selected' : ''}>Editorea</option>
+              <option value="viewer" ${m.role === 'viewer' ? 'selected' : ''}>Ikuslea</option>
+            </select>
+            <button class="member-del" onclick="removeMemberP('${m.user_id}')" title="Kendu">✕</button></div>`;
+        }
+      });
+      h += `</div>
+      <div id="pdel-warn" style="display:none;background:var(--bad-bg);border:1px solid rgba(174,43,43,.3);border-radius:8px;padding:9px 11px;font-size:12px;color:var(--bad);margin:10px 0;line-height:1.55">⚠️ Proiektua eta bere datu GUZTIAK behin betiko ezabatuko dira. Berriro sakatu baieztatzeko.</div>
+      <button class="btn danger full" id="pdel-btn" style="margin-top:10px" onclick="stepDeleteProject()">🗑 Proiektua ezabatu</button>`;
+    } else {
+      h += `<hr class="proj-hr"><div class="sec-title">Taldekideak (${projMembers.length})</div><div class="pm-list">`;
+      projMembers.forEach(m => {
+        const meTag = m.user_id === userId ? ' <em style="color:var(--bark-l)">(zu)</em>' : '';
+        h += `<div class="pm-row"><span class="pm-name">${esc(m.username || '—')}${meTag}</span><span class="pm-role">${roleLabel(m.role)}</span></div>`;
+      });
+      h += '</div>';
+    }
+  }
+  document.getElementById('proj-body').innerHTML = h;
+  pdelStep = 0;
+}
+
+async function doRename() {
+  const name = document.getElementById('proj-rename').value.trim();
+  if (name.length < 2) { toast('Izen laburregia', 'warn'); return; }
+  const { error } = await sb.from('projects').update({ name }).eq('id', projectId);
+  if (error) { toast(error.message, 'bad'); return; }
+  const p = projects.find(x => x.id === projectId); if (p) p.name = name;
+  renderProjectBar(); renderProj(); toast('Izena aldatuta ✓');
+}
+
+function copyCode() {
+  const code = projects.find(p => p.id === projectId)?.join_code || '';
+  if (navigator.clipboard) navigator.clipboard.writeText(code).then(() => toast('Kodea kopiatuta ✓'), () => toast(code, 'warn'));
+  else toast(code, 'warn');
+}
+
+async function doRegenCode() {
+  if (!confirm('Kode berria sortu? Kode zaharrak balioa galduko du.')) return;
+  const { data, error } = await sb.rpc('regenerate_join_code', { p_pid: projectId });
+  if (error) { toast(error.message, 'bad'); return; }
+  const p = projects.find(x => x.id === projectId); if (p) p.join_code = data;
+  const el = document.getElementById('code-val'); if (el) el.textContent = data;
+  toast('Kode berria sortuta ✓');
+}
+
+async function setRole(uid, role) {
+  const { error } = await sb.rpc('set_member_role', { p_pid: projectId, p_uid: uid, p_role: role });
+  if (error) { toast(error.message, 'bad'); return; }
+  const m = projMembers.find(x => x.user_id === uid); if (m) m.role = role;
+  toast('Rola eguneratuta ✓');
+}
+
+async function removeMemberP(uid) {
+  const m = projMembers.find(x => x.user_id === uid);
+  if (!confirm(`«${m?.username || ''}» proiektutik kendu?`)) return;
+  const { error } = await sb.rpc('remove_member', { p_pid: projectId, p_uid: uid });
+  if (error) { toast(error.message, 'bad'); return; }
+  projMembers = projMembers.filter(x => x.user_id !== uid);
+  renderProj(); toast('Kidea kenduta');
+}
+
+function stepDeleteProject() {
+  const btn = document.getElementById('pdel-btn');
+  const warn = document.getElementById('pdel-warn');
+  if (pdelStep === 0) {
+    pdelStep = 1; warn.style.display = '';
+    btn.textContent = '⚠ Berretsi ezabatzea';
+    pdelTimer = setTimeout(() => {
+      pdelStep = 0; warn.style.display = 'none'; btn.textContent = '🗑 Proiektua ezabatu';
+    }, 4000);
+  } else { clearTimeout(pdelTimer); deleteProject(); }
+}
+
+async function deleteProject() {
+  const { error } = await sb.from('projects').delete().eq('id', projectId);
+  if (error) { toast(error.message, 'bad'); return; }
+  projects = projects.filter(p => p.id !== projectId);
+  localStorage.removeItem('erlekide.project');
+  closeM('proj');
+  clearInterval(pollTimer);
+  if (projects.length) { await selectProject(projects[0].id); toast('Proiektua ezabatuta'); }
+  else { projectId = null; showFirstProject(); toast('Proiektua ezabatuta'); }
+}
+
 // ── Datuak ────────────────────────────────────────────────────────────────────
 async function loadHives() {
-  const { data, error } = await sb.from('hives').select('*').order('name');
+  if (!projectId) { hives = []; return; }
+  const { data, error } = await sb.from('hives').select('*').eq('project_id', projectId).order('name');
   if (!error && data) hives = data;
 }
 
@@ -130,20 +384,13 @@ async function loadInsps(hiveId) {
 }
 
 // ── Konfigurazioa / Settings ──────────────────────────────────────────────────
-async function loadSettings() {
-  try {
-    const { data } = await sb.from('settings').select('cols,rows').eq('id', 'main').maybeSingle();
-    if (data) { COLS = Math.max(3, Math.min(20, data.cols || 14)); ROWS = Math.max(1, Math.min(15, data.rows || 10)); }
-  } catch { /* use defaults 14×10 */ }
-  updateHint();
-}
-
 function updateHint() {
   const el = document.getElementById('mhint');
   if (el) el.textContent = `Arrastatu erlauntzak mugitzeko · Sareta: ${COLS}×${ROWS} · ⚙ konfiguratu goiburuan`;
 }
 
 function openCfg() {
+  if (!canEdit()) return;
   document.getElementById('cfg-cols').value = COLS;
   document.getElementById('cfg-rows').value = ROWS;
   document.getElementById('cfg-cols-now').textContent = COLS;
@@ -175,7 +422,9 @@ async function saveSettings() {
     h.grid_x = null; h.grid_y = null;
   }
 
-  await sb.from('settings').upsert({ id: 'main', cols: newCols, rows: newRows });
+  const { error } = await sb.rpc('set_grid', { p_pid: projectId, p_cols: newCols, p_rows: newRows });
+  if (error) { toast(error.message, 'bad'); return; }
+  const cp = projects.find(p => p.id === projectId); if (cp) { cp.cols = newCols; cp.rows = newRows; }
 
   COLS = newCols; ROWS = newRows;
   closeM('cfg');
@@ -314,7 +563,7 @@ function renderGrid() {
     if (!el) return;
     const svg = isWide(h) ? 'kaja' : 'nukleoa';
     if (isWide(h)) el.classList.add('wide');
-    el.innerHTML = `<div class="tok tok-${svg} st-${h.status}" id="t${h.id}" draggable="true"
+    el.innerHTML = `<div class="tok tok-${svg} st-${h.status}" id="t${h.id}" draggable="${canEdit()}"
       ondragstart="ds(event,'${h.id}')" ondragend="de(event,'${h.id}')"
       onclick="tc(event,'${h.id}')">
       <img class="tok-svg" src="/images/${svg}.svg" draggable="false" alt="">
@@ -365,13 +614,13 @@ async function renderDP(id) {
     <div class="strow">
       <div class="mstat"><div class="n" style="color:${stC[h.status]};font-size:14px">${stL[h.status]}</div><div class="l">Egoera</div></div>
       <div class="mstat"><div class="n">${insps.length}</div><div class="l">Inspekzioak</div></div>
-      <div class="mstat"><div class="n" style="font-size:13px">${h.frames != null ? h.frames + 'mk' : '—'}</div><div class="l">Markoak</div></div>
+      <div class="mstat"><div class="n" style="font-size:13px">${h.frames != null ? h.frames : '—'}</div><div class="l">Markoak</div></div>
     </div>
-    <div style="display:flex;gap:8px;margin-bottom:12px">
+    ${canEdit() ? `<div style="display:flex;gap:8px;margin-bottom:12px">
       <button class="btn primary" style="flex:1" onclick="closeM('dp');openInsp('${h.id}')">＋ Inspekzioa</button>
       <button class="btn" onclick="closeM('dp');startMove('${h.id}')">📍 Mugitu</button>
       <button class="btn" onclick="closeM('dp');openEdit('${h.id}')">✎ Editatu</button>
-    </div>
+    </div>` : ''}
     ${h.notes ? `<div style="font-size:12px;color:var(--bark-m);background:var(--cream);padding:8px 10px;border-radius:8px;margin-bottom:12px;line-height:1.6">${esc(h.notes)}</div>` : ''}
     <div class="sec-title">Inspekzio historia</div>
     ${insps.length ? insps.slice(0, 15).map(i => `
@@ -379,7 +628,7 @@ async function renderDP(id) {
         <div class="ichdr">
           <span class="idate">${i.date}</span>
           <span class="iusr">${esc(i.username)}</span>
-          <button class="icon-btn" style="margin-left:auto" onclick="openEditInsp('${i.id}')">✎ Editatu</button>
+          ${canEdit() ? `<button class="icon-btn" style="margin-left:auto" onclick="openEditInsp('${i.id}')">✎ Editatu</button>` : ''}
         </div>
         <div style="color:var(--bark);line-height:1.55">${esc(i.notes) || '<em style="color:var(--bark-l)">Oharrik gabe</em>'}</div>
         <div class="ichips">
@@ -398,12 +647,13 @@ async function renderDP(id) {
 function selHive(id) { selId = id; renderSB(); renderDP(id); }
 
 // ── Drag & Drop ───────────────────────────────────────────────────────────────
-function ds(e, id) { dragId = id; e.dataTransfer.effectAllowed = 'move'; setTimeout(() => document.getElementById('t' + id)?.classList.add('drag'), 0); }
+function ds(e, id) { if (!canEdit()) { e.preventDefault(); return; } dragId = id; e.dataTransfer.effectAllowed = 'move'; setTimeout(() => document.getElementById('t' + id)?.classList.add('drag'), 0); }
 function de(e, id) { document.getElementById('t' + id)?.classList.remove('drag'); dragId = null; }
 function ov(e, x, y) { if (!dragId) return; e.preventDefault(); document.getElementById(`c${x}_${y}`)?.classList.add('dov'); }
 function ol(e, x, y) { document.getElementById(`c${x}_${y}`)?.classList.remove('dov'); }
 
 async function placeHive(id, x, y) {
+  if (!canEdit()) return;
   const hive = hives.find(h => h.id === id);
   if (!hive) return;
   const [px, py] = [hive.grid_x, hive.grid_y];
@@ -425,6 +675,7 @@ async function od(e, x, y) {
 
 // Mugitzeko modua (mugikorrean drag & drop ez dabilenez): hautatu eta ukitu helmuga
 function startMove(id) {
+  if (!canEdit()) return;
   const h = hives.find(x => x.id === id);
   if (!h) return;
   moveId = id;
@@ -448,7 +699,8 @@ async function cc(x, y) {
     await placeHive(id, x, y);
     return;
   }
-  if (occ) selHive(occ.id); else openAddModal(x, y);
+  if (occ) selHive(occ.id);
+  else if (canEdit()) openAddModal(x, y);
 }
 
 function tc(e, id) {
@@ -487,6 +739,7 @@ function readPosSelects(rowSelId, colSelId, ignoreId, wide) {
 }
 
 function openAddModal(x, y) {
+  if (!canEdit()) return;
   pendX = x; pendY = y;
   ['ahn', 'ahno'].forEach(i => document.getElementById(i).value = '');
   document.getElementById('ahf').value = '';
@@ -510,6 +763,7 @@ async function saveHive() {
   saving = true;
   try {
     const { data, error } = await sb.from('hives').insert({
+      project_id: projectId,
       name, type: document.getElementById('aht').value, race: document.getElementById('ahr').value,
       status: document.getElementById('ahs').value, color: document.getElementById('ahc').value,
       install_date: document.getElementById('ahd').value || null,
@@ -676,7 +930,7 @@ async function saveInsp() {
       ({ error } = await sb.from('inspections').update(payload).eq('id', inspEditId));
     } else {
       ({ error } = await sb.from('inspections').insert({
-        ...payload, hive_id: inspHiveId, username: me, created_by: userId
+        ...payload, project_id: projectId, hive_id: inspHiveId, username: me, created_by: userId
       }));
     }
     if (error) { toast(error.message, 'bad'); return; }
@@ -717,15 +971,18 @@ function setMainView(v) {
 
 // ── Datuak kargatu / Load data ────────────────────────────────────────────────
 async function loadExpenses() {
-  const { data } = await sb.from('expenses').select('*').order('date', { ascending: false }).order('created_at', { ascending: false });
+  if (!projectId) { expenses = []; return; }
+  const { data } = await sb.from('expenses').select('*').eq('project_id', projectId).order('date', { ascending: false }).order('created_at', { ascending: false });
   expenses = data || [];
 }
 async function loadMembers() {
-  const { data } = await sb.from('members').select('*').order('name');
+  if (!projectId) { members = []; return; }
+  const { data } = await sb.from('members').select('*').eq('project_id', projectId).order('name');
   members = data || [];
 }
 async function loadMaterials() {
-  const { data } = await sb.from('materials').select('*').order('category').order('name');
+  if (!projectId) { materials = []; return; }
+  const { data } = await sb.from('materials').select('*').eq('project_id', projectId).order('category').order('name');
   materials = data || [];
 }
 
@@ -833,7 +1090,7 @@ async function saveExp() {
   if (!amount || amount <= 0) { toast('Sartu zenbateko baliogarri bat', 'warn'); return; }
   saving = true;
   try {
-    const { error } = await sb.from('expenses').insert({ description, amount, paid_by, date, notes, created_by: userId });
+    const { error } = await sb.from('expenses').insert({ project_id: projectId, description, amount, paid_by, date, notes, created_by: userId });
     if (error) { toast(error.message, 'bad'); return; }
     await loadExpenses();
     closeM('exp'); renderExpenses(); toast('Gastua gordeta ✓');
@@ -865,7 +1122,7 @@ function renderMembersList() {
 async function addMember() {
   const name = document.getElementById('mbr-name').value.trim();
   if (!name) return;
-  const { error } = await sb.from('members').insert({ name });
+  const { error } = await sb.from('members').insert({ project_id: projectId, name });
   if (error) { toast(error.message, 'bad'); return; }
   await loadMembers();
   document.getElementById('mbr-name').value = '';
@@ -948,7 +1205,7 @@ async function saveMat() {
     const payload = { name, category, quantity, notes };
     const { error } = matEditId
       ? await sb.from('materials').update(payload).eq('id', matEditId)
-      : await sb.from('materials').insert({ ...payload, created_by: userId });
+      : await sb.from('materials').insert({ ...payload, project_id: projectId, created_by: userId });
     if (error) { toast(error.message, 'bad'); return; }
     await loadMaterials();
     closeM('mat'); renderMaterials(); toast(matEditId ? 'Materiala eguneratuta ✓' : 'Materiala gordeta ✓');
