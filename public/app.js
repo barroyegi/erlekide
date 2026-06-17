@@ -548,6 +548,7 @@ function alzaHtml(h) {
 }
 
 function buildAlzaCards(h) {
+  if (!isWide(h)) return '';
   const alzas = h.alzas || [];
   if (!alzas.length && !canEdit()) return '';
   let out = '<div class="sec-title" style="margin-top:8px">Alzak</div>';
