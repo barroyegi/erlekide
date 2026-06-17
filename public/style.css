@@ -794,7 +794,7 @@ textarea {
 /* ── ALZAK: Gain-kaxak erlauntzaren gainean / Alzas apiladas sobre el cuerpo ── */
 .tok-alzas {
   position: absolute;
-  bottom: 80%;
+  bottom: 100%;
   left: 50%;
   transform: translateX(-50%);
   width: var(--awidth);
