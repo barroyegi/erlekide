@@ -681,6 +681,11 @@ textarea {
   min-height: 0;
 }
 
+svg.tok-svg {
+  overflow: visible;
+  display: block;
+}
+
 /* Celda con colmena: sin parche, la sombra de contacto hace de suelo */
 .cell:has(.tok):not(.dov),
 .cell:has(.tok):not(.dov):hover {

@@ -536,15 +536,30 @@ function beesHTML(status) {
   return out + '</div>';
 }
 
-function alzaHtml(h) {
+// Dimensiones exactas (px) de cada SVG de alza y de la caja sin tapa
+const ALZA_H = { osoa: 496.730, erdia: 308.375, osoa_st: 390.967, erdia_st: 198.546 };
+const ALZA_W  = 733.869;
+const KAJA_ST_H = 491.055;
+
+// Genera un <svg> inline que combina caja + alzas en el mismo sistema de coordenadas.
+// La caja ocupa y=[0, KAJA_ST_H]; cada alza se apila en y negativa (overflow visible).
+function alzaHiveSvg(h) {
+  const wide = isWide(h);
   const alzas = h.alzas || [];
-  if (!alzas.length) return '';
-  return '<div class="tok-alzas">' +
-    alzas.map((a, i) => {
-      const top = i === alzas.length - 1;
-      const name = a.type === 'osoa' ? 'alzaOsoa' : 'alzaErdia';
-      return `<img class="tok-alza" src="/images/${name}${top ? '' : '_sinTapa'}.svg" draggable="false" alt="">`;
-    }).join('') + '</div>';
+  if (!alzas.length || !wide)
+    return `<img class="tok-svg" src="/images/${wide ? 'kaja' : 'nukleoa'}.svg" draggable="false" alt="">`;
+  let imgs = '';
+  let yUp = 0;
+  alzas.forEach((a, i) => {
+    const isTop = i === alzas.length - 1;
+    const t = a.type === 'osoa' ? 'osoa' : 'erdia';
+    const ah = isTop ? ALZA_H[t] : ALZA_H[t + '_st'];
+    const file = `alza${a.type === 'osoa' ? 'Osoa' : 'Erdia'}${isTop ? '' : '_sinTapa'}.svg`;
+    yUp += ah;
+    imgs += `<image href="/images/${file}" x="0" y="${(-yUp).toFixed(2)}" width="${ALZA_W}" height="${ah}"/>`;
+  });
+  imgs += `<image href="/images/kaja_sinTapa.svg" x="0" y="0" width="${ALZA_W}" height="${KAJA_ST_H}"/>`;
+  return `<svg class="tok-svg" viewBox="0 0 ${ALZA_W} ${KAJA_ST_H}" overflow="visible" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">${imgs}</svg>`;
 }
 
 function buildAlzaCards(h) {
@@ -594,15 +609,12 @@ function renderGrid() {
     const el = document.getElementById(`c${h.grid_x}_${h.grid_y}`);
     if (!el) return;
     const wide = isWide(h);
-    const hasAlzas = (h.alzas || []).length > 0;
     const svgBase = wide ? 'kaja' : 'nukleoa';
-    const svgFile = hasAlzas ? svgBase + '_sinTapa' : svgBase;
     if (wide) el.classList.add('wide');
     el.innerHTML = `<div class="tok tok-${svgBase} st-${h.status}" id="t${h.id}" draggable="${canEdit()}"
       ondragstart="ds(event,'${h.id}')" ondragend="de(event,'${h.id}')"
       onclick="tc(event,'${h.id}')">
-      ${alzaHtml(h)}
-      <img class="tok-svg" src="/images/${svgFile}.svg" draggable="false" alt="">
+      ${alzaHiveSvg(h)}
       ${beesHTML(h.status)}
       <svg class="tgrass" viewBox="0 0 100 14" preserveAspectRatio="none" aria-hidden="true">${GRASS_BLADES}</svg>
       <div class="tbrand">${esc(h.name)}</div>
