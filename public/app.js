@@ -537,12 +537,15 @@ function beesHTML(status) {
 }
 
 // Dimensiones exactas (px) de cada SVG de alza y de la caja sin tapa
-const ALZA_H = { osoa: 496.730, erdia: 308.375, osoa_st: 390.967, erdia_st: 198.546 };
-const ALZA_W  = 733.869;
+const ALZA_H = { osoa_st: 390.967, erdia_st: 198.546 };
+const ALZA_W    = 733.869;
 const KAJA_ST_H = 491.055;
+const TAPA_W    = 819.576;
+const TAPA_H    = 113.319;
 
 // Genera un <svg> inline que combina caja + alzas en el mismo sistema de coordenadas.
 // La caja ocupa y=[0, KAJA_ST_H]; cada alza se apila en y negativa (overflow visible).
+// Todos los cuerpos usan _sinTapa; la tapa se añade como <image> separado encima.
 function alzaHiveSvg(h) {
   const wide = isWide(h);
   const alzas = h.alzas || [];
@@ -550,13 +553,15 @@ function alzaHiveSvg(h) {
     return `<img class="tok-svg" src="/images/${wide ? 'kaja' : 'nukleoa'}.svg" draggable="false" alt="">`;
   let imgs = '';
   let yUp = 0;
+  const tx = -((TAPA_W - ALZA_W) / 2);
   alzas.forEach((a, i) => {
     const isTop = i === alzas.length - 1;
     const t = a.type === 'osoa' ? 'osoa' : 'erdia';
-    const ah = isTop ? ALZA_H[t] : ALZA_H[t + '_st'];
-    const file = `alza${a.type === 'osoa' ? 'Osoa' : 'Erdia'}${isTop ? '' : '_sinTapa'}.svg`;
+    const ah = ALZA_H[t + '_st'];
+    imgs += `<image href="/images/alza${a.type === 'osoa' ? 'Osoa' : 'Erdia'}_sinTapa.svg" x="0" y="${(-(yUp + ah)).toFixed(2)}" width="${ALZA_W}" height="${ah}"/>`;
     yUp += ah;
-    imgs += `<image href="/images/${file}" x="0" y="${(-yUp).toFixed(2)}" width="${ALZA_W}" height="${ah}"/>`;
+    if (isTop)
+      imgs += `<image href="/images/alzaTapa.svg" x="${tx.toFixed(2)}" y="${(-(yUp + TAPA_H)).toFixed(2)}" width="${TAPA_W}" height="${TAPA_H}"/>`;
   });
   imgs += `<image href="/images/kaja_sinTapa.svg" x="0" y="0" width="${ALZA_W}" height="${KAJA_ST_H}"/>`;
   return `<svg class="tok-svg" viewBox="0 0 ${ALZA_W} ${KAJA_ST_H}" overflow="visible" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">${imgs}</svg>`;
