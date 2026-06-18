@@ -542,7 +542,7 @@ textarea {
   --brand: 29%;
   --bwidth: 50%;
   --shw: 80%;
-  --awidth: 63.5%
+  --awidth: 74.7%
 }
 
 /* misma altura que el nukleoa (celda completa); anchura = 2 nukleoa:
@@ -613,7 +613,7 @@ textarea {
     --brand: 35%;
     --bwidth: 62%;
     --shw: 108%;
-    --awidth: 85%
+    --awidth: 90%
   }
 
   .tok-kaja .tok-svg {
