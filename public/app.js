@@ -564,7 +564,7 @@ function alzaHiveSvg(h) {
       imgs += `<image href="/images/alzaTapa.svg" x="${tx.toFixed(2)}" y="${(-(yUp + TAPA_H)).toFixed(2)}" width="${TAPA_W}" height="${TAPA_H}"/>`;
   });
   imgs += `<image href="/images/kaja_sinTapa.svg" x="0" y="0" width="${ALZA_W}" height="${KAJA_ST_H}"/>`;
-  return `<svg class="tok-svg" viewBox="0 0 ${ALZA_W} ${KAJA_ST_H}" overflow="visible" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">${imgs}</svg>`;
+  return `<svg class="tok-svg" viewBox="0 0 ${ALZA_W} ${KAJA_ST_H}" overflow="visible" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg">${imgs}</svg>`;
 }
 
 function buildAlzaCards(h) {
