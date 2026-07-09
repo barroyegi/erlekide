@@ -898,6 +898,7 @@ svg.tok-svg {
   transform-box: fill-box;
   transform-origin: 85% 95%;
   animation: velwing .04s linear infinite alternate;
+  will-change: transform;
 }
 
 .vel .vw2 {
