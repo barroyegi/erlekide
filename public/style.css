@@ -897,19 +897,21 @@ svg.tok-svg {
 .vel .vw2 {
   transform-box: fill-box;
   transform-origin: 85% 95%;
-  animation: velwing .08s linear infinite alternate;
+  animation: velwing .04s linear infinite alternate;
 }
 
 .vel .vw2 {
-  animation-delay: .04s;
+  animation-delay: .02s;
 }
 
 @keyframes velwing {
-  from {
+
+  0%,
+  100% {
     transform: rotate(-14deg) scaleY(.55)
   }
 
-  to {
+  50% {
     transform: rotate(8deg) scaleY(1.15)
   }
 }

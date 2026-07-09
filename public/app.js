@@ -1521,7 +1521,7 @@ function spawnVel(layer, i) {
 }
 
 // Puntu batera hegan egin eta amaitzean callback-a deitu / vuela a un punto
-function velFlyTo(el, x, y, done, speed = 110) {
+function velFlyTo(el, x, y, done, speed = 250) {
   const dx = x - el._x, dy = y - el._y;
   const dur = Math.max(.5, Math.hypot(dx, dy) / speed);
   el.querySelector('.vel-body').style.setProperty('--fx', dx < 0 ? -1 : 1);
