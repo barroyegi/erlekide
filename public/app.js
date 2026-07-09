@@ -1447,7 +1447,8 @@ const VEL_SVG = `<svg
      d="M 44.678246,23.084071 C 42.263159,18.616488 37.9882,15.627315 37.9882,15.627315"
      id="path10-7-1"
      sodipodi:nodetypes="cc" />
-  <ellipse
+  <g class="vw"
+     <ellipse
      cx="33.723045"
      cy="-6.2787027"
      rx="13"
@@ -1456,15 +1457,18 @@ const VEL_SVG = `<svg
      id="ellipse1"
      transform="rotate(21.206592,-14.587838,-19.741466)"
      style="fill:#3f2120;fill-opacity:0.80890054" />
-  <ellipse
-     cx="33.723045"
-     cy="-6.2787027"
-     rx="13"
-     ry="2.1802974"
-     fill="rgba(190,205,225,.6)"
-     id="ellipse1-5"
-     transform="rotate(31.408654,6.0333649,-12.206502)"
-     style="fill:#3f2120;fill-opacity:0.63612568" />
+    />
+  <g class="vw2"
+    <ellipse
+      cx="33.723045"
+      cy="-6.2787027"
+      rx="13"
+      ry="2.1802974"
+      fill="rgba(190,205,225,.6)"
+      id="ellipse1-5"
+      transform="rotate(31.408654,6.0333649,-12.206502)"
+      style="fill:#3f2120;fill-opacity:0.63612568" />
+  />
 </svg>
 `;
 
