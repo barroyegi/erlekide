@@ -700,7 +700,6 @@ async function renderDP(id) {
           <span class="chip">👑 ${i.queen === 'yes' ? 'Ikusi' : i.queen === 'signs' ? 'Aztarnak' : 'Ez aurkitua'}</span>
           ${i.varroa !== 'unknown' ? `<span class="chip ${i.varroa === 'high' ? 'bad' : ''}">Varroa: ${i.varroa === 'low' ? 'Baxua' : i.varroa === 'med' ? 'Ertaina' : 'Altua'}</span>` : ''}
         </div>
-        ${i.ai_summary ? `<div class="ainote"><div class="ainote-lbl">✦ IA ANALISIA</div>${esc(i.ai_summary)}</div>` : ''}
       </div>`).join('') :
       '<div style="font-size:12px;color:var(--bark-l)">Oraindik ez du inspekziorik.</div>'}
   `;
@@ -957,7 +956,7 @@ function openInsp(hiveId) {
 
 function openEditInsp(inspId) {
   const i = insps.find(x => x.id === inspId); if (!i) return;
-  inspHiveId = i.hive_id; inspEditId = inspId; aiTxt = i.ai_summary || '';
+  inspHiveId = i.hive_id; inspEditId = inspId || '';
   document.getElementById('ai-modal-title').innerHTML = 'Inspekzioa editatu <button class="mclose" onclick="closeM(\'ai\')">✕</button>';
   document.getElementById('aid').value = i.date;
   document.getElementById('ais').value = i.strength;
@@ -987,8 +986,7 @@ async function saveInsp() {
     queen: document.getElementById('aiq').value,
     varroa: document.getElementById('aiv').value,
     status,
-    notes: document.getElementById('aino').value,
-    ai_summary: aiTxt
+    notes: document.getElementById('aino').value
   };
 
   saving = true;
