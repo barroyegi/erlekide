@@ -144,7 +144,6 @@ async function selectProject(id) {
   applyRoleUI();
   if (window.innerWidth <= 700 && canEdit())
     document.getElementById('hdr-add-btn').style.display = 'inline-flex';
-  updateHint();
   buildGrid();
   renderAll();
   setMainView('map');
@@ -437,7 +436,6 @@ async function saveSettings() {
 
   COLS = newCols; ROWS = newRows;
   closeM('cfg');
-  updateHint();
   buildGrid();
   renderAll();
   toast(`Sareta ${COLS}×${ROWS} gordeta ✓`);
@@ -1548,7 +1546,6 @@ async function fetchWeather() {
     wxSun = { rise: hh(d.daily.sunrise[0]), set: hh(d.daily.sunset[0]) };
   } catch { /* konexiorik gabe: lehenetsiekin jarraitu */ }
   renderSky();
-  updateHint();
 }
 
 function wxAt(hourDec) {
@@ -1638,7 +1635,6 @@ function setSkyOverride() {
   skyOverride = { hour: hv === '' ? null : +hv, cond: wv || null };
   localStorage.setItem('erlekide.sky', JSON.stringify(skyOverride));
   renderSky();
-  updateHint();
 }
 
 window.addEventListener('resize', () => {
