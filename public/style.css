@@ -850,10 +850,40 @@ svg.tok-svg {
 
 .vel-body {
   --mrot: rotate(0deg);
+  position: relative;
   width: 100%;
   height: 100%;
   transform: var(--mrot) scaleX(var(--fx, 1));
   transition: transform .25s;
+}
+
+/* Harrapatutako erlea hanketan zintzilik / abeja capturada colgando */
+.vel-prey {
+  position: absolute;
+  left: 50%;
+  top: 88%;
+  width: 7px;
+  height: 5px;
+  margin-left: -3.5px;
+  border-radius: 50% / 60%;
+  background: repeating-linear-gradient(90deg, #2E1F0F 0 1.6px, #F2B705 1.6px 3.2px);
+  opacity: 0;
+  transform-origin: 50% -60%;
+}
+
+.vel.prey .vel-prey {
+  opacity: 1;
+  animation: preywiggle .45s ease-in-out infinite alternate;
+}
+
+@keyframes preywiggle {
+  from {
+    transform: rotate(-16deg)
+  }
+
+  to {
+    transform: rotate(13deg)
+  }
 }
 
 .vel svg {

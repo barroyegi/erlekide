@@ -1365,7 +1365,7 @@ function renderVelutinas() {
 function spawnVel(layer, i) {
   const el = document.createElement('div');
   el.className = 'vel';
-  el.innerHTML = `<div class="vel-body">${VEL_SVG}</div>`;
+  el.innerHTML = `<div class="vel-body">${VEL_SVG}<span class="vel-prey"></span></div>`;
   const W = layer.offsetWidth || 600, H = layer.offsetHeight || 400;
   el._x = Math.random() * W;
   el._y = Math.random() * H * .5;
@@ -1375,8 +1375,20 @@ function spawnVel(layer, i) {
   velTimers.push(setTimeout(() => velHop(el, layer), 300 + i * 600));
 }
 
-// Hurrengo helmuga aukeratu eta hara hegan: batzuetan erlauntza baten gainean
-// gelditzen da (perch), bestela puntu aleatorio batera doa alde batetik bestera.
+// Puntu batera hegan egin eta amaitzean callback-a deitu / vuela a un punto
+function velFlyTo(el, x, y, done, speed = 110) {
+  const dx = x - el._x, dy = y - el._y;
+  const dur = Math.max(.5, Math.hypot(dx, dy) / speed);
+  el.querySelector('.vel-body').style.setProperty('--fx', dx < 0 ? -1 : 1);
+  el.style.transition = `left ${dur}s cubic-bezier(.45,.1,.4,1), top ${dur}s cubic-bezier(.55,.25,.45,.95), opacity ${dur}s linear`;
+  el.style.left = x + 'px';
+  el.style.top = y + 'px';
+  el._x = x; el._y = y;
+  velTimers.push(setTimeout(() => { if (el.isConnected) done(); }, dur * 1000 + 80));
+}
+
+// Hurrengo helmuga aukeratu: batzuetan erlauntza baten gainean gelditzen da
+// (perch), batzuetan piqueran ehizatzen du (hunt), bestela puntu aleatorio bat.
 function velHop(el, layer) {
   if (!el.isConnected) return;
   const W = Math.max(layer.offsetWidth, 100), H = Math.max(layer.offsetHeight, 80);
@@ -1386,6 +1398,7 @@ function velHop(el, layer) {
     const h = placed[Math.floor(Math.random() * placed.length)];
     const cell = document.getElementById(`c${h.grid_x}_${h.grid_y}`);
     if (cell) {
+      if (Math.random() < .25) { velHunt(el, layer, cell); return; }
       x = cell.offsetLeft + cell.offsetWidth * (.3 + Math.random() * .4);
       y = cell.offsetTop + cell.offsetHeight * (.05 + Math.random() * .3);
       perch = Math.random() < .55;
@@ -1395,21 +1408,55 @@ function velHop(el, layer) {
     x = 20 + Math.random() * (W - 40);
     y = 10 + Math.random() * (H * .6);
   }
-  const dx = x - el._x, dy = y - el._y;
-  const dur = Math.max(.9, Math.hypot(dx, dy) / 110); // ~110 px/s
-  el.querySelector('.vel-body').style.setProperty('--fx', dx < 0 ? -1 : 1);
   el.classList.remove('perch');
-  el.style.transition = `left ${dur}s cubic-bezier(.45,.1,.4,1), top ${dur}s cubic-bezier(.55,.25,.45,.95)`;
-  el.style.left = x + 'px';
-  el.style.top = y + 'px';
-  el._x = x; el._y = y;
-  velTimers.push(setTimeout(() => {
-    if (!el.isConnected) return;
+  velFlyTo(el, x, y, () => {
     if (perch) {
       el.classList.add('perch');
       velTimers.push(setTimeout(() => velHop(el, layer), 1500 + Math.random() * 3000));
     } else velHop(el, layer);
-  }, dur * 1000 + 80));
+  });
+}
+
+// Ehiza: piquerara hurbildu, erle bat harrapatu, eszenatik atera hegan eta
+// 5 segundora itzuli / caza en la piquera, sale de escena y vuelve a los 5 s
+function velHunt(el, layer, cell) {
+  if (!el.isConnected) return;
+  el.classList.remove('perch');
+  // 1) piquerara hurbildu (erlauntzaren behealdea, erleak dabiltzan tokia)
+  const px = cell.offsetLeft + cell.offsetWidth * (.42 + Math.random() * .16);
+  const py = cell.offsetTop + cell.offsetHeight * (.7 + Math.random() * .08);
+  velFlyTo(el, px, py, () => {
+    // 2) une batez gelditu eta erle bat harrapatu
+    el.classList.add('perch');
+    velTimers.push(setTimeout(() => {
+      if (!el.isConnected) return;
+      el.classList.remove('perch');
+      el.classList.add('prey');
+      const bee = cell.querySelector('.bees .bee');
+      if (bee) bee.remove(); // erle bat gutxiago piqueran
+      // 3) eszenatik atera, harrapakina eramanez (azkarrago, gorantz)
+      const W = Math.max(layer.offsetWidth, 100);
+      const exitX = el._x < W / 2 ? -60 : W + 60;
+      const exitY = Math.max(-40, el._y - 80 - Math.random() * 100);
+      el.style.opacity = '0';
+      velFlyTo(el, exitX, exitY, () => {
+        // 4) 5 segundora itzuli ertz batetik, harrapakinik gabe
+        velTimers.push(setTimeout(() => {
+          if (!el.isConnected) return;
+          el.classList.remove('prey');
+          const W2 = Math.max(layer.offsetWidth, 100), H2 = Math.max(layer.offsetHeight, 80);
+          el.style.transition = 'none';
+          el._x = Math.random() < .5 ? -40 : W2 + 40;
+          el._y = 10 + Math.random() * (H2 * .4);
+          el.style.left = el._x + 'px';
+          el.style.top = el._y + 'px';
+          void el.offsetWidth; // reflow: posizio berria transiziorik gabe aplikatu
+          el.style.opacity = '1';
+          velHop(el, layer);
+        }, 5000));
+      }, 170);
+    }, 700 + Math.random() * 500));
+  });
 }
 
 // ── Velutina modala / CRUD ────────────────────────────────────────────────────
