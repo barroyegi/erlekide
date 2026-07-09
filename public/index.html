@@ -84,6 +84,9 @@
 
       <div id="view-map">
         <div class="mhint" id="mhint">Arrastatu erlauntzak mugitzeko · Egin klik zelula huts batean gehitzeko</div>
+        <button class="vel-btn" id="vel-btn" onclick="openVel()" title="Vespa velutina deklaratu">
+          <span class="vel-badge" id="vel-badge" style="display:none">0</span>
+        </button>
         <div id="cv-wrap">
           <div id="agrid"></div>
         </div>
@@ -368,6 +371,30 @@
         <button class="btn" onclick="closeM('mat')">Utzi</button>
         <button class="btn primary" onclick="saveMat()">✓ Gorde</button>
       </div>
+    </div>
+  </div>
+
+  <!-- MODAL: VESPA VELUTINA -->
+  <div id="mod-vel" class="movl" style="display:none" onclick="if(event.target===this)closeM('vel')">
+    <div class="mbox" style="max-width:420px">
+      <div class="mhandle"></div>
+      <div class="mtitle">⚠️ Liztor asiarra (Vespa velutina) <button class="mclose" onclick="closeM('vel')">✕</button>
+      </div>
+      <p style="font-size:12px;color:var(--bark-l);margin-bottom:12px;line-height:1.6">
+        Deklaratu une honetan erlategiaren inguruan hegan dabiltzan velutina kopurua. Mapan agertuko dira eta
+        historia gordeko da jarraipena egiteko. Deklaratu <strong>0</strong> jada ez badago.
+      </p>
+      <div class="fg2 needs-edit">
+        <div class="ff"><label>Zenbat velutina dabiltza?</label><input id="vel-n" type="number" min="0" max="99"
+            value="1"></div>
+        <div class="ff"><label>Oharrak</label><input id="vel-notes" placeholder="Aukerazkoa..."></div>
+      </div>
+      <div class="brow needs-edit" style="margin-top:4px">
+        <button class="btn" onclick="closeM('vel')">Utzi</button>
+        <button class="btn primary" onclick="saveVel()">✓ Deklaratu</button>
+      </div>
+      <div class="sec-title">Deklarazioen historia</div>
+      <div id="vel-history"></div>
     </div>
   </div>
 

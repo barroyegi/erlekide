@@ -9,6 +9,7 @@ let editId = null, inspHiveId = null, inspEditId = null, aiTxt = '';
 let delStep = 0, delTimer = null;
 let expenses = [], members = [], materials = [];
 let expEditId = null, matEditId = null;
+let velutinas = [], velTimers = [];
 let pollTimer = null;
 // ── Proiektuak / Proyectos ──
 let projectId = null, projects = [], myRole = 'viewer', projMembers = [];
@@ -95,6 +96,7 @@ async function doLogout() {
   await sb.auth.signOut();
   me = userId = token = selId = projectId = null;
   hives = []; insps = []; projects = []; projMembers = []; myRole = 'viewer';
+  velutinas = []; clearVelutinas();
   document.body.classList.remove('viewer');
   clearInterval(pollTimer);
   document.getElementById('scr-app').style.display = 'none';
@@ -135,8 +137,9 @@ async function selectProject(id) {
   clampGrid(p.cols, p.rows);
   selId = null; moveId = null;
   clearInterval(pollTimer);
-  await Promise.all([loadHives(), loadMembers(), loadExpenses(), loadMaterials()]);
+  await Promise.all([loadHives(), loadMembers(), loadExpenses(), loadMaterials(), loadVelutinas()]);
   renderProjectBar();
+  renderVelBtn();
   applyRoleUI();
   if (window.innerWidth <= 700 && canEdit())
     document.getElementById('hdr-add-btn').style.display = 'inline-flex';
@@ -145,8 +148,11 @@ async function selectProject(id) {
   renderAll();
   setMainView('map');
   pollTimer = setInterval(async () => {
-    await Promise.all([loadHives(), loadExpenses(), loadMaterials()]);
+    const pv = velCount();
+    await Promise.all([loadHives(), loadExpenses(), loadMaterials(), loadVelutinas()]);
     renderAll();
+    renderVelBtn();
+    if (velCount() !== pv) renderVelutinas();
     if (document.getElementById('view-gastuak').style.display !== 'none') renderExpenses();
     if (document.getElementById('view-materialak').style.display !== 'none') renderMaterials();
   }, 30000);
@@ -445,10 +451,11 @@ function buildGrid() {
       h += `<div class="cell" id="c${c}_${r}" ondragover="ov(event,${c},${r})" ondragleave="ol(event,${c},${r})" ondrop="od(event,${c},${r})" onclick="cc(${c},${r})"><div class="cempty">+</div></div>`;
     h += '</div>';
   }
-  h += '</div>';
+  h += '<div id="vel-layer" aria-hidden="true"></div></div>';
   g.innerHTML = h;
   // Necesitamos dos frames para que el navegador calcule el layout antes de medir
   requestAnimationFrame(() => requestAnimationFrame(applyMobileRotation));
+  renderVelutinas();
 }
 
 function applyMobileRotation() {
@@ -1301,6 +1308,162 @@ async function deleteMat(id) {
   const { error } = await sb.from('materials').delete().eq('id', id);
   if (error) { toast(error.message, 'bad'); return; }
   await loadMaterials(); renderMaterials(); toast('Materiala ezabatuta');
+}
+
+// ── VESPA VELUTINA / Liztor asiarra ──────────────────────────────────────────
+const VEL_MAX_VISIBLE = 8; // errendimendua zaintzeko gehienezko kopurua mapan
+
+const VEL_SVG = `<svg viewBox="0 0 64 36" xmlns="http://www.w3.org/2000/svg">
+  <g class="vw"><ellipse cx="34" cy="7" rx="13" ry="4.5" fill="rgba(190,205,225,.6)"/></g>
+  <g class="vw2"><ellipse cx="41" cy="9" rx="9" ry="3.5" fill="rgba(190,205,225,.42)"/></g>
+  <path d="M31 18 Q29 10 19 11 Q7 13 4 18.5 Q7 24 19 26 Q29 27 31 18 Z" fill="#26190d"/>
+  <path d="M13.5 12.3 Q8.5 14.5 7 18.5 Q8.5 22.5 13.5 24.7 L17 25.4 L17 11.6 Z" fill="#E8930C"/>
+  <ellipse cx="39" cy="18" rx="9.5" ry="8" fill="#1d1409"/>
+  <ellipse cx="52.5" cy="18" rx="6.5" ry="5.5" fill="#3a2a16"/>
+  <path d="M50 14 Q52 12 56 13.5 Q58 15 58 17 Q55 15.5 50 16 Z" fill="#E8930C" opacity=".85"/>
+  <circle cx="55" cy="16.5" r="1.7" fill="#0d0a06"/>
+  <path d="M56.5 12.5 q3 -4 6.5 -4.5 M55 11.8 q1.5 -4 4.5 -5.6" stroke="#26190d" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+  <path d="M36 25 q-2 6 -6.5 7.5 M42 25.5 q-.5 6 -4.5 8.5 M48 24.5 q1.5 5.5 -1 9" stroke="#E8B84B" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+  <path d="M4.5 18.5 L0.5 19.5 L4.8 20.6 Z" fill="#0d0a06"/>
+</svg>`;
+
+const velCount = () => velutinas.length ? velutinas[0].count : 0;
+
+async function loadVelutinas() {
+  if (!projectId) { velutinas = []; return; }
+  const { data } = await sb.from('velutina_sightings').select('*')
+    .eq('project_id', projectId).order('created_at', { ascending: false }).limit(50);
+  velutinas = data || [];
+}
+
+function renderVelBtn() {
+  const btn = document.getElementById('vel-btn');
+  if (!btn) return;
+  if (!btn.querySelector('svg')) btn.insertAdjacentHTML('afterbegin', VEL_SVG);
+  const n = velCount();
+  const badge = document.getElementById('vel-badge');
+  badge.textContent = n;
+  badge.style.display = n > 0 ? '' : 'none';
+  btn.classList.toggle('alert', n > 0);
+}
+
+function clearVelutinas() {
+  velTimers.forEach(clearTimeout);
+  velTimers = [];
+  const layer = document.getElementById('vel-layer');
+  if (layer) layer.innerHTML = '';
+}
+
+function renderVelutinas() {
+  clearVelutinas();
+  const layer = document.getElementById('vel-layer');
+  if (!layer) return;
+  const n = Math.min(velCount(), VEL_MAX_VISIBLE);
+  for (let i = 0; i < n; i++) spawnVel(layer, i);
+}
+
+function spawnVel(layer, i) {
+  const el = document.createElement('div');
+  el.className = 'vel';
+  el.innerHTML = `<div class="vel-body">${VEL_SVG}</div>`;
+  const W = layer.offsetWidth || 600, H = layer.offsetHeight || 400;
+  el._x = Math.random() * W;
+  el._y = Math.random() * H * .5;
+  el.style.left = el._x + 'px';
+  el.style.top = el._y + 'px';
+  layer.appendChild(el);
+  velTimers.push(setTimeout(() => velHop(el, layer), 300 + i * 600));
+}
+
+// Hurrengo helmuga aukeratu eta hara hegan: batzuetan erlauntza baten gainean
+// gelditzen da (perch), bestela puntu aleatorio batera doa alde batetik bestera.
+function velHop(el, layer) {
+  if (!el.isConnected) return;
+  const W = Math.max(layer.offsetWidth, 100), H = Math.max(layer.offsetHeight, 80);
+  const placed = hives.filter(h => h.grid_x != null && h.grid_y != null);
+  let x = null, y = null, perch = false;
+  if (placed.length && Math.random() < .6) {
+    const h = placed[Math.floor(Math.random() * placed.length)];
+    const cell = document.getElementById(`c${h.grid_x}_${h.grid_y}`);
+    if (cell) {
+      x = cell.offsetLeft + cell.offsetWidth * (.3 + Math.random() * .4);
+      y = cell.offsetTop + cell.offsetHeight * (.05 + Math.random() * .3);
+      perch = Math.random() < .55;
+    }
+  }
+  if (x == null) {
+    x = 20 + Math.random() * (W - 40);
+    y = 10 + Math.random() * (H * .6);
+  }
+  const dx = x - el._x, dy = y - el._y;
+  const dur = Math.max(.9, Math.hypot(dx, dy) / 110); // ~110 px/s
+  el.querySelector('.vel-body').style.setProperty('--fx', dx < 0 ? -1 : 1);
+  el.classList.remove('perch');
+  el.style.transition = `left ${dur}s cubic-bezier(.45,.1,.4,1), top ${dur}s cubic-bezier(.55,.25,.45,.95)`;
+  el.style.left = x + 'px';
+  el.style.top = y + 'px';
+  el._x = x; el._y = y;
+  velTimers.push(setTimeout(() => {
+    if (!el.isConnected) return;
+    if (perch) {
+      el.classList.add('perch');
+      velTimers.push(setTimeout(() => velHop(el, layer), 1500 + Math.random() * 3000));
+    } else velHop(el, layer);
+  }, dur * 1000 + 80));
+}
+
+// ── Velutina modala / CRUD ────────────────────────────────────────────────────
+function openVel() {
+  if (!projectId) return;
+  document.getElementById('vel-n').value = velCount() || 1;
+  document.getElementById('vel-notes').value = '';
+  renderVelHistory();
+  openM('vel');
+}
+
+function renderVelHistory() {
+  const el = document.getElementById('vel-history');
+  if (!velutinas.length) {
+    el.innerHTML = '<div style="font-size:12px;color:var(--bark-l);padding:4px 0">Oraindik ez dago deklaraziorik.</div>';
+    return;
+  }
+  el.innerHTML = velutinas.map((v, i) => {
+    const d = new Date(v.created_at);
+    const when = `${d.toLocaleDateString('eu-ES')} · ${d.toLocaleTimeString('eu-ES', { hour: '2-digit', minute: '2-digit' })}`;
+    const del = canEdit() ? `<button class="member-del" onclick="deleteVel('${v.id}')" title="Ezabatu">✕</button>` : '';
+    return `<div class="vel-row ${i === 0 ? 'cur' : ''}">
+      <span class="vel-row-n ${v.count === 0 ? 'zero' : ''}">${v.count}</span>
+      <span class="vel-row-meta">${when} · ${esc(v.username)}${v.notes ? '<br>' + esc(v.notes) : ''}</span>
+      ${del}
+    </div>`;
+  }).join('');
+}
+
+async function saveVel() {
+  if (!canEdit() || saving || !projectId) return;
+  const n = clampNum(document.getElementById('vel-n').value, 0, 99, 0);
+  saving = true;
+  try {
+    const { error } = await sb.from('velutina_sightings').insert({
+      project_id: projectId, count: n,
+      notes: document.getElementById('vel-notes').value,
+      username: me, created_by: userId
+    });
+    if (error) { toast(error.message, 'bad'); return; }
+    await loadVelutinas();
+    renderVelBtn(); renderVelutinas(); renderVelHistory();
+    document.getElementById('vel-notes').value = '';
+    toast(n ? `⚠️ ${n} velutina deklaratuta` : 'Velutinarik ez ✓', n ? 'warn' : 'ok');
+  } finally { saving = false; }
+}
+
+async function deleteVel(id) {
+  if (!confirm('Deklarazioa historiatik ezabatu?')) return;
+  const { error } = await sb.from('velutina_sightings').delete().eq('id', id);
+  if (error) { toast(error.message, 'bad'); return; }
+  await loadVelutinas();
+  renderVelBtn(); renderVelutinas(); renderVelHistory();
+  toast('Deklarazioa ezabatuta');
 }
 
 window.addEventListener('resize', () => {

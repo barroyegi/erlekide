@@ -133,6 +133,18 @@ drop trigger if exists materials_updated_at on public.materials;
 create trigger materials_updated_at before update on public.materials
   for each row execute function public.set_updated_at();
 
+-- ── Velutina deklarazioak / Avistamientos de vespa velutina ───────────────────
+create table if not exists public.velutina_sightings (
+  id         text        primary key default gen_random_uuid()::text,
+  project_id text        not null references public.projects(id) on delete cascade,
+  count      integer     not null check (count >= 0 and count <= 99),
+  notes      text        not null default '',
+  username   text        not null,
+  created_by uuid        references auth.users(id) on delete set null,
+  created_at timestamptz not null default now()
+);
+create index if not exists velutina_project_idx on public.velutina_sightings(project_id, created_at desc);
+
 -- ══════════════════════════════════════════════════════════════════════════════
 --  SEGURTASUN-LAGUNTZAILEAK / HELPERS (SECURITY DEFINER, sin recursión RLS)
 -- ══════════════════════════════════════════════════════════════════════════════
@@ -247,6 +259,7 @@ alter table public.inspections     enable row level security;
 alter table public.members         enable row level security;
 alter table public.expenses        enable row level security;
 alter table public.materials       enable row level security;
+alter table public.velutina_sightings enable row level security;
 
 -- projects: kideek irakurri; jabeak aldatu/ezabatu; sortzea RPCz
 create policy projects_select on public.projects for select using (public.is_member(id));
@@ -260,7 +273,7 @@ create policy pmembers_select on public.project_members for select using (public
 do $$
 declare t text;
 begin
-  foreach t in array array['hives','inspections','expenses','materials','members'] loop
+  foreach t in array array['hives','inspections','expenses','materials','members','velutina_sightings'] loop
     execute format('create policy %I on public.%I for select using (public.is_member(project_id));', t||'_psel', t);
     execute format('create policy %I on public.%I for insert with check (public.can_edit(project_id));', t||'_pins', t);
     execute format('create policy %I on public.%I for update using (public.can_edit(project_id)) with check (public.can_edit(project_id));', t||'_pupd', t);

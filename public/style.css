@@ -389,7 +389,8 @@ textarea {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  min-width: 0
+  min-width: 0;
+  position: relative
 }
 
 #cv-wrap {
@@ -414,7 +415,8 @@ textarea {
 .gcont {
   display: inline-block;
   padding: 4px 4px 10px 4px;
-  min-width: max-content
+  min-width: max-content;
+  position: relative
 }
 
 .ghrow,
@@ -771,6 +773,193 @@ svg.tok-svg {
   .bee {
     display: none
   }
+}
+
+/* ── VESPA VELUTINA / Liztor asiarra ── */
+.vel-btn {
+  position: absolute;
+  top: 33px;
+  right: 12px;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(46, 31, 15, .55);
+  border: 1px solid rgba(255, 255, 255, .25);
+  border-radius: 20px;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: .15s;
+}
+
+.vel-btn svg {
+  width: 27px;
+  height: 15px;
+  display: block;
+  overflow: visible;
+}
+
+.vel-btn:hover {
+  background: rgba(46, 31, 15, .8);
+}
+
+.vel-btn.alert {
+  border-color: #E8930C;
+  animation: velpulse 2s ease-in-out infinite;
+}
+
+@keyframes velpulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 4px rgba(232, 147, 12, .35)
+  }
+
+  50% {
+    box-shadow: 0 0 13px rgba(232, 147, 12, .85)
+  }
+}
+
+.vel-badge {
+  background: #E8930C;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 9px;
+  padding: 1px 6px;
+  line-height: 1.4;
+}
+
+/* Kapa mapa osoaren gainean: velutinak erlauntza guztien artean dabiltza */
+#vel-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  overflow: visible;
+}
+
+.vel {
+  position: absolute;
+  width: 30px;
+  height: 17px;
+  margin: -8px 0 0 -15px;
+  will-change: left, top;
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .3));
+}
+
+.vel-body {
+  --mrot: rotate(0deg);
+  width: 100%;
+  height: 100%;
+  transform: var(--mrot) scaleX(var(--fx, 1));
+  transition: transform .25s;
+}
+
+.vel svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+.vel .vw,
+.vel .vw2 {
+  transform-box: fill-box;
+  transform-origin: 85% 95%;
+  animation: velwing .08s linear infinite alternate;
+}
+
+.vel .vw2 {
+  animation-delay: .04s;
+}
+
+@keyframes velwing {
+  from {
+    transform: rotate(-14deg) scaleY(.55)
+  }
+
+  to {
+    transform: rotate(8deg) scaleY(1.15)
+  }
+}
+
+/* Erlauntza baten gainean pausatuta / posada sobre una colmena */
+.vel.perch {
+  animation: velbob 1.6s ease-in-out infinite;
+}
+
+.vel.perch .vw,
+.vel.perch .vw2 {
+  animation: velwingslow 1.3s ease-in-out infinite alternate;
+}
+
+@keyframes velwingslow {
+  from {
+    transform: rotate(2deg) scaleY(.9)
+  }
+
+  to {
+    transform: rotate(-5deg) scaleY(1)
+  }
+}
+
+@keyframes velbob {
+
+  0%,
+  100% {
+    margin-top: -8px
+  }
+
+  50% {
+    margin-top: -5px
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vel {
+    display: none
+  }
+
+  .vel-btn.alert {
+    animation: none
+  }
+}
+
+/* Deklarazioen historia modalean */
+.vel-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 6px;
+  font-size: 12px;
+}
+
+.vel-row.cur {
+  border-color: rgba(232, 147, 12, .5);
+}
+
+.vel-row-n {
+  font-weight: 800;
+  font-size: 15px;
+  color: #B06008;
+  min-width: 24px;
+  text-align: center;
+}
+
+.vel-row-n.zero {
+  color: var(--good);
+}
+
+.vel-row-meta {
+  flex: 1;
+  color: var(--bark-l);
+  font-size: 11px;
+  line-height: 1.45;
 }
 
 /* Izena erlauntzaren aurrealdean, egurrean erreta bezala /
@@ -1600,6 +1789,16 @@ body.viewer .needs-edit { display: none !important }
 
   .mhint {
     display: none
+  }
+
+  .vel-btn {
+    top: 8px;
+    right: 8px
+  }
+
+  /* Grid rotado 90° CW: contra-rotamos la velutina para que se vea recta */
+  .vel-body {
+    --mrot: rotate(-90deg)
   }
 
   .fab {
