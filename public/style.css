@@ -992,6 +992,102 @@ svg.tok-svg {
   line-height: 1.45;
 }
 
+/* ── ZERUA: eguna/gaua eta eguraldia / Cielo: día-noche y clima ── */
+#sky {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  overflow: hidden;
+}
+
+#sky>div {
+  position: absolute;
+  inset: 0;
+}
+
+#sky-night,
+#sky-glow,
+#sky-sun {
+  transition: background 2s linear;
+}
+
+#sky-clouds {
+  transition: opacity 2s linear, filter 2s linear;
+}
+
+.cloud {
+  position: absolute;
+  width: 190px;
+  height: 46px;
+  border-radius: 60px;
+  background: rgba(255, 255, 255, .8);
+  filter: blur(8px);
+  animation: clouddrift var(--cd, 90s) linear var(--cdl, 0s) infinite;
+}
+
+.cloud::before,
+.cloud::after {
+  content: '';
+  position: absolute;
+  background: inherit;
+  border-radius: 50%;
+}
+
+.cloud::before {
+  width: 86px;
+  height: 66px;
+  left: 26px;
+  top: -28px;
+}
+
+.cloud::after {
+  width: 64px;
+  height: 48px;
+  right: 30px;
+  top: -18px;
+}
+
+@keyframes clouddrift {
+  from {
+    transform: translateX(-260px) scale(var(--cs, 1));
+  }
+
+  to {
+    transform: translateX(calc(100vw + 260px)) scale(var(--cs, 1));
+  }
+}
+
+#sky-rain {
+  display: none;
+}
+
+.drop {
+  position: absolute;
+  top: -16px;
+  width: 1.5px;
+  height: 13px;
+  background: linear-gradient(rgba(200, 220, 245, 0), rgba(200, 220, 245, .65));
+  animation: dropfall .7s linear infinite;
+}
+
+@keyframes dropfall {
+  to {
+    transform: translate(14px, 115vh);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cloud {
+    animation: none;
+    left: 30%
+  }
+
+  .drop {
+    display: none
+  }
+}
+
 /* Izena erlauntzaren aurrealdean, egurrean erreta bezala /
    nombre en el frontal, como pirograbado en la madera */
 .tbrand {

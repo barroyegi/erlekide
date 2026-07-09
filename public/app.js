@@ -113,6 +113,7 @@ async function enterApp() {
   const app = document.getElementById('scr-app');
   app.style.display = 'flex';
   document.getElementById('ubadge').textContent = '👤 ' + me;
+  initSky();
   await loadProjects();
   if (!projects.length) { showFirstProject(); return; }
   const saved = localStorage.getItem('erlekide.project');
@@ -392,7 +393,7 @@ async function loadInsps(hiveId) {
 // ── Konfigurazioa / Settings ──────────────────────────────────────────────────
 function updateHint() {
   const el = document.getElementById('mhint');
-  if (el) el.textContent = `Arrastatu erlauntzak mugitzeko · Sareta: ${COLS}×${ROWS} · ⚙ konfiguratu goiburuan`;
+  if (el) el.textContent = `${skyBadge()} · Arrastatu erlauntzak mugitzeko · Sareta: ${COLS}×${ROWS} · ⚙ konfiguratu goiburuan`;
 }
 
 function openCfg() {
@@ -404,6 +405,13 @@ function openCfg() {
   const warn = document.getElementById('cfg-warn');
   warn.style.display = 'none'; warn.dataset.confirmed = '0';
   document.getElementById('cfg-save-btn').textContent = '✓ Gorde';
+  const sh = document.getElementById('cfg-sky-hour');
+  if (!sh.options.length) {
+    sh.innerHTML = '<option value="">Auto (orain)</option>'
+      + Array.from({ length: 24 }, (_, h) => `<option value="${h}">${String(h).padStart(2, '0')}:00</option>`).join('');
+  }
+  sh.value = skyOverride.hour != null ? String(skyOverride.hour) : '';
+  document.getElementById('cfg-sky-w').value = skyOverride.cond || '';
   openM('cfg');
 }
 
@@ -1513,8 +1521,154 @@ async function deleteVel(id) {
   toast('Deklarazioa ezabatuta');
 }
 
+// ── ZERUA: eguna/gaua eta eguraldia / Cielo: día-noche y clima ────────────────
+// Ekialdea = maparen goialdea (mugikorrean eskuina); mendebaldea = behealdea.
+const LASARTE = { lat: 43.2686, lon: -2.0217 };
+let wxHours = null;              // orduz orduko eguraldia (gaur + bihar)
+let wxSun = { rise: 7.5, set: 20.5 }; // konexiorik gabeko gutxi gorabeherakoa
+let skyOverride = { hour: null, cond: null };
+let skyInited = false, wxFetchedAt = 0;
+
+function initSky() {
+  if (skyInited) return;
+  skyInited = true;
+  try {
+    const s = JSON.parse(localStorage.getItem('erlekide.sky') || 'null');
+    if (s) skyOverride = { hour: s.hour ?? null, cond: s.cond || null };
+  } catch { /* balio okerra: lehenetsiak */ }
+  buildSkyDOM();
+  fetchWeather();
+  setInterval(() => {
+    renderSky();
+    if (Date.now() - wxFetchedAt > 30 * 60000) fetchWeather();
+  }, 60000);
+}
+
+function buildSkyDOM() {
+  const cl = document.getElementById('sky-clouds');
+  let h = '';
+  for (let i = 0; i < 6; i++) {
+    const dur = 70 + Math.random() * 90;
+    h += `<div class="cloud" style="top:${(3 + Math.random() * 80).toFixed(0)}%;--cs:${(.6 + Math.random() * .9).toFixed(2)};--cd:${dur.toFixed(0)}s;--cdl:${(-Math.random() * dur).toFixed(0)}s"></div>`;
+  }
+  cl.innerHTML = h;
+  const rn = document.getElementById('sky-rain');
+  let r = '';
+  for (let i = 0; i < 44; i++)
+    r += `<span class="drop" style="left:${(Math.random() * 100).toFixed(1)}%;animation-duration:${(.55 + Math.random() * .45).toFixed(2)}s;animation-delay:${(-Math.random()).toFixed(2)}s"></span>`;
+  rn.innerHTML = r;
+}
+
+async function fetchWeather() {
+  wxFetchedAt = Date.now();
+  try {
+    const u = `https://api.open-meteo.com/v1/forecast?latitude=${LASARTE.lat}&longitude=${LASARTE.lon}`
+      + '&hourly=weather_code,cloud_cover,precipitation,temperature_2m&daily=sunrise,sunset&timezone=auto&forecast_days=2';
+    const d = await fetch(u).then(r => r.json());
+    wxHours = d.hourly.time.map((t, i) => ({
+      t, code: d.hourly.weather_code[i], cloud: d.hourly.cloud_cover[i],
+      precip: d.hourly.precipitation[i], temp: d.hourly.temperature_2m[i]
+    }));
+    const hh = s => { const dt = new Date(s); return dt.getHours() + dt.getMinutes() / 60; };
+    wxSun = { rise: hh(d.daily.sunrise[0]), set: hh(d.daily.sunset[0]) };
+  } catch { /* konexiorik gabe: lehenetsiekin jarraitu */ }
+  renderSky();
+  updateHint();
+}
+
+function wxAt(hourDec) {
+  if (!wxHours) return null;
+  const n = new Date();
+  const key = `${n.getFullYear()}-${String(n.getMonth() + 1).padStart(2, '0')}-${String(n.getDate()).padStart(2, '0')}T${String(Math.floor(hourDec)).padStart(2, '0')}:00`;
+  return wxHours.find(x => x.t === key) || null;
+}
+
+function condOf(w) {
+  if (!w) return 'clear';
+  if (w.precip > 0.1 || (w.code >= 51 && w.code <= 67) || (w.code >= 80 && w.code <= 99)) return 'rain';
+  if (w.cloud >= 60) return 'clouds';
+  if (w.cloud >= 25) return 'partly';
+  return 'clear';
+}
+
+function skyNow() {
+  const n = new Date();
+  const hour = skyOverride.hour != null ? +skyOverride.hour : n.getHours() + n.getMinutes() / 60;
+  const w = wxAt(hour);
+  const cond = skyOverride.cond || condOf(w);
+  const cloud = skyOverride.cond
+    ? { clear: 5, partly: 45, clouds: 85, rain: 95 }[skyOverride.cond]
+    : (w ? w.cloud : 20);
+  return { hour, cond, cloud, temp: w ? w.temp : null };
+}
+
+function skyBadge() {
+  const { cond, temp } = skyNow();
+  const ic = { clear: '☀️', partly: '⛅', clouds: '☁️', rain: '🌧️' }[cond];
+  return `${ic}${temp != null ? ' ' + Math.round(temp) + '°C' : ''} Lasarte-Oria`;
+}
+
+function renderSky() {
+  const sky = document.getElementById('sky');
+  if (!sky) return;
+  const c01 = v => Math.max(0, Math.min(1, v));
+  const { hour: t, cond, cloud } = skyNow();
+  const { rise, set } = wxSun;
+
+  // Eguna: 1 egun betean, 0 gauean; ±36 minutuko trantsizioa egunsenti/ilunabarrean
+  const dayF = c01((t - (rise - .6)) / 1.2) * c01(((set + .6) - t) / 1.2);
+  const dark = 1 - dayF;
+  // Distira epela: gaussiar bat egunsentian eta beste bat ilunabarrean
+  const g = c => Math.exp(-((t - c) ** 2) / (2 * .7 * .7));
+  const wRise = g(rise), wSet = g(set);
+  const warm = Math.max(wRise, wSet);
+  const duskSide = wSet > wRise; // true → mendebaldetik (behetik / ezkerretik)
+
+  const mobile = window.innerWidth <= 700;
+  // Ekialdea: goitik (mahaigain) / eskuinetik (mugikorra); mendebaldea alderantziz
+  const dirEast = mobile ? '270deg' : '180deg';
+  const dirWest = mobile ? '90deg' : '0deg';
+
+  // 1) Gaua + eguraldi grisa (bi geruza uniforme pilatuta)
+  const grey = (cond === 'rain' ? .22 : cond === 'clouds' ? .12 : 0) * dayF;
+  const blue = (dark * .58).toFixed(3);
+  document.getElementById('sky-night').style.background =
+    `linear-gradient(rgba(70,82,104,${grey.toFixed(3)}),rgba(70,82,104,${grey.toFixed(3)})),`
+    + `linear-gradient(rgba(9,13,42,${blue}),rgba(9,13,42,${blue}))`;
+
+  // 2) Egunsenti/ilunabar distira dagokion ertzetik
+  const gop = (warm * .38 * (1 - cloud / 140)).toFixed(3);
+  document.getElementById('sky-glow').style.background =
+    `linear-gradient(${duskSide ? dirWest : dirEast}, rgba(255,${duskSide ? 118 : 152},${duskSide ? 42 : 72},${gop}), rgba(255,140,60,0) 55%)`;
+
+  // 3) Eguzkia ekialdetik (goitik/eskuinetik) mendebaldera mugitzen da
+  const P = c01((t - rise) / Math.max(.1, set - rise));
+  const sx = mobile ? (94 - P * 88) : 50;
+  const sy = mobile ? 40 : (6 + P * 88);
+  const sunOp = dayF * (1 - c01(cloud / 90)) * (cond === 'rain' ? 0 : 1);
+  document.getElementById('sky-sun').style.background =
+    `radial-gradient(circle at ${sx.toFixed(1)}% ${sy.toFixed(1)}%, rgba(255,244,190,${(sunOp * .34).toFixed(3)}), rgba(255,240,180,0) 42%)`;
+
+  // 4) Hodeiak eta euria
+  const clouds = document.getElementById('sky-clouds');
+  clouds.style.opacity = c01((cloud - 15) / 60).toFixed(2);
+  clouds.style.filter = `brightness(${(1 - dark * .8 - (cond === 'rain' ? .25 : 0)).toFixed(2)})`;
+  document.getElementById('sky-rain').style.display = cond === 'rain' ? 'block' : 'none';
+}
+
+// Eskuzko proba-kontrolak (⚙ modala): berehala aplikatu eta gorde
+function setSkyOverride() {
+  const hv = document.getElementById('cfg-sky-hour').value;
+  const wv = document.getElementById('cfg-sky-w').value;
+  skyOverride = { hour: hv === '' ? null : +hv, cond: wv || null };
+  localStorage.setItem('erlekide.sky', JSON.stringify(skyOverride));
+  renderSky();
+  updateHint();
+}
+
 window.addEventListener('resize', () => {
   if (document.getElementById('agrid').querySelector('.gcont')) applyMobileRotation();
+  renderSky();
 });
 
 // ── Konexio egoera / Online-offline ──────────────────────────────────────────

@@ -90,6 +90,13 @@
         <div id="cv-wrap">
           <div id="agrid"></div>
         </div>
+        <div id="sky" aria-hidden="true">
+          <div id="sky-night"></div>
+          <div id="sky-glow"></div>
+          <div id="sky-sun"></div>
+          <div id="sky-clouds"></div>
+          <div id="sky-rain"></div>
+        </div>
       </div>
 
       <div id="view-gastuak">
@@ -417,6 +424,23 @@
           <label>Errenkadak (1 – 15)</label>
           <input id="cfg-rows" type="number" min="1" max="15">
           <div style="font-size:10px;color:var(--bark-l);margin-top:3px">Orain: <span id="cfg-rows-now"></span></div>
+        </div>
+      </div>
+      <div class="sec-title">🌦 Zerua eta eguraldia (proba)</div>
+      <p style="font-size:11px;color:var(--bark-l);margin-bottom:8px;line-height:1.55">
+        Argiztapena orduaren arabera eta Lasarte-Oriako eguraldi errealarekin aldatzen da automatikoki.
+        Hemen eskuz alda ditzakezu probatzeko; berehala aplikatzen dira.
+      </p>
+      <div class="fg2">
+        <div class="ff"><label>Ordua</label><select id="cfg-sky-hour" onchange="setSkyOverride()"></select></div>
+        <div class="ff"><label>Eguraldia</label>
+          <select id="cfg-sky-w" onchange="setSkyOverride()">
+            <option value="">Auto (Lasarte-Oria)</option>
+            <option value="clear">☀️ Oskarbi</option>
+            <option value="partly">⛅ Hodei batzuk</option>
+            <option value="clouds">☁️ Lainotuta</option>
+            <option value="rain">🌧️ Euria</option>
+          </select>
         </div>
       </div>
       <div id="cfg-warn"
