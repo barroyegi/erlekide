@@ -967,10 +967,6 @@ function openEditInsp(inspId) {
   document.getElementById('aiv').value = i.varroa;
   document.getElementById('aist').value = i.status;
   document.getElementById('aino').value = i.notes || '';
-  document.getElementById('aibox-wrap').innerHTML = i.ai_summary
-    ? `<div class="aibox"><div class="aibox-lbl">✦ IA ANALISIA (gordeta)</div>${esc(i.ai_summary)}</div>` : '';
-  const btn = document.getElementById('btn-ai'); btn.innerHTML = '✦ IArekin aztertu'; btn.disabled = false;
-  openM('ai');
 }
 
 
