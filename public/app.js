@@ -967,6 +967,7 @@ function openEditInsp(inspId) {
   document.getElementById('aiv').value = i.varroa;
   document.getElementById('aist').value = i.status;
   document.getElementById('aino').value = i.notes || '';
+  openM('ai');
 }
 
 
