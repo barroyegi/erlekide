@@ -390,11 +390,6 @@ async function loadInsps(hiveId) {
   insps = data || [];
 }
 
-// ── Konfigurazioa / Settings ──────────────────────────────────────────────────
-function updateHint() {
-  const el = document.getElementById('mhint');
-  if (el) el.textContent = `${skyBadge()} · Arrastatu erlauntzak mugitzeko · Sareta: ${COLS}×${ROWS} · ⚙ konfiguratu goiburuan`;
-}
 
 function openCfg() {
   if (!canEdit()) return;
@@ -424,7 +419,7 @@ async function saveSettings() {
     (h.grid_x >= newCols || h.grid_y >= newRows || (isWide(h) && h.grid_x + 1 >= newCols)));
 
   if (out.length && warn.dataset.confirmed !== '1') {
-    warn.innerHTML = `⚠️ ${out.length} erlauntz mapan kokatuta daude eremu berritik kanpo:<br><strong>${out.map(h => esc(h.name)).join(', ')}</strong><br>Posizioa ezabatuko zaie (erlauntzak bere horretan geratuko dira zerrendan). Berriro sakatu baieztatzeko.`;
+    warn.innerHTML = `⚠️ ${out.length} erlauntza mapan kokatuta daude eremu berritik kanpo:<br><strong>${out.map(h => esc(h.name)).join(', ')}</strong><br>Posizioa ezabatuko zaie (erlauntzak bere horretan geratuko dira zerrendan). Berriro sakatu baieztatzeko.`;
     warn.style.display = '';
     warn.dataset.confirmed = '1';
     document.getElementById('cfg-save-btn').textContent = '⚠ Berretsi eta gorde';
@@ -553,10 +548,10 @@ function beesHTML(status) {
 
 // Dimensiones exactas (px) de cada SVG de alza y de la caja sin tapa
 const ALZA_H = { osoa_st: 390.967, erdia_st: 198.546 };
-const ALZA_W    = 733.869;
+const ALZA_W = 733.869;
 const KAJA_ST_H = 491.055;
-const TAPA_W    = 819.576;
-const TAPA_H    = 113.319;
+const TAPA_W = 819.576;
+const TAPA_H = 113.319;
 
 // Genera un <svg> inline que combina caja + alzas en el mismo sistema de coordenadas.
 // La caja ocupa y=[0, KAJA_ST_H]; cada alza se apila en y negativa (overflow visible).
@@ -660,7 +655,7 @@ function renderSB() {
   const w = hives.filter(h => h.status === 'warn').length;
   const b = hives.filter(h => h.status === 'bad').length;
   document.getElementById('sbfoot').innerHTML =
-    `<span style="color:var(--good)">● ${g} on</span> &nbsp;<span style="color:var(--warn)">● ${w} kontuz</span> &nbsp;<span style="color:var(--bad)">● ${b} kritiko</span>`;
+    `<span style="color:var(--good)">● ${g} ondo</span> &nbsp;<span style="color:var(--warn)">● ${w} kontuz</span> &nbsp;<span style="color:var(--bad)">● ${b} kritiko</span>`;
 }
 
 // ── Detail modal ──────────────────────────────────────────────────────────────
@@ -980,26 +975,6 @@ function openEditInsp(inspId) {
   openM('ai');
 }
 
-async function runAI() {
-  const h = hives.find(x => x.id === inspHiveId);
-  const btn = document.getElementById('btn-ai');
-  btn.innerHTML = '<span class="spin"></span> Aztertzen...'; btn.disabled = true;
-  const prompt = `Erlazain esperta zara. Ikuskaritza hau aztertu eta 2-3 gomendio zehatz eta praktiko eman itzazu euskaraz (gehienez 90 hitz).
-Erlauntza: ${h ? h.name : ''} (${h ? h.type : ''}, ${h ? h.race : ''})
-Indarra: ${document.getElementById('ais').value}/10 · Hazkuntza: ${document.getElementById('aib').value} · Eztia: ${document.getElementById('aim').value}
-Erregina: ${document.getElementById('aiq').value} · Varroa: ${document.getElementById('aiv').value}
-Behaketak: ${document.getElementById('aino').value || 'bat ere ez'}`;
-  try {
-    const r = await fetch('/api/analyze', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` }, body: JSON.stringify({ prompt }) });
-    const d = await r.json();
-    if (!r.ok) throw new Error(d.error || 'AI errorea');
-    aiTxt = d.text;
-    document.getElementById('aibox-wrap').innerHTML = `<div class="aibox"><div class="aibox-lbl">✦ IA GOMENDIAK</div>${esc(aiTxt)}</div>`;
-  } catch (e) {
-    document.getElementById('aibox-wrap').innerHTML = `<div style="font-size:11px;color:var(--bad);margin-top:8px">${esc(e.message)}</div>`;
-  }
-  btn.innerHTML = '✦ IArekin aztertu'; btn.disabled = false;
-}
 
 function clampNum(v, lo, hi, def) {
   const n = v === '' ? NaN : +v;
@@ -1508,7 +1483,7 @@ async function saveVel() {
     await loadVelutinas();
     renderVelBtn(); renderVelutinas(); renderVelHistory();
     document.getElementById('vel-notes').value = '';
-    toast(n ? `⚠️ ${n} velutina deklaratuta` : 'Velutinarik ez ✓', n ? 'warn' : 'ok');
+    toast(n ? `⚠️ ${n} velutina ikusita` : 'Velutinarik ez ✓', n ? 'warn' : 'ok');
   } finally { saving = false; }
 }
 

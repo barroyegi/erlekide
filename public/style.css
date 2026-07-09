@@ -1280,26 +1280,6 @@ svg.tok-svg {
   display: none
 }
 
-.aibox {
-  margin-top: 9px;
-  padding: 9px 10px;
-  background: #FEFAF2;
-  border: 1px solid rgba(200, 120, 10, .22);
-  border-left: 3px solid var(--honey);
-  border-radius: 0 8px 8px 0;
-  font-size: 11px;
-  line-height: 1.75;
-  color: var(--bark-m)
-}
-
-.aibox-lbl {
-  font-size: 9px;
-  font-weight: 700;
-  color: var(--honey-d);
-  margin-bottom: 3px;
-  letter-spacing: .3px
-}
-
 /* ── DETAIL MODAL ── */
 .strow {
   display: grid;
@@ -1383,25 +1363,6 @@ svg.tok-svg {
   color: var(--bad)
 }
 
-.ainote {
-  background: #fff;
-  border: 1px solid var(--border);
-  border-left: 3px solid var(--honey);
-  border-radius: 0 7px 7px 0;
-  padding: 7px 9px;
-  font-size: 10px;
-  line-height: 1.7;
-  color: var(--bark-m);
-  margin-top: 7px
-}
-
-.ainote-lbl {
-  font-size: 9px;
-  font-weight: 700;
-  color: var(--honey-d);
-  margin-bottom: 3px;
-  letter-spacing: .3px
-}
 
 /* ── FAB (mobile) ── */
 .fab {
@@ -1808,13 +1769,29 @@ svg.tok-svg {
   max-width: 200px;
   gap: 4px;
 }
-.proj-btn #proj-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
-.proj-caret { opacity: .65; font-size: 10px }
+
+.proj-btn #proj-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap
+}
+
+.proj-caret {
+  opacity: .65;
+  font-size: 10px
+}
 
 /* viewer (ikuslea): edizio-kontrolak ezkutatu / ocultar controles de edición */
-body.viewer .needs-edit { display: none !important }
+body.viewer .needs-edit {
+  display: none !important
+}
 
-.proj-list { display: flex; flex-direction: column; gap: 5px; margin-bottom: 4px }
+.proj-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 4px
+}
 
 .proj-row {
   display: flex;
@@ -1831,9 +1808,24 @@ body.viewer .needs-edit { display: none !important }
   cursor: pointer;
   transition: .12s;
 }
-.proj-row:hover { background: var(--cream) }
-.proj-row.on { border-color: var(--honey); background: var(--honey-l) }
-.proj-row-name { flex: 1; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
+
+.proj-row:hover {
+  background: var(--cream)
+}
+
+.proj-row.on {
+  border-color: var(--honey);
+  background: var(--honey-l)
+}
+
+.proj-row-name {
+  flex: 1;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap
+}
+
 .proj-row-role {
   font-size: 10px;
   font-weight: 700;
@@ -1843,11 +1835,24 @@ body.viewer .needs-edit { display: none !important }
   padding: 2px 8px;
   flex-shrink: 0;
 }
-.proj-row.on .proj-row-role { background: #fff }
 
-.proj-hr { border: none; border-top: 1px solid var(--border); margin: 16px 0 4px }
+.proj-row.on .proj-row-role {
+  background: #fff
+}
 
-.code-box { display: flex; align-items: center; gap: 7px; margin-bottom: 4px }
+.proj-hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 16px 0 4px
+}
+
+.code-box {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 4px
+}
+
 .code-val {
   flex: 1;
   font-family: 'Segoe UI', monospace;
@@ -1862,7 +1867,13 @@ body.viewer .needs-edit { display: none !important }
   text-align: center;
 }
 
-.pm-list { display: flex; flex-direction: column; gap: 5px; margin-bottom: 4px }
+.pm-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 4px
+}
+
 .pm-row {
   display: flex;
   align-items: center;
@@ -1871,10 +1882,30 @@ body.viewer .needs-edit { display: none !important }
   border-bottom: .5px solid var(--border);
   font-size: 13px;
 }
-.pm-row:last-child { border-bottom: none }
-.pm-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap }
-.pm-role { font-size: 11px; font-weight: 700; color: var(--bark-l) }
-.pm-sel { width: auto; padding: 4px 8px; font-size: 12px; flex-shrink: 0 }
+
+.pm-row:last-child {
+  border-bottom: none
+}
+
+.pm-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap
+}
+
+.pm-role {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--bark-l)
+}
+
+.pm-sel {
+  width: auto;
+  padding: 4px 8px;
+  font-size: 12px;
+  flex-shrink: 0
+}
 
 /* ── KARGATZEA ── */
 #loading {

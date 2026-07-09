@@ -67,9 +67,9 @@
         onclick="doLogout()">Irten</button>
     </header>
     <nav id="main-nav">
-      <button class="mnav on" onclick="setMainView('map')">🗺 Mapa</button>
-      <button class="mnav" onclick="setMainView('gastuak')">💸 Gastuak</button>
-      <button class="mnav" onclick="setMainView('materialak')">🔧 Materialak</button>
+      <button class="mnav on" onclick="setMainView('map')">Mapa</button>
+      <button class="mnav" onclick="setMainView('gastuak')">Gastuak</button>
+      <button class="mnav" onclick="setMainView('materialak')">Materialak</button>
     </nav>
     <div id="bdy">
       <aside id="sb">
@@ -83,8 +83,9 @@
       </aside>
 
       <div id="view-map">
-        <div class="mhint" id="mhint">Arrastatu erlauntzak mugitzeko · Egin klik zelula huts batean gehitzeko</div>
-        <button class="vel-btn" id="vel-btn" onclick="openVel()" title="Vespa velutina deklaratu">
+        <div class="mhint" id="mhint">Arrastatu erlauntzak mugitzeko · Egin klik kuadro huts batean beste bat gehitzeko
+        </div>
+        <button class="vel-btn" id="vel-btn" onclick="openVel()" title="Vespa velutinaren presentzia">
           <span class="vel-badge" id="vel-badge" style="display:none">0</span>
         </button>
         <div id="cv-wrap">
@@ -104,7 +105,7 @@
           <div class="view-hdr">
             <h3>💸 Gastuak</h3>
             <div style="display:flex;gap:7px">
-              <button class="btn sm needs-edit" onclick="openMembers()">👥 Sozioak</button>
+              <button class="btn sm needs-edit" onclick="openMembers()">Sozioak</button>
               <button class="btn sm primary needs-edit" onclick="openAddExp()">＋ Gastua</button>
             </div>
           </div>
@@ -176,7 +177,7 @@
         <div class="ff"><label>Kokapena — Zutabea</label><select id="ahpx"></select></div>
         <div class="ff"><label>Kolore bereizia</label>
           <select id="ahc">
-            <option value="#C8780A">🟠 Anbrea</option>
+            <option value="#C8780A">🟠 Anbarra</option>
             <option value="#1E6B40">🟢 Berdea</option>
             <option value="#1A5FA0">🔵 Urdina</option>
             <option value="#7A3DAA">🟣 Morea</option>
@@ -239,7 +240,7 @@
         </div>
         <div class="ff"><label>Kolore bereizia</label>
           <select id="ehc">
-            <option value="#C8780A">🟠 Anbrea</option>
+            <option value="#C8780A">🟠 Anbarra</option>
             <option value="#1E6B40">🟢 Berdea</option>
             <option value="#1A5FA0">🔵 Urdina</option>
             <option value="#7A3DAA">🟣 Morea</option>
@@ -281,7 +282,8 @@
       </div>
       <div class="fg2">
         <div class="ff"><label>Data</label><input id="aid" type="date"></div>
-        <div class="ff"><label>Kolonia indarra (1–10)</label><input id="ais" type="number" min="1" max="10" value="7">
+        <div class="ff"><label>Koloniaren indarra (1–10)</label><input id="ais" type="number" min="1" max="10"
+            value="7">
         </div>
         <div class="ff"><label>Hazkuntza markoak</label><input id="aib" type="number" min="0" max="20" value="6"></div>
         <div class="ff"><label>Ezti markoak</label><input id="aim" type="number" min="0" max="20" value="4"></div>
@@ -314,7 +316,6 @@
       <div id="aibox-wrap"></div>
       <div class="brow">
         <button class="btn" onclick="closeM('ai')">Utzi</button>
-        <button class="btn" id="btn-ai" onclick="runAI()">✦ IArekin aztertu</button>
         <button class="btn primary" onclick="saveInsp()">✓ Gorde</button>
       </div>
     </div>
@@ -343,7 +344,7 @@
         <div class="ff fg1"><label>Deskribapena</label><input id="exp-desc" placeholder="Adib: Vatia, tresnak..."></div>
         <div class="ff"><label>Zenbatekoa (€)</label><input id="exp-amt" type="number" min="0" step="0.01"
             placeholder="0.00"></div>
-        <div class="ff"><label>Nork ordaindu</label><select id="exp-payer"></select></div>
+        <div class="ff"><label>Nork ordaindu du?</label><select id="exp-payer"></select></div>
         <div class="ff"><label>Data</label><input id="exp-date" type="date"></div>
         <div class="ff fg1"><label>Oharrak</label><textarea id="exp-notes" placeholder="Aukerazkoa..."></textarea></div>
       </div>
@@ -367,7 +368,7 @@
             <option value="kaxak">📦 Kaxak</option>
             <option value="jantziak">🥼 Jantziak</option>
             <option value="tresnak">🔧 Tresnak</option>
-            <option value="bestelakoa">📋 Bestelakoa</option>
+            <option value="bestelakoa">📋 Bestelakoak</option>
           </select>
         </div>
         <div class="ff"><label>Kopurua</label><input id="mat-qty" type="number" min="0" value="1"></div>
@@ -388,8 +389,8 @@
       <div class="mtitle">⚠️ Liztor asiarra (Vespa velutina) <button class="mclose" onclick="closeM('vel')">✕</button>
       </div>
       <p style="font-size:12px;color:var(--bark-l);margin-bottom:12px;line-height:1.6">
-        Deklaratu une honetan erlategiaren inguruan hegan dabiltzan velutina kopurua. Mapan agertuko dira eta
-        historia gordeko da jarraipena egiteko. Deklaratu <strong>0</strong> jada ez badago.
+        Jarri une honetan erlategiaren inguruan hegan dabiltzan velutina kopurua. Mapan agertuko dira eta
+        historia gordeko da jarraipena egiteko. Jarri <strong>0</strong> jada ez badago.
       </p>
       <div class="fg2 needs-edit">
         <div class="ff"><label>Zenbat velutina dabiltza?</label><input id="vel-n" type="number" min="0" max="99"
@@ -398,7 +399,7 @@
       </div>
       <div class="brow needs-edit" style="margin-top:4px">
         <button class="btn" onclick="closeM('vel')">Utzi</button>
-        <button class="btn primary" onclick="saveVel()">✓ Deklaratu</button>
+        <button class="btn primary" onclick="saveVel()">✓ Gorde</button>
       </div>
       <div class="sec-title">Deklarazioen historia</div>
       <div id="vel-history"></div>
@@ -426,10 +427,10 @@
           <div style="font-size:10px;color:var(--bark-l);margin-top:3px">Orain: <span id="cfg-rows-now"></span></div>
         </div>
       </div>
-      <div class="sec-title">🌦 Zerua eta eguraldia (proba)</div>
+      <div class="sec-title">🌦 Zerua eta eguraldia (test)</div>
       <p style="font-size:11px;color:var(--bark-l);margin-bottom:8px;line-height:1.55">
         Argiztapena orduaren arabera eta Lasarte-Oriako eguraldi errealarekin aldatzen da automatikoki.
-        Hemen eskuz alda ditzakezu probatzeko; berehala aplikatzen dira.
+        Hemen eskuz alda ditzakezu probatzeko.
       </p>
       <div class="fg2">
         <div class="ff"><label>Ordua</label><select id="cfg-sky-hour" onchange="setSkyOverride()"></select></div>
