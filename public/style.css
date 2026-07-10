@@ -922,20 +922,8 @@ svg.tok-svg {
   animation: velbob 1.6s ease-in-out infinite;
 }
 
-.vel.perch .vw,
-.vel.perch .vw2 {
-  animation: velwingslow 1.3s ease-in-out infinite alternate;
-}
-
-@keyframes velwingslow {
-  from {
-    transform: rotate(2deg) scaleY(.9)
-  }
-
-  to {
-    transform: rotate(-5deg) scaleY(1)
-  }
-}
+/* El aleteo es siempre constante (velwing), también posada o cazando —
+   solo el cuerpo se balancea con velbob */
 
 @keyframes velbob {
 
