@@ -1674,6 +1674,7 @@ function initSky() {
     if (s) skyOverride = { hour: s.hour ?? null, cond: s.cond || null };
   } catch { /* balio okerra: lehenetsiak */ }
   buildSkyDOM();
+  renderSky();
   fetchWeather();
   setInterval(() => {
     renderSky();
@@ -1790,6 +1791,29 @@ function renderSky() {
   clouds.style.opacity = c01((cloud - 15) / 60).toFixed(2);
   clouds.style.filter = `brightness(${(1 - dark * .8 - (cond === 'rain' ? .25 : 0)).toFixed(2)})`;
   document.getElementById('sky-rain').style.display = cond === 'rain' ? 'block' : 'none';
+
+  renderWxBox();
+}
+
+// Goiko ezkerreko eguraldi-leihatila / Ventanita de tiempo (arriba izquierda)
+const WX_LABELS = { clear: 'Oskarbi', partly: 'Hodei batzuk', clouds: 'Lainotuta', rain: 'Euria' };
+function renderWxBox() {
+  const box = document.getElementById('wx-box');
+  if (!box) return;
+  const { hour, cond, temp } = skyNow();
+  const night = hour < wxSun.rise || hour > wxSun.set;
+  const icon = cond === 'rain' ? '🌧️'
+    : cond === 'clouds' ? '☁️'
+      : cond === 'partly' ? (night ? '☁️' : '⛅')
+        : (night ? '🌙' : '☀️');
+  const label = cond === 'clear' && night ? 'Gau argia' : WX_LABELS[cond];
+  const hh = Math.floor(hour);
+  const mm = Math.min(59, Math.round((hour - hh) * 60));
+  const time = `${String(hh).padStart(2, '0')}:${String(mm).padStart(2, '0')}`;
+  box.innerHTML = `<div class="wx-top"><span class="wx-ic">${icon}</span>`
+    + `<span class="wx-temp">${temp != null ? Math.round(temp) + '°' : '—'}</span></div>`
+    + `<span class="wx-cond">${label}</span>`
+    + `<span class="wx-meta">Lasarte-Oria · ${time}</span>`;
 }
 
 // Eskuzko proba-kontrolak (⚙ modala): berehala aplikatu eta gorde

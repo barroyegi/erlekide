@@ -1004,6 +1004,58 @@ svg.tok-svg {
   overflow: hidden;
 }
 
+/* Goiko ezkerreko eguraldi-leihatila / Ventanita de tiempo (arriba izquierda) */
+.wx-box {
+  position: absolute;
+  top: 33px;
+  left: 12px;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: rgba(46, 31, 15, .55);
+  border: 1px solid rgba(255, 255, 255, .25);
+  border-radius: 12px;
+  padding: 6px 11px;
+  color: #fff;
+  pointer-events: none;
+  min-width: 92px;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+.wx-box:empty {
+  display: none;
+}
+
+.wx-top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wx-ic {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.wx-temp {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.wx-cond {
+  font-size: 11px;
+  color: rgba(255, 255, 255, .88);
+  line-height: 1.2;
+}
+
+.wx-meta {
+  font-size: 9px;
+  color: rgba(255, 255, 255, .6);
+  line-height: 1.2;
+}
+
 #sky>div {
   position: absolute;
   inset: 0;
@@ -1954,6 +2006,20 @@ body.viewer .needs-edit {
   .vel-btn {
     top: 8px;
     right: 8px
+  }
+
+  .wx-box {
+    top: 8px;
+    left: 8px;
+    padding: 4px 8px;
+  }
+
+  .wx-ic {
+    font-size: 16px
+  }
+
+  .wx-temp {
+    font-size: 14px
   }
 
   /* Grid rotado 90° CW: contra-rotamos la velutina para que se vea recta */
