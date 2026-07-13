@@ -1784,10 +1784,10 @@ function renderSky() {
   document.getElementById('sky-sun').style.background =
     `radial-gradient(circle at ${sx.toFixed(1)}% ${sy.toFixed(1)}%, rgba(255,244,190,${(sunOp * .34).toFixed(3)}), rgba(255,240,180,0) 42%)`;
 
-  // 4) Hodeiak eta euria
+  // 4) Hodeien itzalak (nubeak ez dira ikusten) eta euria
+  // Itzal arina soilik egunez; gauean ez dago argirik itzalak sortzeko.
   const clouds = document.getElementById('sky-clouds');
-  clouds.style.opacity = c01((cloud - 15) / 60).toFixed(2);
-  clouds.style.filter = `brightness(${(1 - dark * .8 - (cond === 'rain' ? .25 : 0)).toFixed(2)})`;
+  clouds.style.opacity = (c01((cloud - 15) / 60) * dayF).toFixed(2);
   document.getElementById('sky-rain').style.display = cond === 'rain' ? 'block' : 'none';
 
   renderWxBox();

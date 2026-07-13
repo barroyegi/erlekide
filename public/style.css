@@ -1055,17 +1055,20 @@ svg.tok-svg {
   transition: background 2s linear;
 }
 
+/* Nubes invisibles: solo se ve su sombra tenue proyectada sobre la escena.
+   multiply oscurece lo que hay debajo (hierba y colmenas por igual). */
 #sky-clouds {
-  transition: opacity 2s linear, filter 2s linear;
+  transition: opacity 2s linear;
+  mix-blend-mode: multiply;
 }
 
 .cloud {
   position: absolute;
-  width: 190px;
-  height: 46px;
-  border-radius: 60px;
-  background: rgba(255, 255, 255, .8);
-  filter: blur(8px);
+  width: 210px;
+  height: 54px;
+  border-radius: 70px;
+  background: rgba(38, 48, 42, .26);
+  filter: blur(18px);
   animation: clouddrift var(--cd, 90s) linear var(--cdl, 0s) infinite;
 }
 
