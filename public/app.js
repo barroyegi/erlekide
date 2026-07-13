@@ -10,7 +10,10 @@ let delStep = 0, delTimer = null;
 let expenses = [], members = [], materials = [];
 let expEditId = null, matEditId = null;
 let velutinas = [], velTimers = [];
-let pollTimer = null;
+let varroaTests = [], varroaTreatments = [];
+let dpHiveId = null, dpTab = 'insp';
+let vtEditId = null, vtrEditId = null;
+let pollTimer = null, rtChannel = null;
 // ── Proiektuak / Proyectos ──
 let projectId = null, projects = [], myRole = 'viewer', projMembers = [];
 let pdelStep = 0, pdelTimer = null;
@@ -96,9 +99,9 @@ async function doLogout() {
   await sb.auth.signOut();
   me = userId = token = selId = projectId = null;
   hives = []; insps = []; projects = []; projMembers = []; myRole = 'viewer';
-  velutinas = []; clearVelutinas();
+  velutinas = []; varroaTests = []; varroaTreatments = []; dpHiveId = null; clearVelutinas();
   document.body.classList.remove('viewer');
-  clearInterval(pollTimer);
+  unsubscribeRealtime();
   document.getElementById('scr-app').style.display = 'none';
   showLogin();
 }
@@ -137,7 +140,7 @@ async function selectProject(id) {
   localStorage.setItem('erlekide.project', id);
   clampGrid(p.cols, p.rows);
   selId = null; moveId = null;
-  clearInterval(pollTimer);
+  unsubscribeRealtime();
   await Promise.all([loadHives(), loadMembers(), loadExpenses(), loadMaterials(), loadVelutinas()]);
   renderProjectBar();
   renderVelBtn();
@@ -147,15 +150,86 @@ async function selectProject(id) {
   buildGrid();
   renderAll();
   setMainView('map');
-  pollTimer = setInterval(async () => {
-    const pv = velCount();
-    await Promise.all([loadHives(), loadExpenses(), loadMaterials(), loadVelutinas()]);
-    renderAll();
-    renderVelBtn();
-    if (velCount() !== pv) renderVelutinas();
-    if (document.getElementById('view-gastuak').style.display !== 'none') renderExpenses();
-    if (document.getElementById('view-materialak').style.display !== 'none') renderMaterials();
-  }, 30000);
+  subscribeRealtime();
+}
+
+// ── Realtime / Denbora errealeko sinkronizazioa (30s polling-aren ordez) ───────
+function viewVisible(name) {
+  const el = document.getElementById('view-' + name);
+  return el && el.style.display !== 'none';
+}
+function isDpOpen() {
+  const m = document.getElementById('mod-dp');
+  return m && m.style.display === 'flex' && dpHiveId;
+}
+const refreshDp = () => { if (isDpOpen()) renderDP(dpHiveId); };
+
+function unsubscribeRealtime() {
+  if (rtChannel && sb) { sb.removeChannel(rtChannel); }
+  rtChannel = null;
+  clearInterval(pollTimer); pollTimer = null;
+}
+
+// Realtime-k huts egiten badu (publikazioa gaitu gabe, e.a.), 60s-ko polling motela
+async function refreshAll() {
+  if (!projectId) return;
+  const pv = velCount();
+  await Promise.all([loadHives(), loadExpenses(), loadMaterials(), loadVelutinas()]);
+  renderAll(); renderVelBtn();
+  if (velCount() !== pv) renderVelutinas();
+  if (viewVisible('gastuak')) renderExpenses();
+  if (viewVisible('materialak')) renderMaterials();
+  refreshDp();
+}
+function startFallbackPoll() {
+  if (pollTimer) return;
+  pollTimer = setInterval(refreshAll, 60000);
+}
+
+async function rtHives() { await loadHives(); renderAll(); refreshDp(); }
+async function rtInspOrVarroa() { refreshDp(); }
+async function rtExpenses() { await loadExpenses(); if (viewVisible('gastuak')) renderExpenses(); }
+async function rtMaterials() { await loadMaterials(); if (viewVisible('materialak')) renderMaterials(); }
+async function rtMembers() { await loadMembers(); if (viewVisible('gastuak')) renderExpenses(); }
+async function rtVelutina() {
+  const pv = velCount();
+  await loadVelutinas();
+  renderVelBtn();
+  if (velCount() !== pv) renderVelutinas();
+  if (document.getElementById('mod-vel').style.display === 'flex') renderVelHistory();
+}
+async function rtProject() {
+  await loadProjects();
+  const p = projects.find(x => x.id === projectId);
+  if (!p) return;
+  const oc = COLS, orr = ROWS;
+  clampGrid(p.cols, p.rows);
+  renderProjectBar();
+  if (COLS !== oc || ROWS !== orr) { buildGrid(); renderAll(); updateHint(); }
+}
+
+function subscribeRealtime() {
+  unsubscribeRealtime();
+  if (!projectId || !sb || typeof sb.channel !== 'function') { startFallbackPoll(); return; }
+  const pf = `project_id=eq.${projectId}`;
+  const ch = sb.channel(`erlekide:${projectId}:${Date.now()}`);
+  rtChannel = ch;
+  const on = (table, filter, handler) =>
+    ch.on('postgres_changes', { event: '*', schema: 'public', table, filter }, handler);
+  on('hives', pf, rtHives);
+  on('inspections', pf, rtInspOrVarroa);
+  on('varroa_tests', pf, rtInspOrVarroa);
+  on('varroa_treatments', pf, rtInspOrVarroa);
+  on('expenses', pf, rtExpenses);
+  on('materials', pf, rtMaterials);
+  on('members', pf, rtMembers);
+  on('velutina_sightings', pf, rtVelutina);
+  on('projects', `id=eq.${projectId}`, rtProject);
+  ch.subscribe(status => {
+    if (ch !== rtChannel) return; // kanal zaharra: baztertu
+    if (status === 'SUBSCRIBED') { clearInterval(pollTimer); pollTimer = null; }
+    else if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') startFallbackPoll();
+  });
 }
 
 function clampGrid(c, r) {
@@ -371,7 +445,7 @@ async function deleteProject() {
   projects = projects.filter(p => p.id !== projectId);
   localStorage.removeItem('erlekide.project');
   closeM('proj');
-  clearInterval(pollTimer);
+  unsubscribeRealtime();
   if (projects.length) { await selectProject(projects[0].id); toast('Proiektua ezabatuta'); }
   else { projectId = null; showFirstProject(); toast('Proiektua ezabatuta'); }
 }
@@ -387,6 +461,17 @@ async function loadInsps(hiveId) {
   const { data } = await sb.from('inspections').select('*')
     .eq('hive_id', hiveId).order('date', { ascending: false }).order('created_at', { ascending: false });
   insps = data || [];
+}
+
+async function loadVarroa(hiveId) {
+  const [tRes, trRes] = await Promise.all([
+    sb.from('varroa_tests').select('*').eq('hive_id', hiveId)
+      .order('date', { ascending: false }).order('created_at', { ascending: false }),
+    sb.from('varroa_treatments').select('*').eq('hive_id', hiveId)
+      .order('start_date', { ascending: false }).order('created_at', { ascending: false })
+  ]);
+  varroaTests = tRes.data || [];
+  varroaTreatments = trRes.data || [];
 }
 
 
@@ -656,15 +741,16 @@ function renderSB() {
     `<span style="color:var(--good)">● ${g} ondo</span> &nbsp;<span style="color:var(--warn)">● ${w} kontuz</span> &nbsp;<span style="color:var(--bad)">● ${b} kritiko</span>`;
 }
 
-// ── Detail modal ──────────────────────────────────────────────────────────────
+// ── Detail modal (fitxekin) / Modal de detalle (con pestañas) ──────────────────
 async function renderDP(id) {
   const h = hives.find(x => x.id === id);
   if (!h) return;
-  await loadInsps(id);
+  dpHiveId = id;
+  await Promise.all([loadInsps(id), loadVarroa(id)]);
   const pos = h.grid_x != null ? `${RLBLS[h.grid_y]}${h.grid_x + 1} posizioa` : 'Mapan kokatu gabe';
   const stL = { good: 'Ona', warn: 'Kontuz', bad: 'Kritikoa' };
   const stC = { good: 'var(--good)', warn: 'var(--warn)', bad: 'var(--bad)' };
-  const alzaSection = buildAlzaCards(h);
+  const tab = (t, label) => `<button class="dp-tab ${dpTab === t ? 'on' : ''}" onclick="setDpTab('${t}')">${label}</button>`;
   document.getElementById('mod-dp-content').innerHTML = `
     <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:12px">
       <div style="flex:1">
@@ -678,32 +764,235 @@ async function renderDP(id) {
       <div class="mstat"><div class="n">${insps.length}</div><div class="l">Inspekzioak</div></div>
       <div class="mstat"><div class="n" style="font-size:13px">${h.frames != null ? h.frames : '—'}</div><div class="l">Markoak</div></div>
     </div>
-    ${canEdit() ? `<div style="display:flex;gap:8px;margin-bottom:12px">
+    ${canEdit() ? `<div style="display:flex;gap:8px;margin-bottom:4px">
       <button class="btn primary" style="flex:1" onclick="closeM('dp');openInsp('${h.id}')">＋ Inspekzioa</button>
       <button class="btn" onclick="closeM('dp');startMove('${h.id}')">📍 Mugitu</button>
       <button class="btn" onclick="closeM('dp');openEdit('${h.id}')">✎ Editatu</button>
     </div>` : ''}
-    ${h.notes ? `<div style="font-size:12px;color:var(--bark-m);background:var(--cream);padding:8px 10px;border-radius:8px;margin-bottom:12px;line-height:1.6">${esc(h.notes)}</div>` : ''}
-    ${alzaSection}
-    <div class="sec-title">Inspekzio historia</div>
-    ${insps.length ? insps.slice(0, 15).map(i => `
-      <div class="icard">
-        <div class="ichdr">
-          <span class="idate">${i.date}</span>
-          <span class="iusr">${esc(i.username)}</span>
-          ${canEdit() ? `<button class="icon-btn" style="margin-left:auto" onclick="openEditInsp('${i.id}')">✎ Editatu</button>` : ''}
-        </div>
-        <div style="color:var(--bark);line-height:1.55">${esc(i.notes) || '<em style="color:var(--bark-l)">Oharrik gabe</em>'}</div>
-        <div class="ichips">
-          <span class="chip">💪 ${i.strength}/10</span>
-          <span class="chip">🍯 ${i.honey} mko.</span>
-          <span class="chip">👑 ${i.queen === 'yes' ? 'Ikusi' : i.queen === 'signs' ? 'Aztarnak' : 'Ez aurkitua'}</span>
-          ${i.varroa !== 'unknown' ? `<span class="chip ${i.varroa === 'high' ? 'bad' : ''}">Varroa: ${i.varroa === 'low' ? 'Baxua' : i.varroa === 'med' ? 'Ertaina' : 'Altua'}</span>` : ''}
-        </div>
-      </div>`).join('') :
-      '<div style="font-size:12px;color:var(--bark-l)">Oraindik ez du inspekziorik.</div>'}
+    ${h.notes ? `<div style="font-size:12px;color:var(--bark-m);background:var(--cream);padding:8px 10px;border-radius:8px;margin:12px 0 0;line-height:1.6">${esc(h.notes)}</div>` : ''}
+    <div class="dp-tabs">
+      ${tab('insp', '📋 Inspekzioak')}
+      ${tab('varroa', '🕷 Varroa')}
+      ${tab('graf', '📈 Grafikoak')}
+    </div>
+    <div id="dp-body"></div>
   `;
+  renderDpBody();
   openM('dp');
+}
+
+function setDpTab(t) { dpTab = t; renderDpBody(); }
+
+function renderDpBody() {
+  const el = document.getElementById('dp-body');
+  if (!el) return;
+  const h = hives.find(x => x.id === dpHiveId);
+  if (!h) return;
+  el.innerHTML = dpTab === 'varroa' ? dpVarroaHTML(h)
+    : dpTab === 'graf' ? dpGrafHTML(h)
+      : dpInspHTML(h);
+}
+
+// ── Fitxa: Inspekzioak / Pestaña: Inspecciones ────────────────────────────────
+function dpInspHTML(h) {
+  const alzaSection = buildAlzaCards(h);
+  const hist = insps.length ? insps.slice(0, 15).map(i => `
+    <div class="icard">
+      <div class="ichdr">
+        <span class="idate">${i.date}</span>
+        <span class="iusr">${esc(i.username)}</span>
+        ${canEdit() ? `<button class="icon-btn" style="margin-left:auto" onclick="openEditInsp('${i.id}')">✎ Editatu</button>` : ''}
+      </div>
+      <div style="color:var(--bark);line-height:1.55">${esc(i.notes) || '<em style="color:var(--bark-l)">Oharrik gabe</em>'}</div>
+      <div class="ichips">
+        <span class="chip">💪 ${i.strength}/10</span>
+        <span class="chip">🍯 ${i.honey} mko.</span>
+        <span class="chip">👑 ${i.queen === 'yes' ? 'Ikusi' : i.queen === 'signs' ? 'Aztarnak' : 'Ez aurkitua'}</span>
+        ${i.varroa !== 'unknown' ? `<span class="chip ${i.varroa === 'high' ? 'bad' : ''}">Varroa: ${i.varroa === 'low' ? 'Baxua' : i.varroa === 'med' ? 'Ertaina' : 'Altua'}</span>` : ''}
+      </div>
+    </div>`).join('') :
+    '<div class="dp-empty">Oraindik ez du inspekziorik.</div>';
+  return alzaSection + '<div class="sec-title">Inspekzio historia</div>' + hist;
+}
+
+// ── Fitxa: Varroa / Pestaña: Varroa ───────────────────────────────────────────
+const VT_METHOD = { wash: 'Garbiketa (alkohol/azukrea)', drop: 'Kaida naturala', other: 'Beste metodo bat' };
+
+function varroaResult(v) {
+  if (v.method === 'wash' && v.sample > 0) {
+    const pct = v.mites / v.sample * 100;
+    return { txt: pct.toFixed(1) + '% infestazioa', sev: pct < 2 ? 'good' : pct < 3 ? 'warn' : 'bad' };
+  }
+  if (v.method === 'drop' && v.sample > 0) {
+    const r = v.mites / v.sample;
+    return { txt: r.toFixed(1) + ' akaro/egun', sev: r < 3 ? 'good' : r < 6 ? 'warn' : 'bad' };
+  }
+  return { txt: v.mites + ' akaro', sev: '' };
+}
+
+function dpVarroaHTML(h) {
+  let out = `<div class="dp-sec-hdr"><span class="sec-title">Testak</span>${canEdit() ? `<button class="btn sm" onclick="openVTest()">＋ Testa</button>` : ''}</div>`;
+  out += varroaTests.length ? varroaTests.map(v => {
+    const r = varroaResult(v);
+    const sub = v.method !== 'other'
+      ? `<span class="chip">${v.mites} akaro / ${v.sample != null ? v.sample : '—'} ${v.method === 'wash' ? 'erle' : 'egun'}</span>` : '';
+    return `<div class="icard">
+      <div class="ichdr"><span class="idate">${v.date}</span><span class="iusr">${esc(v.username)}</span>
+        ${canEdit() ? `<span style="margin-left:auto"></span><button class="icon-btn" onclick="openVTest('${v.id}')">✎</button><button class="icon-btn" onclick="deleteVTest('${v.id}')">🗑</button>` : ''}</div>
+      <div class="ichips">
+        <span class="chip">${VT_METHOD[v.method]}</span>
+        <span class="chip ${r.sev}">${r.txt}</span>
+        ${sub}
+      </div>
+      ${v.notes ? `<div style="color:var(--bark);line-height:1.5;margin-top:4px">${esc(v.notes)}</div>` : ''}
+    </div>`;
+  }).join('') : '<div class="dp-empty">Oraindik ez dago testik.</div>';
+
+  out += `<div class="dp-sec-hdr" style="margin-top:16px"><span class="sec-title">Tratamenduak</span>${canEdit() ? `<button class="btn sm" onclick="openVTr()">＋ Tratamendua</button>` : ''}</div>`;
+  out += varroaTreatments.length ? varroaTreatments.map(v => {
+    const range = v.end_date ? `${v.start_date} → ${v.end_date}` : `${v.start_date} →`;
+    return `<div class="icard">
+      <div class="ichdr"><span class="idate">${range}</span><span class="iusr">${esc(v.username)}</span>
+        ${canEdit() ? `<span style="margin-left:auto"></span><button class="icon-btn" onclick="openVTr('${v.id}')">✎</button><button class="icon-btn" onclick="deleteVTr('${v.id}')">🗑</button>` : ''}</div>
+      <div style="font-weight:600;color:var(--bark)">💊 ${esc(v.product)}</div>
+      ${v.notes ? `<div style="color:var(--bark);line-height:1.5;margin-top:2px">${esc(v.notes)}</div>` : ''}
+    </div>`;
+  }).join('') : '<div class="dp-empty">Oraindik ez dago tratamendurik.</div>';
+  return out;
+}
+
+// ── Fitxa: Grafikoak / Pestaña: Gráficos ──────────────────────────────────────
+function chartCard(title, pts, opt = {}) {
+  if (!pts || pts.length < 2) return '';
+  const color = opt.color || 'var(--honey)', unit = opt.unit || '';
+  const ys = pts.map(p => p.y);
+  let lo = opt.min != null ? opt.min : Math.min(...ys);
+  let hi = opt.max != null ? opt.max : Math.max(...ys);
+  if (hi === lo) { hi = lo + 1; lo = Math.max(0, lo - 1); }
+  const W = 300, H = 84, padX = 8, padTop = 8, padBot = 8, n = pts.length;
+  const X = i => padX + i * (W - 2 * padX) / (n - 1);
+  const Y = v => padTop + (H - padTop - padBot) * (1 - (v - lo) / (hi - lo));
+  const line = pts.map((p, i) => `${X(i).toFixed(1)},${Y(p.y).toFixed(1)}`).join(' ');
+  const area = `${padX},${H - padBot} ${line} ${W - padX},${H - padBot}`;
+  const dots = pts.map((p, i) => `<circle cx="${X(i).toFixed(1)}" cy="${Y(p.y).toFixed(1)}" r="2.4" fill="${color}"/>`).join('');
+  const last = pts[n - 1].y;
+  return `<div class="chart-card">
+    <div class="chart-hdr"><span>${title}</span><span class="chart-last" style="color:${color}">${last}${unit}</span></div>
+    <svg class="chart-svg" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="${area}" fill="${color}" opacity=".12"/>
+      <polyline points="${line}" fill="none" stroke="${color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+      ${dots}
+    </svg>
+    <div class="chart-x"><span>${pts[0].x}</span><span>${pts[n - 1].x}</span></div>
+  </div>`;
+}
+
+function dpGrafHTML() {
+  const ins = [...insps].reverse(); // data gorakorra / orden ascendente
+  const vts = [...varroaTests].reverse();
+  const strength = ins.map(i => ({ x: i.date, y: i.strength }));
+  const honey = ins.map(i => ({ x: i.date, y: i.honey }));
+  const brood = ins.map(i => ({ x: i.date, y: i.brood }));
+  const wash = vts.filter(v => v.method === 'wash' && v.sample > 0).map(v => ({ x: v.date, y: +(v.mites / v.sample * 100).toFixed(1) }));
+  const drop = vts.filter(v => v.method === 'drop' && v.sample > 0).map(v => ({ x: v.date, y: +(v.mites / v.sample).toFixed(1) }));
+  let out = '';
+  out += chartCard('💪 Koloniaren indarra', strength, { color: 'var(--honey)', unit: '/10', min: 0, max: 10 });
+  out += chartCard('🍯 Ezti markoak', honey, { color: '#C8780A', unit: ' mko.', min: 0 });
+  out += chartCard('🐣 Hazkuntza markoak', brood, { color: '#1E6B40', unit: ' mko.', min: 0 });
+  out += chartCard('🕷 Varroa — garbiketa', wash, { color: 'var(--bad)', unit: '%', min: 0 });
+  out += chartCard('🕷 Varroa — kaida naturala', drop, { color: 'var(--bad)', unit: ' akaro/egun', min: 0 });
+  return out || '<div class="dp-empty">Datu gutxiegi grafikoak marrazteko. Gehitu inspekzioak edo varroa testak (gutxienez 2).</div>';
+}
+
+// ── Varroa CRUD ───────────────────────────────────────────────────────────────
+function vtSampleLabel() {
+  const m = document.getElementById('vt-method').value;
+  document.getElementById('vt-sample-lbl').textContent = m === 'drop' ? 'Egun kopurua' : 'Erle kopurua (lagina)';
+  document.getElementById('vt-sample-wrap').style.display = m === 'other' ? 'none' : '';
+}
+
+function openVTest(id) {
+  if (!canEdit() || !dpHiveId) return;
+  vtEditId = id || null;
+  const v = id ? varroaTests.find(x => x.id === id) : null;
+  document.getElementById('vt-title').innerHTML = (v ? 'Testa editatu' : 'Varroa test berria') + ' <button class="mclose" onclick="closeM(\'vt\')">✕</button>';
+  document.getElementById('vt-date').value = v ? v.date : new Date().toISOString().slice(0, 10);
+  document.getElementById('vt-method').value = v ? v.method : 'wash';
+  document.getElementById('vt-mites').value = v ? v.mites : '';
+  document.getElementById('vt-sample').value = v && v.sample != null ? v.sample : '';
+  document.getElementById('vt-notes').value = v ? v.notes : '';
+  vtSampleLabel();
+  openM('vt');
+}
+
+async function saveVTest() {
+  if (!canEdit() || saving || !dpHiveId) return;
+  const method = document.getElementById('vt-method').value;
+  const mites = clampNum(document.getElementById('vt-mites').value, 0, 100000, 0);
+  const raw = document.getElementById('vt-sample').value;
+  const sample = method === 'other' ? null : (raw === '' ? null : Math.max(1, Math.round(+raw)));
+  const payload = {
+    date: document.getElementById('vt-date').value || new Date().toISOString().slice(0, 10),
+    method, mites, sample, notes: document.getElementById('vt-notes').value
+  };
+  saving = true;
+  try {
+    let error;
+    if (vtEditId) ({ error } = await sb.from('varroa_tests').update(payload).eq('id', vtEditId));
+    else ({ error } = await sb.from('varroa_tests').insert({ ...payload, project_id: projectId, hive_id: dpHiveId, username: me, created_by: userId }));
+    if (error) { toast(error.message, 'bad'); return; }
+    await loadVarroa(dpHiveId);
+    closeM('vt'); renderDpBody();
+    toast(vtEditId ? 'Testa eguneratuta ✓' : 'Testa gordeta ✓');
+  } finally { saving = false; }
+}
+
+async function deleteVTest(id) {
+  if (!confirm('Test hau ezabatu nahi duzu?')) return;
+  const { error } = await sb.from('varroa_tests').delete().eq('id', id);
+  if (error) { toast(error.message, 'bad'); return; }
+  await loadVarroa(dpHiveId); renderDpBody(); toast('Testa ezabatuta');
+}
+
+function openVTr(id) {
+  if (!canEdit() || !dpHiveId) return;
+  vtrEditId = id || null;
+  const v = id ? varroaTreatments.find(x => x.id === id) : null;
+  document.getElementById('vtr-title').innerHTML = (v ? 'Tratamendua editatu' : 'Tratamendu berria') + ' <button class="mclose" onclick="closeM(\'vtr\')">✕</button>';
+  document.getElementById('vtr-product').value = v ? v.product : '';
+  document.getElementById('vtr-start').value = v ? v.start_date : new Date().toISOString().slice(0, 10);
+  document.getElementById('vtr-end').value = v && v.end_date ? v.end_date : '';
+  document.getElementById('vtr-notes').value = v ? v.notes : '';
+  openM('vtr');
+}
+
+async function saveVTr() {
+  if (!canEdit() || saving || !dpHiveId) return;
+  const product = document.getElementById('vtr-product').value.trim();
+  if (!product) { toast('Idatzi produktua', 'warn'); return; }
+  const payload = {
+    product,
+    start_date: document.getElementById('vtr-start').value || new Date().toISOString().slice(0, 10),
+    end_date: document.getElementById('vtr-end').value || null,
+    notes: document.getElementById('vtr-notes').value
+  };
+  saving = true;
+  try {
+    let error;
+    if (vtrEditId) ({ error } = await sb.from('varroa_treatments').update(payload).eq('id', vtrEditId));
+    else ({ error } = await sb.from('varroa_treatments').insert({ ...payload, project_id: projectId, hive_id: dpHiveId, username: me, created_by: userId }));
+    if (error) { toast(error.message, 'bad'); return; }
+    await loadVarroa(dpHiveId);
+    closeM('vtr'); renderDpBody();
+    toast(vtrEditId ? 'Tratamendua eguneratuta ✓' : 'Tratamendua gordeta ✓');
+  } finally { saving = false; }
+}
+
+async function deleteVTr(id) {
+  if (!confirm('Tratamendu hau ezabatu nahi duzu?')) return;
+  const { error } = await sb.from('varroa_treatments').delete().eq('id', id);
+  if (error) { toast(error.message, 'bad'); return; }
+  await loadVarroa(dpHiveId); renderDpBody(); toast('Tratamendua ezabatuta');
 }
 
 function selHive(id) { selId = id; renderSB(); renderDP(id); }

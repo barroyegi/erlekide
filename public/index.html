@@ -320,6 +320,65 @@
     </div>
   </div>
 
+  <!-- MODAL: VARROA TESTA -->
+  <div id="mod-vt" class="movl" style="display:none" onclick="if(event.target===this)closeM('vt')">
+    <div class="mbox" style="max-width:400px">
+      <div class="mhandle"></div>
+      <div class="mtitle" id="vt-title">Varroa test berria <button class="mclose" onclick="closeM('vt')">✕</button>
+      </div>
+      <div class="fg2">
+        <div class="ff"><label>Data</label><input id="vt-date" type="date"></div>
+        <div class="ff"><label>Metodoa</label>
+          <select id="vt-method" onchange="vtSampleLabel()">
+            <option value="wash">Garbiketa (alkohol/azukrea)</option>
+            <option value="drop">Kaida naturala</option>
+            <option value="other">Beste bat</option>
+          </select>
+        </div>
+        <div class="ff"><label>Akaro kopurua</label><input id="vt-mites" type="number" min="0" step="1"
+            placeholder="0"></div>
+        <div class="ff" id="vt-sample-wrap"><label id="vt-sample-lbl">Erle kopurua (lagina)</label><input id="vt-sample"
+            type="number" min="1" step="1" placeholder="300"></div>
+        <div class="ff fg1"><label>Oharrak</label><textarea id="vt-notes" placeholder="Aukerazkoa..."></textarea></div>
+      </div>
+      <div class="brow">
+        <button class="btn" onclick="closeM('vt')">Utzi</button>
+        <button class="btn primary" onclick="saveVTest()">✓ Gorde</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: VARROA TRATAMENDUA -->
+  <div id="mod-vtr" class="movl" style="display:none" onclick="if(event.target===this)closeM('vtr')">
+    <div class="mbox" style="max-width:400px">
+      <div class="mhandle"></div>
+      <div class="mtitle" id="vtr-title">Tratamendu berria <button class="mclose" onclick="closeM('vtr')">✕</button>
+      </div>
+      <div class="fg2">
+        <div class="ff fg1"><label>Produktua</label>
+          <input id="vtr-product" list="vtr-products" placeholder="Adib: Apivar, azido oxalikoa...">
+          <datalist id="vtr-products">
+            <option value="Apivar (amitraz)"></option>
+            <option value="Apitraz (amitraz)"></option>
+            <option value="Apiguard (timola)"></option>
+            <option value="Azido oxalikoa (tanttaka)"></option>
+            <option value="Azido oxalikoa (sublimazioa)"></option>
+            <option value="Azido formikoa (MAQS)"></option>
+            <option value="Apistan (fluvalinato)"></option>
+          </datalist>
+        </div>
+        <div class="ff"><label>Hasiera data</label><input id="vtr-start" type="date"></div>
+        <div class="ff"><label>Amaiera data (aukerazkoa)</label><input id="vtr-end" type="date"></div>
+        <div class="ff fg1"><label>Oharrak</label><textarea id="vtr-notes" placeholder="Dosia, behaketak..."></textarea>
+        </div>
+      </div>
+      <div class="brow">
+        <button class="btn" onclick="closeM('vtr')">Utzi</button>
+        <button class="btn primary" onclick="saveVTr()">✓ Gorde</button>
+      </div>
+    </div>
+  </div>
+
   <!-- MODAL: SOZIOAK (members) -->
   <div id="mod-members" class="movl" style="display:none" onclick="if(event.target===this)closeM('members')">
     <div class="mbox" style="max-width:360px">
