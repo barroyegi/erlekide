@@ -5,7 +5,7 @@ let sb = null, me = null, userId = null, token = null;
 let hives = [], insps = [];
 let selId = null, dragId = null, moveId = null, pendX = null, pendY = null;
 let saving = false;
-let editId = null, inspHiveId = null, inspEditId = null, aiTxt = '';
+let editId = null, inspHiveId = null, inspEditId = null;
 let delStep = 0, delTimer = null;
 let expenses = [], members = [], materials = [];
 let expEditId = null, matEditId = null;
@@ -939,7 +939,7 @@ async function delHive() {
 }
 
 function openInsp(hiveId) {
-  inspHiveId = hiveId; inspEditId = null; aiTxt = '';
+  inspHiveId = hiveId; inspEditId = null;
   document.getElementById('ai-modal-title').innerHTML = 'Inspekzio berria <button class="mclose" onclick="closeM(\'ai\')">✕</button>';
   document.getElementById('aid').value = new Date().toISOString().slice(0, 10);
   document.getElementById('ais').value = '7';
@@ -949,8 +949,6 @@ function openInsp(hiveId) {
   document.getElementById('aiv').value = 'low';
   document.getElementById('aist').value = 'good';
   document.getElementById('aino').value = '';
-  document.getElementById('aibox-wrap').innerHTML = '';
-  const btn = document.getElementById('btn-ai'); btn.innerHTML = '✦ IArekin aztertu'; btn.disabled = false;
   openM('ai');
 }
 
