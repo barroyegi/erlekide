@@ -750,7 +750,7 @@ async function renderDP(id) {
   const pos = h.grid_x != null ? `${RLBLS[h.grid_y]}${h.grid_x + 1} posizioa` : 'Mapan kokatu gabe';
   const stL = { good: 'Ona', warn: 'Kontuz', bad: 'Kritikoa' };
   const stC = { good: 'var(--good)', warn: 'var(--warn)', bad: 'var(--bad)' };
-  const tab = (t, label) => `<button class="dp-tab ${dpTab === t ? 'on' : ''}" onclick="setDpTab('${t}')">${label}</button>`;
+  const tab = (t, label) => `<button class="dp-tab ${dpTab === t ? 'on' : ''}" data-tab="${t}" onclick="setDpTab('${t}')">${label}</button>`;
   document.getElementById('mod-dp-content').innerHTML = `
     <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:12px">
       <div style="flex:1">
@@ -781,7 +781,11 @@ async function renderDP(id) {
   openM('dp');
 }
 
-function setDpTab(t) { dpTab = t; renderDpBody(); }
+function setDpTab(t) {
+  dpTab = t;
+  document.querySelectorAll('.dp-tab').forEach(b => b.classList.toggle('on', b.dataset.tab === t));
+  renderDpBody();
+}
 
 function renderDpBody() {
   const el = document.getElementById('dp-body');
